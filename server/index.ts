@@ -1,13 +1,10 @@
 import path from "path"
 import express from "express"
-import dotenv from "dotenv"
+import config from "./config"
 import { serveStream } from "./serveAudio"
-
-
-dotenv.config()
+import { generateHtmlFromDir } from "./readLibDir"
 
 const app = express()
-const port = process.env.PORT
 
 const rootFolder = __dirname
 console.log("rootFolder", rootFolder)
@@ -15,9 +12,6 @@ const web = path.resolve("..", "web")
 
 
 app.use('/static', express.static(web))
-app.get('/', (req, res) => {
-    res.send("<a href='static'>Client</a>")
-})
 
 app.get("/file/*", (req, res) => {
     let filePath = req.path
@@ -31,6 +25,16 @@ app.get("/file/*", (req, res) => {
     }
 })
 
+app.get('*', (req, res) => {
+    let path = req.path
+    console.log("path*", path)
+    const html = generateHtmlFromDir(path)
+    res.send(html)
+})
+if (!config.libPath)
+    throw Error("missing libpath!!")
+
+let port = config.port ? config.port : 8000
 app.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`)
 })

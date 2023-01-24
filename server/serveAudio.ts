@@ -1,11 +1,9 @@
 import fs from "fs"
 import path from "path"
 import mime from "mime-types"
+import config from "./config"
 import type { Request, Response } from "express"
 
-const rootFolder = __dirname
-const lib = "../lib"
-const libPath = path.resolve(rootFolder, lib)
 
 const getRangeStream = (res: Response, filePath: string, mimeType: string, size: number, range: string) => {
 
@@ -45,7 +43,7 @@ const getStream = (res: Response, filePath: string, mimeType: string, size: numb
  
 export const serveStream = (req: Request, res: Response, filePath: string) => {
     
-    const fullPath = path.join(libPath, filePath)
+    const fullPath = path.join(config.libPath, filePath)
     console.log("file fullpath", fullPath)
 
     const stat = fs.statSync(fullPath)

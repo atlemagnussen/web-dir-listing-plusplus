@@ -2,3 +2,11 @@ body {
     background: #444;
     color: white;
 }
+a, a:visited {
+    color: white;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+}

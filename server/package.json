@@ -4,7 +4,8 @@
     "description": "atle audio¨",
     "main": "index.js",
     "scripts": {
-      "start": "ts-node index.ts"
+      "start": "ts-node index.ts",
+      "test": "ts-node readLibDir.ts"
     },
     "keywords": [
       "express",

@@ -1,0 +1,5 @@
+lib
+*.mp3
+*.flac
+
+node_modules

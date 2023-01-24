@@ -1,0 +1,16 @@
+{
+    "name": "audioplayer-server",
+    "version": "1.0.0",
+    "description": "atle audio¨",
+    "main": "index.js",
+    "scripts": {
+      "start": "ts-node index.ts"
+    },
+    "keywords": [
+      "express",
+      "audio"
+    ],
+    "author": "atlemagnussen",
+    "license": "ISC"
+  }
+  

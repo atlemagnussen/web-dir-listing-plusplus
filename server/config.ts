@@ -2,6 +2,6 @@ import dotenv from "dotenv"
 dotenv.config()
 
 export default {
-    port: process.env.PORT,
+    port: parseInt(process.env.PORT as string),
     libPath: process.env.LIBPATH as string
 }

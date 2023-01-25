@@ -44,7 +44,7 @@ const getHtmlFromDir = (dir: string): string => {
     
     const tags = dirEntries.map(e => {
         if (e.type == "folder")
-            return `<a href="${e.name}">${e.name}</a>`
+            return `<a href="${e.name}/">${e.name}</a>`
         
         
         return `<label>${e.name}</label>

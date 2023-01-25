@@ -4,9 +4,11 @@
     "description": "atle audio¨",
     "main": "index.js",
     "scripts": {
-      "start": "ts-node index.ts",
+      "start": "cross-env NODE_ENV=local ts-node index.ts",
       "test": "ts-node readLibDir.ts",
-      "prod": "cross-env prod && ts-node index.ts"
+      "build": "tsc",
+      "prod": "cross-env NODE_ENV=prod node ./dist/index.js",
+      "prod:ts": "cross-env NODE_ENV=prod ts-node index.ts"
     },
     "keywords": [
       "express",

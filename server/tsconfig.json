@@ -6,5 +6,7 @@
         "files": true,
         "compilerOptions": {}
     },
-    "compilerOptions": {}
+    "compilerOptions": {
+        "outDir": "dist"
+    }
 }

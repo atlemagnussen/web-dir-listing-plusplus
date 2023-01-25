@@ -1,5 +1,9 @@
 import dotenv from "dotenv"
-dotenv.config()
+
+const environment = process.env.NODE_ENV ?? ""
+const envFile = environment ? `${environment}.env` : ".env"
+console.log(`environment: ${environment}, envFile: ${envFile}`)
+const config = dotenv.config({ path: envFile})
 
 export default {
     port: parseInt(process.env.PORT as string),

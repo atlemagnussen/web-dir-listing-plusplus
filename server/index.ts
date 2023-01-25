@@ -9,7 +9,7 @@ const app = express()
 const rootFolder = __dirname
 console.log("rootFolder", rootFolder)
 const web = path.resolve("..", "web")
-
+console.log("libdir", config.libPath)
 
 app.use('/static', express.static(web))
 

@@ -6,6 +6,7 @@ export default defineConfig({
         lib: {
             entry: "src/app.ts",
             formats: ['es'],
-        }
+        },
+        sourcemap: true
     }
 })

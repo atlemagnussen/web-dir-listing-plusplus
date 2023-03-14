@@ -1,8 +1,13 @@
-import { LitElement, css, html } from 'lit'
-import { customElement, property } from 'lit/decorators.js'
+import { LitElement, css, html } from "lit"
+import { customElement, property } from "lit/decorators.js"
 
 @customElement('audio-player')
-export class AudioElement extends LitElement {
+export class AudioPlayer extends LitElement {
+    static styles = css`
+        :host {
+            display: block;
+        }
+    `
     
     @property({attribute: true})
     url = ""
@@ -22,15 +27,6 @@ export class AudioElement extends LitElement {
             <audio controls src="${this.url}" type="${this.ext}"></audio>
         `
     }
-
-    static styles = css`
-    :host {
-        max-width: 1280px;
-        margin: 0 auto;
-        padding: 2rem;
-        text-align: center;
-    }
-  `
 }
 
 // declare global {

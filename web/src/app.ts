@@ -1,5 +1,9 @@
-import { LitElement, css, html } from 'lit'
-import { customElement, property } from 'lit/decorators.js'
+import { LitElement, css, html } from "lit"
+import { customElement, property } from "lit/decorators.js"
+import {ref, createRef, Ref} from "lit/directives/ref.js"
+
+import "./audioPlayer"
+import { AudioPlayer } from "./audioPlayer"
 import "./index.css"
 
 type FileEntryType = "file" | "folder"
@@ -11,27 +15,62 @@ interface FileOrDir {
 }
 
 @customElement('audio-app')
-export class AudioElement extends LitElement {
+export class AudioApp extends LitElement {
     
     @property({attribute: false})
     entries: FileOrDir[] = []
     
+    audioPlayerRef: Ref<AudioPlayer> = createRef()
+
+    // _click(e: MouseEvent) {
+    //     console.log("click", e)
+    // }
+    // constructor() {
+    //     super()
+    //     this.addEventListener("click", (e) => this._click(e))
+    // }
+    play(entry: FileOrDir) {
+        console.log("play entry", entry)
+        if (!this.audioPlayerRef.value)
+            return
+        
+        this.audioPlayerRef.value.label = entry.name
+        this.audioPlayerRef.value.url = entry.webpath
+        this.audioPlayerRef.value.ext = entry.ext
+    }
+
     render() {
-        console.log("entries", this.entries)
+        
+        if (this.entries.length === 0) {
+            return html`<h2>No entries</h2>`
+        }
         return html`
-            <h1>Audio player</h1>
-            <audio-player></audio-player>
+            ${this.entries.map(e => {
+                if (e.type == "folder")
+                    return html`<p>
+                        <a href="${e.name}/">${e.name}</a>
+                    </p>`
+                
+                return html`<p>
+                    <button @click=${() => this.play(e)}>${e.name}</button>
+                </p>
+                `
+            })}
+            <audio-player ${ref(this.audioPlayerRef)}></audio-player>
         `
     }
 
     static styles = css`
-    :host {
-        max-width: 1280px;
-        margin: 0 auto;
-        padding: 2rem;
-        text-align: center;
-    }
-  `
+        :host {
+            display: block;
+        }
+        a {
+            color: white;
+        }
+        a:visited {
+            color: lightblue
+        }
+    `
 }
 
 // let entries: FileOrDir[] = []
@@ -40,5 +79,3 @@ export class AudioElement extends LitElement {
 //     entries = ent
 //     console.log(ent)
 // }
-
-import "./audioPlayer"

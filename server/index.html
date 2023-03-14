@@ -17,14 +17,15 @@
         <h1><!--$TITLE$--></h1>
     </header>
     <main>
-        
-        <!--%BODY%-->
         <audio-app></audio-app>
     </main>
     <script type="module">
-        import "./static/dist/web.js"
-        const audioApp = document.querySelector("audio-app")
-        //%script%
+        import "/static/dist/web.js"
+        customElements.whenDefined("audio-player").then(() => {
+            const audioApp = document.querySelector("audio-app")
+            //%script%
+        })
+        
     </script>
 </body>
 </html>

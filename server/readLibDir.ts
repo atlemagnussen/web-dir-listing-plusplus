@@ -54,13 +54,21 @@ const getHtmlFromDir = (dir: string): string => {
     return tags.join()
 }
 
+const getJsonStringFromDir = (dir:string) => {
+    const dirEntries = readDir(dir)
+    const str = JSON.stringify(dirEntries)
+    return `const entries = ${str};\n`
+}
+
 export const generateHtmlFromDir = (dir: string) => {
     let html = fs.readFileSync(htmlFilePath, 'utf8')
 
-    const htmlToInject = getHtmlFromDir(dir)
-
+    // const htmlToInject = getHtmlFromDir(dir)
+    const jsonStr = getJsonStringFromDir(dir)
+    const jsToInject = `${jsonStr} audioApp.entries = entries;\n`
+    //console.log(jsonToInject)
     html = html.replaceAll("<!--$TITLE$-->", dir == "/" ? "Audio lib" : dir)
-    html = html.replace("<!--%BODY%-->", htmlToInject)
+    html = html.replace("//%script%", jsToInject)
 
     return html
 }

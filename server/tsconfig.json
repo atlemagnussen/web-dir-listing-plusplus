@@ -4,7 +4,9 @@
     "ts-node": {
         "transpileOnly": false,
         "files": true,
-        "compilerOptions": {}
+        "compilerOptions": {
+            "noImplicitAny": true
+        }
     },
     "compilerOptions": {
         "outDir": "dist"

@@ -10,15 +10,21 @@
     <link rel="icon" href="https://storage.googleapis.com/backslash-project.appspot.com/static/html5b-192.png" sizes="128x128" type="image/png">
     
     <title><!--$TITLE$--></title>
-    <link rel="stylesheet" href="/static/index.css">
+    <link rel="stylesheet" href="/static/dist/style.css">
 </head>
 <body>
     <header>
         <h1><!--$TITLE$--></h1>
     </header>
     <main>
+        
         <!--%BODY%-->
+        <audio-app></audio-app>
     </main>
-    
+    <script type="module">
+        import "./static/dist/web.js"
+        const audioApp = document.querySelector("audio-app")
+        //%script%
+    </script>
 </body>
 </html>

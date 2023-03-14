@@ -1,0 +1,19 @@
+{
+  "name": "web",
+  "version": "1.0.0",
+  "description": "webaudio",
+  "type": "module",
+  "main": "dist/app.es.js",
+  "exports": {
+    ".": "./dist/app.es.js"
+  },
+  "scripts": {
+    "build": "tsc && vite build"
+  },
+  "keywords": [
+    "audio",
+    "web"
+  ],
+  "author": "atlemagnussen",
+  "license": "ISC"
+}

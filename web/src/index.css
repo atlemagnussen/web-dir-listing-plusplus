@@ -2,6 +2,7 @@ body {
     background: #444;
     color: white;
     margin: 0;
+    height: 100vh;
 }
 a, a:visited {
     color: white;

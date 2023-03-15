@@ -36,19 +36,19 @@ const getConfigForDir = (dir:string) => {
         title,
         entries
     }
-    const strConf = JSON.stringify(config)
-    
-    return `const config = ${strConf};\n`
+    return config
 }
 
 export const generateHtmlFromDir = (dir: string) => {
     let html = fs.readFileSync(htmlFilePath, 'utf8')
 
     // const htmlToInject = getHtmlFromDir(dir)
-    const jsonStr = getConfigForDir(dir)
-    const jsToInject = `${jsonStr} audioApp.config = config;\n`
+    const config = getConfigForDir(dir)
+    const confStr = `const config = ${JSON.stringify(config)};`
+    const jsToInject = `${confStr}\naudioApp.config = config;\n`
     //console.log(jsonToInject)
     
+    html = html.replaceAll("<!--$TITLE$-->", config.title)
     html = html.replace("//%script%", jsToInject)
 
     return html

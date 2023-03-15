@@ -22,6 +22,13 @@ export class AudioPlayer extends LitElement {
                 width: 100%;;
             }
         }
+        label, audio {
+            flex: 0 0 50%;
+        }
+        label {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     `
     sub: Subscription | null = null
 

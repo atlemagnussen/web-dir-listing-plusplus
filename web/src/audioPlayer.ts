@@ -8,7 +8,10 @@ export class AudioPlayer extends LitElement {
     static styles = css`
         :host {
             display: flex;
-            justify-content: center;
+            justify-content: left;
+            width: 100%;
+            max-width: 100%;
+            overflow: none;
         }
         .wrapper {
             display: flex;
@@ -19,11 +22,12 @@ export class AudioPlayer extends LitElement {
         }
         @media only screen and (max-width: 640px) {
             .wrapper {
-                width: 100%;;
+                width: 100%;
+                max-width: 100%;
             }
         }
         label, audio {
-            flex: 0 0 50%;
+            flex: 0 0 50vw;
         }
         label {
             overflow: hidden;
@@ -61,8 +65,8 @@ export class AudioPlayer extends LitElement {
             label = "Not playing anything"
             
         return html`
-            <label>${label}</label>
             <audio controls src="${this.url}" type="${this.ext}"></audio>
+            <label>${label}</label>
         `
     }
 }

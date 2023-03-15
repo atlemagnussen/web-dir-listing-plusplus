@@ -56,6 +56,7 @@ export class AudioApp extends LitElement {
         main {
             overflow: auto;
             grid-area: main;
+            max-width: 100vw;
             padding: 15px 5px 10px 5px;
             display: block;
         }

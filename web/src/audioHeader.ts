@@ -7,6 +7,7 @@ export class AudioHeader extends LitElement {
         :host {
             display: flex;
             justify-content: center;
+            max-width: 100vw;
         }
         .wrapper {
             display: flex;
@@ -17,8 +18,8 @@ export class AudioHeader extends LitElement {
         }
         @media only screen and (max-width: 640px) {
             .wrapper {
-                width: 100%;
-                max-width: 100%;
+                width: 100vw;
+                max-width: 100vw;
             }
         }
     `

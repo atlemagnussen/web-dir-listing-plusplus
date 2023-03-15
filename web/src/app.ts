@@ -5,6 +5,7 @@ import { ConfigFolder } from "@common/types"
 import "./audioHeader"
 import "./audioPlayer"
 import "./audioPlayList"
+import "./audioLink"
 import "./vars.css"
 import "./index.css"
 
@@ -19,9 +20,19 @@ export class AudioApp extends LitElement {
             ext: "mp3",
             webpath: "http://localhost:8000/debug.mp3",
             type: "file"
+        }, {
+            name: "folder1",
+            type: "folder",
+            ext: "",
+            webpath: ""
         }]
     }
-    
+
+    constructor() {
+        super()
+        for (let i=0; i<20; i++)
+            this.config.entries.push({name: `test ${i}`, ext: "mp3", type: "file", webpath: `http://localhost:8000/${i}.mp3`})
+    }
 
     render() {
         console.log("config", this.config)
@@ -44,6 +55,7 @@ export class AudioApp extends LitElement {
 
     static styles = css`
         :host {
+            overflow: hidden;
             height: 100vh;
             display: grid;
             grid-template-columns: 1fr;
@@ -55,7 +67,9 @@ export class AudioApp extends LitElement {
         }
         
         header {
+            background: var(--third-background);
             grid-area: header;
+            padding: 0.2rem;
         }
         
         main {
@@ -68,6 +82,8 @@ export class AudioApp extends LitElement {
         
         footer {
             grid-area: footer;
+            background: var(--secondary-background);
+            padding: 0.2rem;
         }
         a, a:visited {
             color: white;

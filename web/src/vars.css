@@ -1,4 +1,10 @@
 :root {
     --default-width: 1280px;
     --mobile-width: 640px;
+
+    --headline-color: rgb(157, 9, 255);
+    --link-color: rgb(240, 130, 20);
+    --primary-background: #444;
+    --third-background: #333;
+    --secondary-background: #111;
 }

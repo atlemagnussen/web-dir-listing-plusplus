@@ -54,17 +54,10 @@ export class AudioPlayList extends LitElement {
                     </p>`
                 
                 return html`<p>
-                    <button @click=${() => this.play(e)}>${e.name}</button>
+                    <audio-link @click=${() => this.play(e)} .name=${e.name}></audio-link>
                 </p>
                 `
             })}
         `
     }
 }
-
-// let entries: FileOrDir[] = []
-
-// export const setEntries = (ent: FileOrDir[]) => {
-//     entries = ent
-//     console.log(ent)
-// }

@@ -26,7 +26,7 @@ export class AudioPlayer extends LitElement {
             }
         }
         label, audio {
-            flex: 0 0 50vw;
+            flex: 1 1 50%;
         }
         label {
             overflow: hidden;

@@ -9,6 +9,10 @@
         }
     },
     "compilerOptions": {
-        "outDir": "dist"
+        "outDir": "dist",
+        "baseUrl": ".",
+        "paths": {
+            "@common/*": ["../common/*"]
+        }
     }
 }

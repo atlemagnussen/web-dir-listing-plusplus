@@ -1,74 +1,70 @@
 import { LitElement, css, html } from "lit"
 import { customElement, property } from "lit/decorators.js"
-import {ref, createRef, Ref} from "lit/directives/ref.js"
+import { ConfigFolder } from "@common/types"
 
+import "./audioHeader"
 import "./audioPlayer"
-import { AudioPlayer } from "./audioPlayer"
+import "./audioPlayList"
+import "./vars.css"
 import "./index.css"
-
-type FileEntryType = "file" | "folder"
-interface FileOrDir {
-    type: FileEntryType
-    name: string
-    ext: string
-    webpath: string
-}
 
 @customElement('audio-app')
 export class AudioApp extends LitElement {
     
     @property({attribute: false})
-    entries: FileOrDir[] = []
-    
-    audioPlayerRef: Ref<AudioPlayer> = createRef()
-
-    // _click(e: MouseEvent) {
-    //     console.log("click", e)
-    // }
-    // constructor() {
-    //     super()
-    //     this.addEventListener("click", (e) => this._click(e))
-    // }
-    play(entry: FileOrDir) {
-        console.log("play entry", entry)
-        if (!this.audioPlayerRef.value)
-            return
-        
-        this.audioPlayerRef.value.label = entry.name
-        this.audioPlayerRef.value.url = entry.webpath
-        this.audioPlayerRef.value.ext = entry.ext
+    config: ConfigFolder = {
+        title: "no title",
+        entries: []
     }
+    
 
     render() {
-        
-        if (this.entries.length === 0) {
-            return html`<h2>No entries</h2>`
-        }
+        console.log("config", this.config)
         return html`
-            ${this.entries.map(e => {
-                if (e.type == "folder")
-                    return html`<p>
-                        <a href="${e.name}/">${e.name}</a>
-                    </p>`
-                
-                return html`<p>
-                    <button @click=${() => this.play(e)}>${e.name}</button>
-                </p>
-                `
-            })}
-            <audio-player ${ref(this.audioPlayerRef)}></audio-player>
+            <header>
+                <audio-header .title=${this.config.title}></audio-header>
+            </header>
+            
+            <main>
+                <audio-playlist .entries=${this.config.entries}></audio-playlist>
+            </main>
+            
+            
+            <footer>
+                <audio-player></audio-player>
+            </footer>
+            
         `
     }
 
     static styles = css`
         :host {
+            height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: auto 1fr auto;
+            grid-template-areas: 
+                'header'
+                'main'
+                'footer';
+        }
+        
+        header {
+            grid-area: header;
+        }
+        
+        main {
+            overflow: auto;
+            grid-area: main;
+            padding: 15px 5px 10px 5px;
             display: block;
         }
-        a {
-            color: white;
+        
+        footer {
+            grid-area: footer;
         }
-        a:visited {
-            color: lightblue
+        a, a:visited {
+            color: white;
         }
     `
 }

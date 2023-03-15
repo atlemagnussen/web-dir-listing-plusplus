@@ -1,17 +1,10 @@
 import fs from "fs"
 import path from "path"
 import config from "./config"
+import { FileOrDir, FileEntryType, ConfigFolder } from "@common/types"
 
 const rootFolder = __dirname
 const htmlFilePath = path.join(rootFolder, "index.html")
-
-type FileEntryType = "file" | "folder"
-interface FileOrDir {
-    type: FileEntryType
-    name: string
-    ext: string
-    webpath: string
-}
 
 const readDir = (dir: string) => {
 
@@ -36,38 +29,26 @@ const readDir = (dir: string) => {
     return entriesTyped
 }
 
-const getHtmlFromDir = (dir: string): string => {
-    const dirEntries = readDir(dir)
-
-    if (dirEntries.length == 0)
-        return "<p>Empty folder</p>"
+const getConfigForDir = (dir:string) => {
+    const entries = readDir(dir)
+    const title = dir == "/" ? "Audio lib" : dir
+    const config: ConfigFolder = {
+        title,
+        entries
+    }
+    const strConf = JSON.stringify(config)
     
-    const tags = dirEntries.map(e => {
-        if (e.type == "folder")
-            return `<a href="${e.name}/">${e.name}</a>`
-        
-        
-        return `<label>${e.name}</label>
-        <audio controls src="${e.webpath}" type="${e.ext}"></audio>`
-    })
-
-    return tags.join()
-}
-
-const getJsonStringFromDir = (dir:string) => {
-    const dirEntries = readDir(dir)
-    const str = JSON.stringify(dirEntries)
-    return `const entries = ${str};\n`
+    return `const config = ${strConf};\n`
 }
 
 export const generateHtmlFromDir = (dir: string) => {
     let html = fs.readFileSync(htmlFilePath, 'utf8')
 
     // const htmlToInject = getHtmlFromDir(dir)
-    const jsonStr = getJsonStringFromDir(dir)
-    const jsToInject = `${jsonStr} audioApp.entries = entries;\n`
+    const jsonStr = getConfigForDir(dir)
+    const jsToInject = `${jsonStr} audioApp.config = config;\n`
     //console.log(jsonToInject)
-    html = html.replaceAll("<!--$TITLE$-->", dir == "/" ? "Audio lib" : dir)
+    
     html = html.replace("//%script%", jsToInject)
 
     return html

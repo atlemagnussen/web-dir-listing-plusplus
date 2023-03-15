@@ -1,14 +1,45 @@
 import { LitElement, css, html } from "lit"
 import { customElement, property } from "lit/decorators.js"
+import {Subscription} from "rxjs"
+import { playingFile } from "./audioState"
 
 @customElement('audio-player')
 export class AudioPlayer extends LitElement {
     static styles = css`
         :host {
-            display: block;
+            display: flex;
+            justify-content: center;
+        }
+        .wrapper {
+            display: flex;
+            flex-direction: row;
+            gap: 1rem;
+            width: var(--default-width);
+            max-width: var(--default-width);
+        }
+        @media only screen and (max-width: 640px) {
+            .wrapper {
+                width: 100%;;
+            }
         }
     `
-    
+    sub: Subscription | null = null
+
+    connectedCallback() {
+        super.connectedCallback()
+        this.sub = playingFile.subscribe(file => {
+            this.url = file.webpath
+            this.label = file.name
+            this.ext = file.ext
+        })
+    }
+
+    disconnectedCallback() {
+        super.disconnectedCallback()
+        if (this.sub) {
+            this.sub.unsubscribe()
+        }
+    }
     @property({attribute: true})
     url = ""
     
@@ -18,12 +49,12 @@ export class AudioPlayer extends LitElement {
     @property({attribute: true})
     ext = ""
     render() {
+        let label = this.label
         if (!this.url || !this.ext)
-            return html`
-                <label>Not playing anything</label>
-            `
+            label = "Not playing anything"
+            
         return html`
-            <label>${this.label}</label>
+            <label>${label}</label>
             <audio controls src="${this.url}" type="${this.ext}"></audio>
         `
     }

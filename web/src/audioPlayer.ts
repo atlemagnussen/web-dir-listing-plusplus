@@ -8,9 +8,8 @@ export class AudioPlayer extends LitElement {
     static styles = css`
         :host {
             display: flex;
-            justify-content: left;
-            width: 100%;
-            max-width: 100%;
+            justify-content: center;
+            width: 100vw;
             overflow: none;
         }
         .wrapper {
@@ -65,8 +64,10 @@ export class AudioPlayer extends LitElement {
             label = "Not playing anything"
             
         return html`
-            <audio controls src="${this.url}" type="${this.ext}"></audio>
-            <label>${label}</label>
+            <div class="wrapper">
+                <audio controls src="${this.url}" type="${this.ext}"></audio>
+                <label>${label}</label>
+            </div>
         `
     }
 }

@@ -14,7 +14,12 @@ export class AudioApp extends LitElement {
     @property({attribute: false})
     config: ConfigFolder = {
         title: "no title",
-        entries: []
+        entries: [{
+            name: "debug-dev-mode.debug-dev-mode.debug-dev-mode.debug-dev-mode.mp3",
+            ext: "mp3",
+            webpath: "http://localhost:8000/debug.mp3",
+            type: "file"
+        }]
     }
     
 

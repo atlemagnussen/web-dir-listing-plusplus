@@ -8,6 +8,7 @@
     ".": "./dist/app.es.js"
   },
   "scripts": {
+    "start": "vite",
     "build": "tsc && vite build"
   },
   "keywords": [

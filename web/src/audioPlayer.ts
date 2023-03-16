@@ -13,6 +13,7 @@ export class AudioPlayer extends LitElement {
             display: flex;
             justify-content: center;
             width: 100%;
+            max-width: 100%;
             height: 4rem;
             overflow: none;
             --button-height: 3rem;
@@ -131,7 +132,7 @@ export class AudioPlayer extends LitElement {
                     
                 </div>
                 <div class="information">
-                    <label>${label}</label>
+                    <scrolling-text>${label}</scrolling-text>
                     <div class="time">
                         ${this.currentTime ? html`
                             <duration-viewer .duration=${this.currentTime}></duration-viewer>

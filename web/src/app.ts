@@ -44,6 +44,7 @@ export class AudioApp extends LitElement {
         
         footer {
             grid-area: footer;
+            max-width: 100vw;
             background: var(--secondary-background);
             padding: 0.2rem;
         }

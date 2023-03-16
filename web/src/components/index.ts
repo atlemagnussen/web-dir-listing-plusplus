@@ -1,1 +1,2 @@
 import "./durationViewer"
+import "./scrollingText"

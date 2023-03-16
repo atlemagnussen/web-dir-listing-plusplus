@@ -65,7 +65,9 @@ export class AudioApp extends LitElement {
                 'main'
                 'footer';
         }
-        
+        * {
+            box-sizing: border-box;
+        }
         header {
             background: var(--third-background);
             grid-area: header;

@@ -12,8 +12,9 @@ const readDir = (dir: string) => {
     console.log("fullDirPath", fullDirPath)
     const entries = fs.readdirSync(fullDirPath)
 
-    const entriesTyped = entries.map(name => {
-        const fullPath = path.join(fullDirPath, name)
+    const entriesTyped = entries.map(entry => {
+        const fullPath = path.join(fullDirPath, entry)
+        let name = entry
         const stat = fs.statSync(fullPath)
         const type: FileEntryType = stat.isDirectory() ? "folder" : "file"
         let ext = ""
@@ -21,6 +22,7 @@ const readDir = (dir: string) => {
         if (type == "file") {
             ext = path.extname(fullPath).replace(".", "")
             webpath = fullPath.replace(config.libPath, "/file")
+            name = entry.replace("."+ext, "")
         }
             
         return { name, type, ext, webpath }

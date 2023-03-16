@@ -8,14 +8,21 @@ export class ScrollingText extends LitElement {
             width: 100%;
             max-width: 100%;
             display: block;
+            height: 1.5rem;
+        }
+        * {
+            box-sizing: border-box;
         }
         label {
+            display: block;
             position: relative;
             width: 100%;
             max-width: 100%;
-            line-height: 2rem;
+            overflow: hidden;
+            height: 1.5rem;
+            color: var(--winamp-green);
         }
-        slot {
+        span {
             will-change: transform;
             left: 0;
             top: 0;
@@ -38,7 +45,9 @@ export class ScrollingText extends LitElement {
     render() {
         return html`
             <label>
+                <span>
                 <slot></slot>
+                </span>
             </label>
         `
     }

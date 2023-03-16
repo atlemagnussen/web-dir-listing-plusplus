@@ -39,12 +39,18 @@ export class AudioPlayer extends LitElement {
             flex-direction: row;
         }
         .information {
+            flex: 1 1 auto;
             display: inline-flex;
             flex-direction: column;
         }
         label {
             overflow: hidden;
             text-overflow: ellipsis;
+        }
+        label.filetype {
+            color: var(--filetype-color);
+            border: 1px solid var(--filetype-color);
+            padding: 0.1rem;
         }
     `
     sub: Subscription | null = null
@@ -134,11 +140,12 @@ export class AudioPlayer extends LitElement {
                 <div class="information">
                     <scrolling-text>${label}</scrolling-text>
                     <div class="time">
-                        ${this.currentTime ? html`
-                            <duration-viewer .duration=${this.currentTime}></duration-viewer>
-                            <span>/</span>
-                        ` : ""}
+                        <duration-viewer .duration=${this.currentTime}></duration-viewer>
+                        <span>/</span>
                         <duration-viewer .duration=${this.duration}></duration-viewer>
+                        ${this.ext ? html`
+                            <label class="filetype">${this.ext}</label>
+                        ` : ""}
                     </div>
                 </div>
             </div>

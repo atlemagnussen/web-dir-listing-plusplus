@@ -5,6 +5,7 @@ body {
     height: 100svh;
     width: 100svw;
     max-width: 100svw;
+    font-family: monospace;
 }
 * {
     box-sizing: border-box;

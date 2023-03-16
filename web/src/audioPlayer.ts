@@ -128,6 +128,7 @@ export class AudioPlayer extends LitElement {
                 @play=${() => this.setState("playing")}
                 @pause=${() => this.setState("paused")}
                 @ended=${() => this.setState("stopped")}
+                @suspend=${() => this.setState("stopped")}
                 @timeupdate=${this.currentTimeUpdate}>
             </audio>
             <div class="wrapper">

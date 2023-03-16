@@ -2,7 +2,9 @@ body {
     background: var(--primary-background);
     color: white;
     margin: 0;
-    height: 100vh;
+    height: 100svh;
+    width: 100svw;
+    max-width: 100svw;
 }
 * {
     box-sizing: border-box;

@@ -9,7 +9,7 @@ export class AudioPlayer extends LitElement {
         :host {
             display: flex;
             justify-content: center;
-            width: 100vw;
+            width: 100%;
             overflow: none;
         }
         .wrapper {

@@ -56,7 +56,7 @@ export class AudioApp extends LitElement {
     static styles = css`
         :host {
             overflow: hidden;
-            height: 100vh;
+            height: 100%;
             display: grid;
             grid-template-columns: 1fr;
             grid-template-rows: auto 1fr auto;

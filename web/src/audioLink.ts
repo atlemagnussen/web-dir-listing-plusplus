@@ -13,6 +13,8 @@ export class AudioLink extends LitElement {
         }
         label {
             cursor: pointer;
+            /* overflow: hidden;
+            text-overflow: ellipsis; */
         }        
         
     `

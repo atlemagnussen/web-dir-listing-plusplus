@@ -9,7 +9,7 @@ export class AudioPlayList extends LitElement {
         :host {
             display: flex;
             justify-content: center;
-            max-width: 100vw;
+            max-width: 100%;
         }
         .wrapper {
             display: block;
@@ -19,7 +19,7 @@ export class AudioPlayList extends LitElement {
         @media only screen and (max-width: 640px) {
             .wrapper {
                 width: 100%;
-                max-width: 100vw;
+                max-width: 100%;
             }
         }
         a, a:visited {

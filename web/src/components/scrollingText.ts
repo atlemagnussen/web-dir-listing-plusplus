@@ -1,5 +1,6 @@
 import { LitElement, css, html } from "lit"
-import { customElement } from "lit/decorators.js"
+import { customElement, state } from "lit/decorators.js"
+import {classMap} from "lit/directives/class-map.js"
 
 @customElement('scrolling-text')
 export class ScrollingText extends LitElement {
@@ -21,16 +22,19 @@ export class ScrollingText extends LitElement {
             overflow: hidden;
             height: 1.5rem;
             color: var(--winamp-green);
+            cursor: pointer;
         }
         span {
-            will-change: transform;
             left: 0;
             top: 0;
-            animation: scroll-left 10s linear infinite;
             width: 100%;
             max-width: 100%;
             position: absolute;
             white-space: nowrap;
+        }
+        span.scrolling {
+            will-change: transform;
+            animation: scroll-left 10s linear infinite;
         }
         @keyframes scroll-left {
             0% {
@@ -41,11 +45,16 @@ export class ScrollingText extends LitElement {
             }
         }
     `
-    
+    @state()
+    scrolling = false
+    toggle() {
+        this.scrolling = !this.scrolling
+    }
     render() {
+        const classes = { scrolling: this.scrolling }
         return html`
-            <label>
-                <span>
+            <label @click=${this.toggle}>
+                <span class=${classMap(classes)}>
                 <slot></slot>
                 </span>
             </label>

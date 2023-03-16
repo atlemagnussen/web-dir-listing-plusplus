@@ -16,7 +16,7 @@ export class AudioPlayList extends LitElement {
             width: var(--default-width);
             max-width: var(--default-width);
         }
-        @media only screen and (max-width: 640px) {
+        @media only screen and (max-width: 1024px) {
             .wrapper {
                 width: 100%;
                 max-width: 100%;

@@ -1,7 +1,10 @@
 import { LitElement, css, html } from "lit"
-import { customElement, property } from "lit/decorators.js"
+import { customElement, property, state } from "lit/decorators.js"
+import { ref, Ref, createRef } from "lit/directives/ref.js"
 import {Subscription} from "rxjs"
 import { playingFile } from "./audioState"
+
+type PlayingState = "playing" | "paused" | "stopped"
 
 @customElement('audio-player')
 export class AudioPlayer extends LitElement {
@@ -10,23 +13,33 @@ export class AudioPlayer extends LitElement {
             display: flex;
             justify-content: center;
             width: 100%;
+            height: 4rem;
             overflow: none;
+            --button-height: 3rem;
+            --button-width: 3rem;
         }
         .wrapper {
+            padding: 0.5rem;
             display: flex;
             flex-direction: row;
             gap: 1rem;
             width: var(--default-width);
             max-width: var(--default-width);
+            border: 1px solid var(--link-color);
         }
-        @media only screen and (max-width: 640px) {
+        @media only screen and (max-width: 1024px) {
             .wrapper {
                 width: 100%;
                 max-width: 100%;
             }
         }
-        label, audio {
-            flex: 1 1 50%;
+        .controls {
+            display: inline-flex;
+            flex-direction: row;
+        }
+        .information {
+            display: inline-flex;
+            flex-direction: column;
         }
         label {
             overflow: hidden;
@@ -34,6 +47,7 @@ export class AudioPlayer extends LitElement {
         }
     `
     sub: Subscription | null = null
+    audioRef: Ref<HTMLAudioElement> = createRef()
 
     connectedCallback() {
         super.connectedCallback()
@@ -58,22 +72,76 @@ export class AudioPlayer extends LitElement {
 
     @property({attribute: true})
     ext = ""
+
+    @state()
+    duration = 0
+
+    @state()
+    currentTime = 0
+
+    @state()
+    playingState: PlayingState = "stopped"
+
+    togglePlay() {
+        if (!this.audioRef.value)
+            return
+        const audio = this.audioRef.value
+        if (this.playingState == "paused" || this.playingState == "stopped")
+            audio.play()
+        else
+            audio.pause()
+    }
+
+    loadedMetaData() {
+        if (!this.audioRef.value)
+            return
+        this.duration = this.audioRef.value.duration
+        
+    }
+    currentTimeUpdate() {
+        if (!this.audioRef.value)
+            return
+        this.currentTime = this.audioRef.value.currentTime
+    }
+    setState(state: PlayingState) {
+        this.playingState = state
+    }
     render() {
         let label = this.label
         if (!this.url || !this.ext)
             label = "Not playing anything"
             
         return html`
+            <audio ${ref(this.audioRef)}
+                src="${this.url}"
+                type="${this.ext}"
+                preload="metadata"
+                @loadedmetadata=${this.loadedMetaData}
+                @play=${() => this.setState("playing")}
+                @pause=${() => this.setState("paused")}
+                @ended=${() => this.setState("stopped")}
+                @timeupdate=${this.currentTimeUpdate}>
+            </audio>
             <div class="wrapper">
-                <audio controls src="${this.url}" type="${this.ext}"></audio>
-                <label>${label}</label>
+                <div class="controls">
+                    ${this.playingState == "stopped" || this.playingState == "paused" ? 
+                        html`<play-button @click=${this.togglePlay}></play-button>` : 
+                        html`<pause-button @click=${this.togglePlay}></pause-button>`
+                    }
+                    
+                </div>
+                <div class="information">
+                    <label>${label}</label>
+                    <div class="time">
+                        ${this.currentTime ? html`
+                            <duration-viewer .duration=${this.currentTime}></duration-viewer>
+                            <span>/</span>
+                        ` : ""}
+                        <duration-viewer .duration=${this.duration}></duration-viewer>
+                    </div>
+                </div>
             </div>
         `
     }
 }
 
-// declare global {
-//     interface HTMLElementTagNameMap {
-//         'my-element': MyElement
-//     }
-// }

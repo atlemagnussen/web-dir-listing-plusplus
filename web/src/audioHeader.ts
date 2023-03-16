@@ -22,7 +22,7 @@ export class AudioHeader extends LitElement {
             margin-block-start: 0;
             margin-block-end: 0;
         }
-        @media only screen and (max-width: 640px) {
+        @media only screen and (max-width: 1024px) {
             .wrapper {
                 width: 100%;
                 max-width: 100%;

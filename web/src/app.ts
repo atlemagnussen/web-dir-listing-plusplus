@@ -6,53 +6,13 @@ import "./audioHeader"
 import "./audioPlayer"
 import "./audioPlayList"
 import "./audioLink"
+import "./buttons"
+import "./components"
 import "./vars.css"
 import "./index.css"
 
 @customElement('audio-app')
 export class AudioApp extends LitElement {
-    
-    @property({attribute: false})
-    config: ConfigFolder = {
-        title: "no title",
-        entries: [{
-            name: "debug-dev-mode.debug-dev-mode.debug-dev-mode.debug-dev-mode.mp3",
-            ext: "mp3",
-            webpath: "http://localhost:8000/debug.mp3",
-            type: "file"
-        }, {
-            name: "folder1",
-            type: "folder",
-            ext: "",
-            webpath: ""
-        }]
-    }
-
-    constructor() {
-        super()
-        for (let i=0; i<20; i++)
-            this.config.entries.push({name: `test ${i}`, ext: "mp3", type: "file", webpath: `http://localhost:8000/${i}.mp3`})
-    }
-
-    render() {
-        console.log("config", this.config)
-        return html`
-            <header>
-                <audio-header .title=${this.config.title}></audio-header>
-            </header>
-            
-            <main>
-                <audio-playlist .entries=${this.config.entries}></audio-playlist>
-            </main>
-            
-            
-            <footer>
-                <audio-player></audio-player>
-            </footer>
-            
-        `
-    }
-
     static styles = css`
         :host {
             overflow: hidden;
@@ -91,11 +51,45 @@ export class AudioApp extends LitElement {
             color: white;
         }
     `
+
+    @property({attribute: false})
+    config: ConfigFolder = {
+        title: "no title",
+        entries: [{
+            name: "Explorer.31.-.Entities.Energy.Streams.and.Information.Services.mp3",
+            ext: "mp3",
+            webpath: "http://192.168.1.3:8000/file/monroe.institute.explorer.series.1/Explorer.31.-.Entities.Energy.Streams.and.Information.Services.mp3",
+            type: "file"
+        }, {
+            name: "folder1",
+            type: "folder",
+            ext: "",
+            webpath: ""
+        }]
+    }
+
+    constructor() {
+        super()
+        for (let i=0; i<20; i++)
+            this.config.entries.push({name: `test ${i}`, ext: "mp3", type: "file", webpath: `http://localhost:8000/${i}.mp3`})
+    }
+
+    render() {
+        console.log("config", this.config)
+        return html`
+            <header>
+                <audio-header .title=${this.config.title}></audio-header>
+            </header>
+            
+            <main>
+                <audio-playlist .entries=${this.config.entries}></audio-playlist>
+            </main>
+            
+            
+            <footer>
+                <audio-player></audio-player>
+            </footer>
+            
+        `
+    }
 }
-
-// let entries: FileOrDir[] = []
-
-// export const setEntries = (ent: FileOrDir[]) => {
-//     entries = ent
-//     console.log(ent)
-// }

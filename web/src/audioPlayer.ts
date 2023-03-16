@@ -62,6 +62,7 @@ export class AudioPlayer extends LitElement {
             this.url = file.webpath
             this.label = file.name
             this.ext = file.ext
+            this.playingState == "stopped"
         })
     }
 

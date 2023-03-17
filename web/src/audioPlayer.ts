@@ -163,6 +163,7 @@ export class AudioPlayer extends LitElement {
                 <div class="section">
                     <duration-viewer .duration=${this.currentTime}></duration-viewer>
                     <slider-bar .duration=${this.duration}
+                        .current=${this.currentTime}
                         @change=${this.seek}>
                     </slider-bar>
                     <duration-viewer .duration=${this.duration}></duration-viewer>

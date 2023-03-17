@@ -1,15 +1,15 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     background: var(--primary-background);
     color: white;
     margin: 0;
+    padding: 0;
     height: 100svh;
     width: 100svw;
     max-width: 100svw;
     font-family: monospace;
-}
-* {
-    box-sizing: border-box;
-}
-a, a:visited {
-    color: white;
+    overflow: hidden;
 }

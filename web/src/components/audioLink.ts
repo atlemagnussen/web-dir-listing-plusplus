@@ -9,12 +9,17 @@ export class AudioLink extends LitElement {
             display: inline-flex;
             justify-content: left;
             max-width: 100%;
-            color: var(--link-color);
+            color: var(--link-text);
+        }
+        * {
+            box-sizing: border-box;
         }
         label {
             cursor: pointer;
-            /* overflow: hidden;
-            text-overflow: ellipsis; */
+            width: 100%;
+            /* word-wrap: break-word; */
+            overflow: hidden;
+            text-overflow: ellipsis;
         }        
         
     `

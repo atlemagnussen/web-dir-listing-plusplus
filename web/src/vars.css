@@ -2,12 +2,26 @@
     --default-width: 1024px;
     --mobile-width: 640px;
 
-    --headline-color: rgb(157, 9, 255);
+    
     --link-color: rgb(240, 130, 20);
     --winamp-green: #3bfb0b;
     --filetype-color: #fbff00;
 
-    --primary-background: #444;
-    --third-background: #333;
+    --primary-background: #222;
     --secondary-background: #111;
+
+    --purple: rgb(198, 9, 255);
+    --magenta: rgb(255, 0, 255);
+    --magenta-dark: rgb(139, 0, 139);
+
+    --cyan: rgb(0, 255, 255);
+    --cyan-dark: rgb(0, 139, 139);
+
+    --cardinal: rgb(196, 30, 58);
+    --cardinal-blue: rgb(196, 30, 90);
+    --cardinal-hover: rgb(196, 30, 90, 0.3);
+
+
+    --headline-color: var(--cardinal);
+    --link-text: var(--magenta);
 }

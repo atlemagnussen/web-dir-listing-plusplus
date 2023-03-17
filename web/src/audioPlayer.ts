@@ -3,6 +3,7 @@ import { customElement, property, state } from "lit/decorators.js"
 import { ref, Ref, createRef } from "lit/directives/ref.js"
 import {Subscription} from "rxjs"
 import { playingFile } from "./audioState"
+import { SliderBar } from "./components/sliderBar"
 
 type PlayingState = "playing" | "paused" | "stopped"
 
@@ -14,19 +15,28 @@ export class AudioPlayer extends LitElement {
             justify-content: center;
             width: 100%;
             max-width: 100%;
-            height: 4rem;
+            height: 6rem;
             overflow: none;
             --button-height: 3rem;
             --button-width: 3rem;
         }
+        * {
+            box-sizing: border-box;
+        }
         .wrapper {
             padding: 0.5rem;
+            gap: 0.5rem;
             display: flex;
-            flex-direction: row;
-            gap: 1rem;
+            flex-direction: column;
             width: var(--default-width);
             max-width: var(--default-width);
             border: 1px solid var(--link-color);
+        }
+        .section {
+            display: flex;
+            flex-direction: row;
+            gap: 1rem;
+            align-items: center;
         }
         @media only screen and (max-width: 1024px) {
             .wrapper {
@@ -51,6 +61,9 @@ export class AudioPlayer extends LitElement {
             color: var(--filetype-color);
             border: 1px solid var(--filetype-color);
             padding: 0.1rem;
+        }
+        slider-bar {
+            flex: 1 1 auto;
         }
     `
     sub: Subscription | null = null
@@ -114,6 +127,22 @@ export class AudioPlayer extends LitElement {
     setState(state: PlayingState) {
         this.playingState = state
     }
+    displayBufferedAmount = () => {
+        if (!this.audioRef.value)
+            return
+        const audio = this.audioRef.value
+        const bufferedAmount = Math.floor(audio.buffered.end(audio.buffered.length - 1))
+        console.log("bufferedAmount", bufferedAmount)
+        //audioPlayerContainer.style.setProperty('--buffered-width', `${(bufferedAmount / seekSlider.max) * 100}%`);
+    }
+    seek(e: Event) {
+        if (!this.audioRef.value)
+            return
+        const audio = this.audioRef.value
+        const slider = e.target as SliderBar
+        audio.currentTime = slider.value
+        this.currentTime = slider.value
+    }
     render() {
         let label = this.label
         if (!this.url || !this.ext)
@@ -131,22 +160,28 @@ export class AudioPlayer extends LitElement {
                 @timeupdate=${this.currentTimeUpdate}>
             </audio>
             <div class="wrapper">
-                <div class="controls">
-                    ${this.playingState == "stopped" || this.playingState == "paused" ? 
-                        html`<play-button @click=${this.togglePlay}></play-button>` : 
-                        html`<pause-button @click=${this.togglePlay}></pause-button>`
-                    }
-                    
+                <div class="section">
+                    <duration-viewer .duration=${this.currentTime}></duration-viewer>
+                    <slider-bar .duration=${this.duration}
+                        @change=${this.seek}>
+                    </slider-bar>
+                    <duration-viewer .duration=${this.duration}></duration-viewer>
                 </div>
-                <div class="information">
-                    <scrolling-text>${label}</scrolling-text>
-                    <div class="time">
-                        <duration-viewer .duration=${this.currentTime}></duration-viewer>
-                        <span>/</span>
-                        <duration-viewer .duration=${this.duration}></duration-viewer>
-                        ${this.ext ? html`
-                            <label class="filetype">${this.ext}</label>
-                        ` : ""}
+                <div class="section">
+                <div class="controls">
+                        ${this.playingState == "stopped" || this.playingState == "paused" ? 
+                            html`<play-button @click=${this.togglePlay}></play-button>` : 
+                            html`<pause-button @click=${this.togglePlay}></pause-button>`
+                        }
+                    </div>
+                    <div class="information">
+                        <scrolling-text>${label}</scrolling-text>
+                        <div class="time">
+                            
+                            ${this.ext ? html`
+                                <label class="filetype">${this.ext}</label>
+                            ` : ""}
+                        </div>
                     </div>
                 </div>
             </div>

@@ -5,7 +5,6 @@ import { ConfigFolder } from "@common/types"
 import "./audioHeader"
 import "./audioPlayer"
 import "./audioPlayList"
-import "./audioLink"
 import "./buttons"
 import "./components"
 import "./vars.css"
@@ -29,16 +28,16 @@ export class AudioApp extends LitElement {
             box-sizing: border-box;
         }
         header {
-            background: var(--third-background);
+            background: var(--secondary-background);
             grid-area: header;
             padding: 0.2rem;
         }
         
         main {
-            overflow: auto;
+            overflow-x: hidden;
+            overflow-y: auto;
             grid-area: main;
-            max-width: 100vw;
-            padding: 15px 5px 10px 5px;
+            padding: 0.5rem;
             display: block;
         }
         
@@ -48,16 +47,13 @@ export class AudioApp extends LitElement {
             background: var(--secondary-background);
             padding: 0.2rem;
         }
-        a, a:visited {
-            color: white;
-        }
     `
 
     @property({attribute: false})
     config: ConfigFolder = {
         title: "no title",
         entries: [{
-            name: "Explorer 31 - Entities.Energy Streams and Information Services",
+            name: "Explorer.31.-.Entities.Energy.Streams.and.Information.Services",
             ext: "mp3",
             webpath: "http://192.168.1.3:8000/file/monroe.institute.explorer.series.1/Explorer.31.-.Entities.Energy.Streams.and.Information.Services.mp3",
             type: "file"
@@ -71,7 +67,7 @@ export class AudioApp extends LitElement {
 
     constructor() {
         super()
-        for (let i=0; i<20; i++)
+        for (let i=0; i<30; i++)
             this.config.entries.push({name: `test ${i}`, ext: "mp3", type: "file", webpath: `http://localhost:8000/${i}.mp3`})
     }
 

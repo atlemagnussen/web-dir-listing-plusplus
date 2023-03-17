@@ -1,5 +1,7 @@
 {
     "compilerOptions": {
+        "incremental": true,
+        "target": "ESNext",
         "module": "ESNext",
         "lib": [
             "ES2020",

@@ -20,10 +20,10 @@ export class SliderBar extends LitElement {
     duration = 0
 
     _value = 0
+    @state()
     set current(value) {
         this._value = Math.floor(value)
     }
-    @state()
     get current() {
         return this._value
     }

@@ -33,16 +33,30 @@ export class SliderBar extends LitElement {
         return this._value
     }
 
+    getValueFromInput(input: HTMLInputElement) {
+        const valStr = input.value
+        const valNum = parseFloat(valStr)
+        return valNum
+    }
     changeEvent(e: Event) {
-        const changedInternalValue = (e.target as HTMLInputElement).value
-        const value = parseFloat(changedInternalValue)
+        const value = this.getValueFromInput(e.target as HTMLInputElement)
+        
         this.current = value
-        console.log("changedInternalValue", changedInternalValue)
         const changeEvent = new Event("change", {
             bubbles: true,
             composed: true
         })
         this.dispatchEvent(changeEvent)
+    }
+    inputEvent(e: Event) {
+        const value = this.getValueFromInput(e.target as HTMLInputElement)
+
+        const tempEvent = new CustomEvent("temporary-change", {
+            detail: value,
+            bubbles: true,
+            composed: true
+        })
+        this.dispatchEvent(tempEvent)
     }
     render() {
         let duration = this.duration
@@ -53,7 +67,8 @@ export class SliderBar extends LitElement {
             <input type="range" min="0" 
                 max="${duration}"
                 value=${this.current}
-                @change=${this.changeEvent}>
+                @change=${this.changeEvent}
+                @input=${this.inputEvent}>
         `
     }
 }

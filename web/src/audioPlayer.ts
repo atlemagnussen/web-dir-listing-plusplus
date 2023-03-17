@@ -127,6 +127,10 @@ export class AudioPlayer extends LitElement {
     setState(state: PlayingState) {
         this.playingState = state
     }
+    tempTimeChange(e: CustomEvent) {
+        const value = e.detail as number
+        this.currentTime = value
+    }
     displayBufferedAmount = () => {
         if (!this.audioRef.value)
             return
@@ -164,7 +168,8 @@ export class AudioPlayer extends LitElement {
                     <duration-viewer .duration=${this.currentTime}></duration-viewer>
                     <slider-bar .duration=${this.duration}
                         .current=${this.currentTime}
-                        @change=${this.seek}>
+                        @change=${this.seek}
+                        @temporary-change=${this.tempTimeChange}>
                     </slider-bar>
                     <duration-viewer .duration=${this.duration}></duration-viewer>
                 </div>

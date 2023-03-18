@@ -61,9 +61,20 @@ export class AudioPlayer extends LitElement {
             color: var(--filetype-color);
             border: 1px solid var(--filetype-color);
             padding: 0.1rem;
+            margin: 0;
         }
         slider-bar {
             flex: 1 1 auto;
+        }
+        .fileinfo {
+            display: inline-flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 1rem;
+        }
+        download-button {
+            --button-height: 1.3rem;
+            --button-width: 1.3rem;
         }
     `
     sub: Subscription | null = null
@@ -103,6 +114,9 @@ export class AudioPlayer extends LitElement {
     @state()
     playingState: PlayingState = "stopped"
 
+    get filename() {
+        return `${this.label}.${this.ext}`
+    }
     togglePlay() {
         if (!this.audioRef.value)
             return
@@ -182,10 +196,12 @@ export class AudioPlayer extends LitElement {
                     </div>
                     <div class="information">
                         <scrolling-text>${label}</scrolling-text>
-                        <div class="time">
-                            
+                        <div class="fileinfo">
                             ${this.ext ? html`
                                 <label class="filetype">${this.ext}</label>
+                                <a href="${this.url}" download filename="${this.filename}">
+                                    <download-button></download-button>
+                                </a>
                             ` : ""}
                         </div>
                     </div>

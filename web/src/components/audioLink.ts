@@ -6,15 +6,15 @@ import { customElement, property } from "lit/decorators.js"
 export class AudioLink extends LitElement {
     static styles = css`
         :host {
-            display: inline-flex;
-            justify-content: left;
+            display: block;
+            width: 100%;
             max-width: 100%;
             color: var(--link-text);
         }
         * {
             box-sizing: border-box;
         }
-        label {
+        span {
             cursor: pointer;
             width: 100%;
             /* word-wrap: break-word; */
@@ -29,7 +29,7 @@ export class AudioLink extends LitElement {
 
     render() {
         return html`
-            <label>${this.name}</label>
+            <span title="${this.name}">${this.name}</span>
         `
     }
 

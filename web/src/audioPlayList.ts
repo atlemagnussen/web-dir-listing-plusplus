@@ -20,6 +20,18 @@ export class AudioPlayList extends LitElement {
         * {
             box-sizing: border-box;
         }
+        .filelink {
+            max-width: 100%;
+            width: 100%;
+            padding: 0;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        audio-link {
+            flex: 1 1 auto;
+        }
         @media only screen and (max-width: 1024px) {
             .wrapper {
                 width: 100%;
@@ -57,11 +69,13 @@ export class AudioPlayList extends LitElement {
         return html`
             ${this.entries.map(e => {
                 if (e.type == "folder")
-                    return html`<p>
+                    return html`
+                    <p>
                         <a href="${e.name}/">${e.name}</a>
                     </p>`
                 
-                return html`<p>
+                return html`
+                <p class="filelink">
                     <audio-link @click=${() => this.play(e)} .name=${e.name}></audio-link>
                     <file-ext-label ext="${e.ext}"></file-ext-label>
                 </p>

@@ -15,7 +15,7 @@ export class AudioPlayer extends LitElement {
             justify-content: center;
             width: 100%;
             max-width: 100%;
-            height: 6rem;
+            height: 7rem;
             overflow: none;
             --button-height: 3rem;
             --button-width: 3rem;
@@ -57,12 +57,7 @@ export class AudioPlayer extends LitElement {
             overflow: hidden;
             text-overflow: ellipsis;
         }
-        label.filetype {
-            color: var(--filetype-color);
-            border: 1px solid var(--filetype-color);
-            padding: 0.1rem;
-            margin: 0;
-        }
+        
         slider-bar {
             flex: 1 1 auto;
         }
@@ -198,7 +193,7 @@ export class AudioPlayer extends LitElement {
                         <scrolling-text>${label}</scrolling-text>
                         <div class="fileinfo">
                             ${this.ext ? html`
-                                <label class="filetype">${this.ext}</label>
+                                <file-ext-label ext="${this.ext}"></file-ext-label>
                                 <a href="${this.url}" download filename="${this.filename}">
                                     <download-button></download-button>
                                 </a>

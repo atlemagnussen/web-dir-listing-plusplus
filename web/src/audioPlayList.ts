@@ -10,6 +10,7 @@ export class AudioPlayList extends LitElement {
             display: flex;
             justify-content: center;
             max-width: 100%;
+            
         }
         .wrapper {
             display: block;
@@ -27,6 +28,10 @@ export class AudioPlayList extends LitElement {
         }
         a, a:visited {
             color: white;
+        }
+        file-ext-label {
+            --filetype-color: var(--yellow-dark);
+            font-size: 0.7rem;
         }
     `
 
@@ -58,6 +63,7 @@ export class AudioPlayList extends LitElement {
                 
                 return html`<p>
                     <audio-link @click=${() => this.play(e)} .name=${e.name}></audio-link>
+                    <file-ext-label ext="${e.ext}"></file-ext-label>
                 </p>
                 `
             })}

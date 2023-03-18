@@ -12,6 +12,7 @@ export class AudioHeader extends LitElement {
         .wrapper {
             display: flex;
             flex-direction: row;
+            justify-content: center;
             gap: 1rem;
             width: var(--default-width);
             max-width: var(--default-width);

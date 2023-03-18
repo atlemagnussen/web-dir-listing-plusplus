@@ -1,7 +1,10 @@
+html {
+    font-family: monospace;
+    font-size: 14px;
+}
 * {
     box-sizing: border-box;
 }
-
 body {
     background: var(--primary-background);
     color: white;
@@ -10,6 +13,5 @@ body {
     height: 100svh;
     width: 100svw;
     max-width: 100svw;
-    font-family: monospace;
     overflow: hidden;
 }

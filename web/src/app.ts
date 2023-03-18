@@ -47,6 +47,18 @@ export class AudioApp extends LitElement {
             background: var(--secondary-background);
             padding: 0.2rem;
         }
+        main::-webkit-scrollbar {
+            width: 1em;
+        }
+        
+        main::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        }
+        
+        main::-webkit-scrollbar-thumb {
+            background-color: var(--magenta-dark);
+            outline: 1px solid slategrey;
+        }
     `
 
     @property({attribute: false})

@@ -9,12 +9,12 @@ export class AudioHeader extends LitElement {
             justify-content: center;
             max-width: 100%;
             width: 100%;
-            overflow: hidden;
+            overflow: scroll;
         }
         .wrapper {
-            max-width: 100%;
+            /* max-width: 100%;
             width: 100%;
-            overflow: hidden;
+            overflow: hidden; */
             display: flex;
             flex-direction: row;
             justify-content: center;
@@ -50,7 +50,8 @@ export class AudioHeader extends LitElement {
         
         return html`
             <div class="wrapper">
-                <audio-link .name="${this.title}"></audio-link>
+                <h1>${this.title}</h1>
+                <!-- <audio-link .name="${this.title}"></audio-link> -->
             </div>
         `
     }

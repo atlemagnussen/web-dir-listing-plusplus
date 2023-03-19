@@ -31,6 +31,8 @@ export class AudioApp extends LitElement {
             background: var(--secondary-background);
             grid-area: header;
             padding: 0.2rem;
+            display: block;
+            overflow: hidden;
         }
         
         main {

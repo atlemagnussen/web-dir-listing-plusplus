@@ -10,7 +10,7 @@ export class AudioPlayList extends LitElement {
             display: flex;
             justify-content: center;
             max-width: 100%;
-            
+            width: 100%;
         }
         .wrapper {
             display: block;

@@ -7,9 +7,14 @@ export class AudioHeader extends LitElement {
         :host {
             display: flex;
             justify-content: center;
+            max-width: 100%;
             width: 100%;
+            overflow: hidden;
         }
         .wrapper {
+            max-width: 100%;
+            width: 100%;
+            overflow: hidden;
             display: flex;
             flex-direction: row;
             justify-content: center;
@@ -18,8 +23,9 @@ export class AudioHeader extends LitElement {
             max-width: var(--default-width);
         }
         h1 {
+            flex: 1 1 auto;
             color: var(--headline-color);
-            font-size: 1.6em;
+            font-size: 1rem;
             margin-block-start: 0;
             margin-block-end: 0;
         }

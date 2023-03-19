@@ -1,10 +1,11 @@
 {
-  "name": "audioplayer",
-  "version": "1.0.0",
-  "description": "atle audio¨",
-  "main": "index.js",
+  "name": "audioplaye",
+  "version": "0.1.9",
+  "description": "atle audi",
   "scripts": {
-    "serve": "serve web"
+    "build:web": "cd web && npm run build && cd ..",
+    "server": "cd server && npm run prod:ts && cd ..",
+    "prod": "npm run build:web && npm run server"
   },
   "keywords": [
     "web",

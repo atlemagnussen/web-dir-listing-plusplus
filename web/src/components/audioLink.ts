@@ -7,21 +7,13 @@ export class AudioLink extends LitElement {
     static styles = css`
         :host {
             display: block;
-            width: 100%;
-            max-width: 100%;
             color: var(--link-text);
-        }
-        * {
-            box-sizing: border-box;
-        }
-        span {
-            cursor: pointer;
             width: 100%;
-            /* word-wrap: break-word; */
+            white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-        }        
-        
+            min-width: 0;
+        }
     `
 
     @property({attribute: false})
@@ -32,5 +24,4 @@ export class AudioLink extends LitElement {
             <span title="${this.name}">${this.name}</span>
         `
     }
-
 }

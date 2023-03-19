@@ -65,7 +65,7 @@ export class AudioApp extends LitElement {
     config: ConfigFolder = {
         title: "no title",
         entries: [{
-            name: "Explorer.31.-.Entities.Energy.Streams.and.Information.Services",
+            name: "Explorer.31.-.Entities.Energy.Streams.and.Information",
             ext: "mp3",
             webpath: "http://192.168.1.3:8000/file/monroe.institute.explorer.series.1/Explorer.31.-.Entities.Energy.Streams.and.Information.Services.mp3",
             type: "file"

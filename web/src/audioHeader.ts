@@ -9,7 +9,8 @@ export class AudioHeader extends LitElement {
             justify-content: center;
             max-width: 100%;
             width: 100%;
-            overflow: scroll;
+            overflow-y: hidden;
+            overflow-x: auto;
         }
         .wrapper {
             /* max-width: 100%;

@@ -68,7 +68,7 @@ export class AudioPlayList extends LitElement {
         }
         return html`
             ${this.entries.map(e => {
-                if (e.type == "folder")
+                if (e.type == "folder" || e.type == "root")
                     return html`
                     <p>
                         <a href="${e.name}/">${e.name}</a>

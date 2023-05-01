@@ -19,6 +19,7 @@ const readDir = (dir: string) => {
     const entries = fs.readdirSync(fullDirPath)
 
     const entriesTyped = entries.map(entry => {
+        console.log("entry", entry)
         const fullPath = path.join(fullDirPath, entry)
         let name = entry
         const stat = fs.statSync(fullPath)
@@ -33,7 +34,7 @@ const readDir = (dir: string) => {
             
         return { name, type, ext, path: webpath }
     }) as FileOrDir[]
-
+    console.log("entriesTyped", entriesTyped)
     return entriesTyped
 }
 

@@ -14,7 +14,7 @@ console.log("libdirs", config.libPaths)
 app.use('/static', express.static(web))
 
 app.get("/file/*", (req, res) => {
-    let filePath = req.path
+    let filePath = decodeURI(req.path)
     console.log("requested file path", filePath)
     try {
         return serveStream(req, res, filePath)
@@ -25,7 +25,7 @@ app.get("/file/*", (req, res) => {
 })
 
 app.get('*', (req, res) => {
-    let path = req.path
+    let path = decodeURI(req.path)
     console.log("path*", path)
     const html = generateHtmlFromDir(path)
     res.send(html)

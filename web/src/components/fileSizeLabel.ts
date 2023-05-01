@@ -1,8 +1,8 @@
 import { LitElement, css, html } from "lit"
 import { customElement, property } from "lit/decorators.js"
 
-@customElement('file-ext-label')
-export class FileExtLabel extends LitElement {
+@customElement('file-size-label')
+export class FileSizeLabel extends LitElement {
     static styles = css`
         :host {
             display: inline-block;
@@ -22,6 +22,12 @@ export class FileExtLabel extends LitElement {
         if (this.size < 512)
             return `${this.size} b`
         
+        const kb = 1024
+        const mb = 1024
+        if (this.size < (mb))
+            return `${this.size/kb} kb`
+        
+        return `${this.size/mb} mb`
     }
 
     render() {

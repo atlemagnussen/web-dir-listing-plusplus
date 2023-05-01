@@ -77,6 +77,7 @@ export class AudioPlayList extends LitElement {
                 return html`
                 <p class="filelink">
                     <audio-link @click=${() => this.play(e)} .name=${e.name}></audio-link>
+                    <file-size-label size=${e.size}></file-size-label>
                     <file-ext-label ext="${e.ext}"></file-ext-label>
                 </p>
                 `

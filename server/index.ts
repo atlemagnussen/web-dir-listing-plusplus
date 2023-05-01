@@ -9,7 +9,7 @@ const app = express()
 const rootFolder = __dirname
 console.log("rootFolder", rootFolder)
 const web = path.resolve("..", "web")
-console.log("libdir", config.libPath)
+console.log("libdirs", config.libPaths)
 
 app.use('/static', express.static(web))
 
@@ -31,7 +31,7 @@ app.get('*', (req, res) => {
     const html = generateHtmlFromDir(path)
     res.send(html)
 })
-if (!config.libPath)
+if (!config.libPaths)
     throw Error("missing libpath!!")
 
 let port = config.port ? config.port : 5000

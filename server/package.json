@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
       "start": "cross-env NODE_ENV=local ts-node index.ts",
-      "test": "ts-node readLibDir.ts",
+      "test": "cross-env NODE_ENV=local ts-node test.ts",
       "build": "tsc",
       "prod": "cross-env NODE_ENV=prod node ./dist/index.js",
       "prod:ts": "cross-env NODE_ENV=prod ts-node index.ts"

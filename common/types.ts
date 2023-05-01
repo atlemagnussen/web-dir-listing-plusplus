@@ -1,11 +1,11 @@
 
-export type FileEntryType = "file" | "folder"
+export type FileEntryType = "file" | "folder" | "root"
 
 export interface FileOrDir {
     type: FileEntryType
     name: string
     ext: string
-    webpath: string
+    path: string
 }
 
 export interface ConfigFolder {

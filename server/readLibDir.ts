@@ -8,7 +8,17 @@ const htmlFilePath = path.join(rootFolder, "index.html")
 
 const readDir = (dir: string) => {
 
-    const fullDirPath = path.join(config.libPath, dir)
+    const pathSplit = dir.split("/")
+
+    if (pathSplit.length == 0)
+        return []
+
+    const root = pathSplit.shift()
+    const rootDir = config.libPaths[root!]
+
+    const restOfPath = pathSplit.join("/")
+
+    const fullDirPath = path.join(rootDir, restOfPath)
     console.log("fullDirPath", fullDirPath)
     const entries = fs.readdirSync(fullDirPath)
 
@@ -25,7 +35,7 @@ const readDir = (dir: string) => {
             name = entry.replace("."+ext, "")
         }
             
-        return { name, type, ext, webpath }
+        return { name, type, ext, path: webpath }
     }) as FileOrDir[]
 
     return entriesTyped
@@ -33,7 +43,7 @@ const readDir = (dir: string) => {
 
 const getConfigForDir = (dir:string) => {
     const entries = readDir(dir)
-    const title = dir == "/" ? "Audio lib" : dir
+    const title = dir == "/" ?  : dir
     const config: ConfigFolder = {
         title,
         entries
@@ -41,11 +51,33 @@ const getConfigForDir = (dir:string) => {
     return config
 }
 
+const getConfigRoot = (): ConfigFolder => {
+
+    const entries: FileOrDir[] = Object.keys(config.libPaths).map(l => {
+        const path = config.libPaths[l]
+        return {
+            type: "root",
+            name: l,
+            path,
+            ext: ""
+        }
+    })
+
+    return {
+        title: "Audio lib",
+        entries
+    }
+}
+
 export const generateHtmlFromDir = (dir: string) => {
     let html = fs.readFileSync(htmlFilePath, 'utf8')
 
-    // const htmlToInject = getHtmlFromDir(dir)
-    const config = getConfigForDir(dir)
+    let config: ConfigFolder
+    if (!dir || dir == "/" || dir == "")
+        config = getConfigRoot()
+    else
+        config = getConfigForDir(dir)
+
     const confStr = `const config = ${JSON.stringify(config)};`
     const jsToInject = `${confStr}\naudioApp.config = config;\n`
     //console.log(jsonToInject)

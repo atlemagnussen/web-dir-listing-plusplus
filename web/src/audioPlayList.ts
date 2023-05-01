@@ -45,6 +45,10 @@ export class AudioPlayList extends LitElement {
             --filetype-color: var(--yellow-dark);
             font-size: 0.7rem;
         }
+        file-size-label {
+            --filetype-color: var(--yellow-dark);
+            font-size: 0.9rem;
+        }
     `
 
     @property({attribute: false})

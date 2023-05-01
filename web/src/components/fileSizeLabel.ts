@@ -20,14 +20,14 @@ export class FileSizeLabel extends LitElement {
 
     formatSize() {
         if (this.size < 512)
-            return `${this.size} b`
+            return `${this.size}b`
         
         const kb = 1024
         const mb = 1024
         if (this.size < (mb))
-            return `${this.size/kb} kb`
+            return `${(this.size/kb).toFixed(1)}kb`
         
-        return `${this.size/mb} mb`
+        return `${(this.size/mb).toFixed(1)}mb`
     }
 
     render() {

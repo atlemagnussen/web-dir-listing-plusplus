@@ -58,6 +58,7 @@ const getConfigRoot = (): ConfigFolder => {
             type: "root",
             name: l,
             path: l,
+            size: 0,
             ext: ""
         }
     })

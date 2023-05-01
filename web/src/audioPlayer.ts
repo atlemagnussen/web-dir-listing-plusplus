@@ -6,7 +6,6 @@ import { playingFile } from "./audioState"
 import { SliderBar } from "./components/sliderBar"
 
 type PlayingState = "playing" | "paused" | "stopped"
-const playableExts = ["mp3", "m4b", "flac"]
 
 @customElement('audio-player')
 export class AudioPlayer extends LitElement {
@@ -161,8 +160,6 @@ export class AudioPlayer extends LitElement {
         let label = this.label
         if (!this.url || !this.ext)
             label = "Not playing anything"
-        
-        const isPlayable = playableExts.includes(this.ext)
 
         return html`
             <audio ${ref(this.audioRef)}

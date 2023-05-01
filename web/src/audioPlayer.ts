@@ -78,7 +78,7 @@ export class AudioPlayer extends LitElement {
     connectedCallback() {
         super.connectedCallback()
         this.sub = playingFile.subscribe(file => {
-            this.url = file.webpath
+            this.url = file.path
             this.label = file.name
             this.ext = file.ext
             this.playingState == "stopped"

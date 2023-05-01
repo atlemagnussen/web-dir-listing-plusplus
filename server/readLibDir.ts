@@ -1,6 +1,7 @@
 import fs from "fs"
 import path from "path"
 import config from "./config"
+import { splitDir } from "./common"
 import { FileOrDir, FileEntryType, ConfigFolder } from "@common/types"
 
 const rootFolder = __dirname
@@ -8,15 +9,10 @@ const htmlFilePath = path.join(rootFolder, "index.html")
 
 const readDir = (dir: string) => {
 
-    const pathSplit = dir.split("/")
-
-    if (pathSplit.length == 0)
+    const split = splitDir(dir)
+    if (!split)
         return []
-
-    const root = pathSplit.shift()
-    const rootDir = config.libPaths[root!]
-
-    const restOfPath = pathSplit.join("/")
+    const { root, rootDir, restOfPath } = split
 
     const fullDirPath = path.join(rootDir, restOfPath)
     console.log("fullDirPath", fullDirPath)
@@ -31,7 +27,7 @@ const readDir = (dir: string) => {
         let webpath = ""
         if (type == "file") {
             ext = path.extname(fullPath).replace(".", "")
-            webpath = fullPath.replace(config.libPath, "/file")
+            webpath = fullPath.replace(rootDir, "/file/" + root)
             name = entry.replace("."+ext, "")
         }
             
@@ -43,7 +39,7 @@ const readDir = (dir: string) => {
 
 const getConfigForDir = (dir:string) => {
     const entries = readDir(dir)
-    const title = dir == "/" ?  : dir
+    const title = dir
     const config: ConfigFolder = {
         title,
         entries
@@ -54,11 +50,11 @@ const getConfigForDir = (dir:string) => {
 const getConfigRoot = (): ConfigFolder => {
 
     const entries: FileOrDir[] = Object.keys(config.libPaths).map(l => {
-        const path = config.libPaths[l]
+        //const path = config.libPaths[l]
         return {
             type: "root",
             name: l,
-            path,
+            path: l,
             ext: ""
         }
     })

@@ -69,20 +69,20 @@ export class AudioApp extends LitElement {
     entries: [{
       name: "Explorer.31.-.Entities.Energy.Streams.and.Information.xxx.yyy.zzz.xxx.yyy.zzz.xxx.yyy.zzz.xxx.yyy.zzz.xxx.yyy.zzz",
       ext: "mp3",
-      webpath: "http://192.168.1.3:8000/file/monroe.institute.explorer.series.1/Explorer.31.-.Entities.Energy.Streams.and.Information.Services.mp3",
+      path: "http://192.168.1.3:8000/file/monroe.institute.explorer.series.1/Explorer.31.-.Entities.Energy.Streams.and.Information.Services.mp3",
       type: "file"
     }, {
       name: "folder1",
       type: "folder",
       ext: "",
-      webpath: ""
+      path: ""
     }]
   }
 
   constructor() {
     super()
     for (let i = 0; i < 30; i++)
-      this.config.entries.push({ name: `test ${i}`, ext: "mp3", type: "file", webpath: `http://localhost:8000/${i}.mp3` })
+      this.config.entries.push({ name: `test ${i}`, ext: "mp3", type: "file", path: `http://localhost:8000/${i}.mp3` })
   }
 
   render() {

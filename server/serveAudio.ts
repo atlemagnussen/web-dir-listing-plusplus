@@ -1,8 +1,8 @@
 import fs from "fs"
 import path from "path"
 import mime from "mime-types"
-import config from "./config"
 import type { Request, Response } from "express"
+import { splitDir } from "./common"
 
 
 const getRangeStream = (res: Response, filePath: string, mimeType: string, size: number, range: string) => {
@@ -43,7 +43,14 @@ const getStream = (res: Response, filePath: string, mimeType: string, size: numb
  
 export const serveStream = (req: Request, res: Response, filePath: string) => {
     
-    const fullPath = path.join(config.libPath, filePath)
+    filePath = filePath.replace("/file/", "")
+
+    const split = splitDir(filePath)
+    if (!split)
+        return []
+    const { root, rootDir, restOfPath } = split
+
+    const fullPath = path.join(rootDir, restOfPath)
     console.log("file fullpath", fullPath)
 
     const stat = fs.statSync(fullPath)

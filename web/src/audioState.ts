@@ -1,7 +1,7 @@
 import { FileOrDir } from "@common/types"
 import { BehaviorSubject } from "rxjs"
 
-const PlayingSubject = new BehaviorSubject<FileOrDir>({name: "", ext: "", webpath: "", type: "file"})
+const PlayingSubject = new BehaviorSubject<FileOrDir>({name: "", ext: "", path: "", type: "file"})
 
 export const playingFile = PlayingSubject.asObservable()
 

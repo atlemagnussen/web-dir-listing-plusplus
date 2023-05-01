@@ -16,7 +16,6 @@ app.use('/static', express.static(web))
 app.get("/file/*", (req, res) => {
     let filePath = req.path
     console.log("requested file path", filePath)
-    filePath = filePath.replace("/file/", "")
     try {
         return serveStream(req, res, filePath)
     } catch (err) {

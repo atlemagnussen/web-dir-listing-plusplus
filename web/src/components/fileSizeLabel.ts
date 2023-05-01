@@ -16,13 +16,20 @@ export class FileExtLabel extends LitElement {
         }
     `
     @property({attribute: true})
-    ext = ""
+    size = 0
+
+    formatSize() {
+        if (this.size < 512)
+            return `${this.size} b`
+        
+    }
+
     render() {
-        if (!this.ext)
-            return html`<label></label>`
+        if (!this.size)
+            return html`<label>0</label>`
 
         return html`
-            <label class="filetype">${this.ext}</label>
+            <label class="filetype">${this.formatSize()}</label>
         `
     }
 }

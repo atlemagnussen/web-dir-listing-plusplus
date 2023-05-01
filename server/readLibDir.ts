@@ -26,13 +26,15 @@ const readDir = (dir: string) => {
         const type: FileEntryType = stat.isDirectory() ? "folder" : "file"
         let ext = ""
         let webpath = ""
+        let size = 0
         if (type == "file") {
             ext = path.extname(fullPath).replace(".", "")
+            size = stat.size
             webpath = fullPath.replace(rootDir, "/file/" + root)
             name = entry.replace("."+ext, "")
         }
             
-        return { name, type, ext, path: webpath }
+        return { name, type, ext, size, path: webpath }
     }) as FileOrDir[]
     console.log("entriesTyped", entriesTyped)
     return entriesTyped

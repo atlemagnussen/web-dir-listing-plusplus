@@ -1,6 +1,8 @@
 import { LitElement, css, html } from "lit"
 import { customElement, property } from "lit/decorators.js"
 
+import "@material/mwc-icon"
+
 @customElement('audio-header')
 export class AudioHeader extends LitElement {
     static styles = css`
@@ -51,6 +53,9 @@ export class AudioHeader extends LitElement {
         
         return html`
             <div class="wrapper">
+                <a href="/">
+                    <mwc-icon>home</mwc-icon>
+                </a>
                 <h1>${this.title}</h1>
                 <!-- <audio-link .name="${this.title}"></audio-link> -->
             </div>

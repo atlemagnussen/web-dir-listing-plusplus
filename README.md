@@ -16,6 +16,7 @@ LIBPATHS={"Audio": "/some/path/audio","Books": "/some/path/books"}
 ```
 
 ## run
+from this root folder
 ```sh
 npm i
 npm run prod

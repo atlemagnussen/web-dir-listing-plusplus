@@ -1,6 +1,11 @@
 import { LitElement, css, html } from "lit"
 import { customElement, property } from "lit/decorators.js"
 
+interface NamedLink {
+    name: string
+    path: string
+}
+
 @customElement('dir-header')
 export class DirHeader extends LitElement {
     static styles = css`
@@ -27,6 +32,9 @@ export class DirHeader extends LitElement {
             margin-block-start: 0;
             margin-block-end: 0;
         }
+        a {
+            color: var(--headline-color);
+        }
         audio-link {
             flex: 1 1 auto;
             color: var(--headline-color);
@@ -45,18 +53,44 @@ export class DirHeader extends LitElement {
     `
     
     @property({attribute: true})
-    title = "No title yet"
+    title = ""
     
-    
-    render() {
+    renderBreadCrumb() {
+
+        let pathSplit = location.pathname.split("/")
+        pathSplit = pathSplit.filter(p => p)
+
+        let link = "/"
+        let links = pathSplit.map(p => {
+            link = `${link}${p}/`
+            const namedLink: NamedLink = {
+                name: p,
+                path: link
+            }
+            return namedLink
+            
+        })
         
+        return html`<h1>
+            ${links.map((p) => 
+                html`<a href="${p.path}">${p.name}/</a>`
+            )}
+            </h1>
+        `
+    }
+
+    render() {
         return html`
             <div class="wrapper">
                 <a href="/">
                     <home-button></home-button>
                 </a>
-                <h1>${this.title}</h1>
-                <!-- <audio-link .name="${this.title}"></audio-link> -->
+                ${location.pathname == "/" ? 
+                    html`<h1>${this.title}</h1>` : 
+                    this.renderBreadCrumb()
+                }
+                
+                
             </div>
         `
     }

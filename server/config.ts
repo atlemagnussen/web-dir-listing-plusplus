@@ -11,6 +11,8 @@ console.log(config)
 const portStr = process.env.PORT as string
 const port = portStr ? 8000 : parseInt(portStr)
 
+const title = process.env.TITLE ? process.env.TITLE : "Dir list++"
+
 const libPathsStr = process.env.LIBPATHS as string
 let libPaths: Record<string, string> = {"Root": libPathsStr}
 if (libPathsStr) {
@@ -25,6 +27,7 @@ if (libPathsStr) {
 }
 
 export default {
+    title,
     port,
     libPaths
 }

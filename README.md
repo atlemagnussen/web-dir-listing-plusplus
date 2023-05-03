@@ -1,22 +1,22 @@
-# audio player
+# directory listing++
 
-just a nodejs express server that should traverse a lib folder of audio files and stream them in a client
+just a nodejs express app that traverses one or more lib folders and presents them ala directory listing
+files are displayed with a download link and some info, folders with a normal navigation link
+Also an audio player for audio files to listen to them directly
 
-optimally organizing them in their folder structure
+## Dependencies
+[nodejs](https://nodejs.org) minimum version 16
 
-## run
-
-### web client
-```sh
-cd web
-npm run build
+## Config
+create a file `.env.prod` in server folder:
+```
+PORT=8000
+LIBPATHS={"Audio": "/some/path/audio","Books": "/some/path/books"}
 ```
 
-### server
-create env-file `.env.prod`
+## run
 ```sh
-cd server
-npm run prod:ts
+npm run prod
 ```
 
 ## debug

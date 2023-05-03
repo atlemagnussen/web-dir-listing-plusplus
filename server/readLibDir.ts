@@ -64,7 +64,7 @@ const getConfigRoot = (): ConfigFolder => {
     })
 
     return {
-        title: "Audio lib",
+        title: config.title,
         entries
     }
 }

@@ -1,7 +1,7 @@
 {
-  "name": "audioplaye",
+  "name": "directory-listing-plus-plus",
   "version": "0.1.9",
-  "description": "atle audi",
+  "description": "directory listing app with extra features like audio player",
   "scripts": {
     "build:web": "cd web && npm run build && cd ..",
     "server": "cd server && npm run prod:ts && cd ..",

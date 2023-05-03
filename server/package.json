@@ -1,5 +1,5 @@
 {
-    "name": "audioplayer-server",
+    "name": "directory-listing-server",
     "version": "1.0.0",
     "description": "atle audio¨",
     "main": "index.js",
@@ -12,6 +12,8 @@
     },
     "keywords": [
       "express",
+      "directory",
+      "listing",
       "audio"
     ],
     "author": "atlemagnussen",

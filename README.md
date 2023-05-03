@@ -1,8 +1,8 @@
 # directory listing++
 
-just a nodejs express app that traverses one or more lib folders and presents them ala directory listing
-files are displayed with a download link and some info, folders with a normal navigation link
-Also an audio player for audio files to listen to them directly
+just a nodejs express app that traverses one or more lib folders and presents them ala directory listing  
+files are displayed with a download link and some info, folders with a normal navigation link  
+Also an audio player for audio files to listen to them directly  s
 
 ## Dependencies
 [nodejs](https://nodejs.org) minimum version 16

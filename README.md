@@ -10,12 +10,14 @@ Also an audio player for audio files to listen to them directly
 ## Config
 create a file `.env.prod` in server folder:
 ```
+TITLE=my lib
 PORT=8000
 LIBPATHS={"Audio": "/some/path/audio","Books": "/some/path/books"}
 ```
 
 ## run
 ```sh
+npm i
 npm run prod
 ```
 

@@ -45,6 +45,9 @@ export class DirHeader extends LitElement {
                 width: 100%;
                 max-width: 100%;
             }
+            h1 {
+                font-size: 1.1rem;
+            }
         }
         home-button {
             --button-height: 3rem;

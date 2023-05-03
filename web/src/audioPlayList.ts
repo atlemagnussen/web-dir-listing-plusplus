@@ -49,6 +49,10 @@ export class AudioPlayList extends LitElement {
             --filetype-color: var(--yellow-dark);
             font-size: 0.9rem;
         }
+        download-button {
+            width: 1.4rem;
+            height: 1.4rem;
+        }
     `
 
     @property({attribute: false})
@@ -83,6 +87,9 @@ export class AudioPlayList extends LitElement {
                     <audio-link @click=${() => this.play(e)} .name=${e.name}></audio-link>
                     <file-size-label size=${e.size}></file-size-label>
                     <file-ext-label ext="${e.ext}"></file-ext-label>
+                    <a href="${e.path}" download filename="${e.name}">
+                        <download-button></download-button>
+                    </a>
                 </p>
                 `
             })}

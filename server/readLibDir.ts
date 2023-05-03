@@ -79,7 +79,7 @@ export const generateHtmlFromDir = (dir: string) => {
         config = getConfigForDir(dir)
 
     const confStr = `const config = ${JSON.stringify(config)};`
-    const jsToInject = `${confStr}\naudioApp.config = config;\n`
+    const jsToInject = `${confStr}\ndirListApp.config = config;\n`
     //console.log(jsonToInject)
     
     html = html.replaceAll("<!--$TITLE$-->", config.title)

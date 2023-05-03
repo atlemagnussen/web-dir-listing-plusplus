@@ -2,8 +2,8 @@ import { LitElement, css, html } from "lit"
 import { customElement, property, state } from "lit/decorators.js"
 import { ref, Ref, createRef } from "lit/directives/ref.js"
 import {Subscription} from "rxjs"
-import { playingFile } from "./audioState"
-import { SliderBar } from "./components/sliderBar"
+import { playingFile } from "../stores/fileSelectedStore"
+import { SliderBar } from "./sliderBar"
 
 type PlayingState = "playing" | "paused" | "stopped"
 

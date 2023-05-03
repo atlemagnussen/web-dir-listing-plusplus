@@ -26,7 +26,6 @@
     "typescript": "^4.9.4"
   },
   "dependencies": {
-    "@material/mwc-icon": "^0.27.0",
     "lit": "^2.6.1",
     "rxjs": "^7.8.0",
     "vite": "^4.1.4"

@@ -1,10 +1,10 @@
 import { LitElement, css, html } from "lit"
 import { customElement, property } from "lit/decorators.js"
 import { FileOrDir } from "@common/types"
-import { setPlayingFile } from "./audioState"
+import { setPlayingFile } from "./stores/fileSelectedStore"
 
-@customElement('audio-playlist')
-export class AudioPlayList extends LitElement {
+@customElement('dir-listing')
+export class DirListing extends LitElement {
     static styles = css`
         :host {
             display: flex;
@@ -84,7 +84,7 @@ export class AudioPlayList extends LitElement {
                 
                 return html`
                 <p class="filelink">
-                    <audio-link @click=${() => this.play(e)} .name=${e.name}></audio-link>
+                    <file-link @click=${() => this.play(e)} .name=${e.name}></file-link>
                     <file-size-label size=${e.size}></file-size-label>
                     <file-ext-label ext="${e.ext}"></file-ext-label>
                     <a href="${e.path}" download filename="${e.name}">

@@ -3,8 +3,8 @@ import { customElement, property } from "lit/decorators.js"
 
 import "@material/mwc-icon"
 
-@customElement('audio-header')
-export class AudioHeader extends LitElement {
+@customElement('dir-header')
+export class DirHeader extends LitElement {
     static styles = css`
         :host {
             display: flex;
@@ -15,9 +15,6 @@ export class AudioHeader extends LitElement {
             overflow-x: auto;
         }
         .wrapper {
-            /* max-width: 100%;
-            width: 100%;
-            overflow: hidden; */
             display: flex;
             flex-direction: row;
             justify-content: center;
@@ -43,6 +40,10 @@ export class AudioHeader extends LitElement {
                 max-width: 100%;
             }
         }
+        home-button {
+            --button-height: 3rem;
+            --button-width: 3rem;
+        }
     `
     
     @property({attribute: true})
@@ -54,7 +55,7 @@ export class AudioHeader extends LitElement {
         return html`
             <div class="wrapper">
                 <a href="/">
-                    <mwc-icon>home</mwc-icon>
+                    <home-button></home-button>
                 </a>
                 <h1>${this.title}</h1>
                 <!-- <audio-link .name="${this.title}"></audio-link> -->

@@ -2,8 +2,8 @@ import { LitElement, css, html } from "lit"
 import { customElement, property } from "lit/decorators.js"
 
 
-@customElement('audio-link')
-export class AudioLink extends LitElement {
+@customElement('file-link')
+export class FileLink extends LitElement {
     static styles = css`
         :host {
             display: block;

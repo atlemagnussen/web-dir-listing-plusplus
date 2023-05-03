@@ -2,16 +2,16 @@ import { LitElement, css, html } from "lit"
 import { customElement, property } from "lit/decorators.js"
 import { ConfigFolder } from "@common/types"
 
-import "./audioHeader"
-import "./audioPlayer"
-import "./audioPlayList"
+import "./dirHeader"
+import "./filePreview"
+import "./dirListing"
 import "./buttons"
 import "./components"
 import "./vars.css"
 import "./index.css"
 
-@customElement('audio-app')
-export class AudioApp extends LitElement {
+@customElement('dir-listing-app')
+export class DirListingApp extends LitElement {
   static styles = css`
         :host {
             overflow: hidden;
@@ -68,7 +68,7 @@ export class AudioApp extends LitElement {
     title: "xxx.yyy.zzz.xxx.yyy.zzz.xxx.yyy.zzz.xxx.yyy.zzz.xxx.yyy.zzz",
     entries: [{
       name: "Explorer.31.-.Entities.Energy.Streams.and.Information.xxx.yyy.zzz.xxx.yyy.zzz.xxx.yyy.zzz.xxx.yyy.zzz.xxx.yyy.zzz",
-      ext: "mp3",
+      ext: "pdf",
       size: 1024,
       path: "http://192.168.1.3:8000/file/monroe.institute.explorer.series.1/Explorer.31.-.Entities.Energy.Streams.and.Information.Services.mp3",
       type: "file"
@@ -91,16 +91,16 @@ export class AudioApp extends LitElement {
     console.log("config", this.config.entries)
     return html`
             <header>
-                <audio-header .title=${this.config.title}></audio-header>
+                <dir-header .title=${this.config.title}></dir-header>
             </header>
 
             <main>
-                <audio-playlist .entries=${this.config.entries}></audio-playlist>
+                <dir-listing .entries=${this.config.entries}></dir-listing>
             </main>
 
 
             <footer>
-                <audio-player></audio-player>
+                <file-preview></file-preview>
             </footer>
 
         `

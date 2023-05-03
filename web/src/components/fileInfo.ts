@@ -50,7 +50,7 @@ export class FileInfo extends LitElement {
         return html`
             <div class="wrapper"> 
                 <div class="section">
-                    <label title="${this.file.name}">${this.file.name}</label>
+                    <label title="${this.file.name}">${this.file.name}.${this.file.ext}</label>
                 </div>
                 <div class="section">
                     <div class="information">

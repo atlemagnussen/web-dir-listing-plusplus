@@ -27,8 +27,19 @@ export class FileInfo extends LitElement {
             max-width: var(--default-width);
             border: 1px solid var(--link-color);
         }
+        .fileinfo {
+            display: inline-flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 1rem;
+        }
         file-ext-label {
             font-size: 1.4rem;
+        }
+        a {
+            display: inline-block;
+            height: 3rem;
+            width: 3rem;
         }
     `
 
@@ -47,6 +58,7 @@ export class FileInfo extends LitElement {
                         <div class="fileinfo">
                             ${this.file.ext ? html`
                                 <file-ext-label ext="${this.file.ext}"></file-ext-label>
+                                <file-size-label size=${this.file.size}></file-size-label>
                                 <a href="${this.file.path}" download filename="${this.file.name}">
                                     <download-button></download-button>
                                 </a>

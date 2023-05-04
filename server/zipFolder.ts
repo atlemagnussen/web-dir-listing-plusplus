@@ -10,7 +10,7 @@ export const zipAndReturnFolder = (reqpath: string) => {
 
     const split = splitDir(dir)
     if (!split)
-        return []
+        return null
     const { root, rootDir, restOfPath } = split
 
     const fullDirPath = path.join(rootDir, restOfPath)
@@ -43,6 +43,5 @@ export const zipAndReturnFolder = (reqpath: string) => {
         zip.addLocalFile(f.path)
     })
 
-    return zip.toBuffer()
-    
+    return zip.toBuffer()    
 }

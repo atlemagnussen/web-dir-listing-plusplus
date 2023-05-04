@@ -82,7 +82,7 @@ export class DirListing extends LitElement {
                         
                         <a class="link" href="${e.name}/">${e.name}</a>
                         
-                        <a href="${e.path}" download filename="${e.name}.zip">
+                        <a href="${e.path}" download="${e.name}.zip">
                             <download-button></download-button>
                         </a>
                     </p>`
@@ -92,7 +92,7 @@ export class DirListing extends LitElement {
                     <file-link @click=${() => this.play(e)} .name=${e.name}></file-link>
                     <file-size-label size=${e.size}></file-size-label>
                     <file-ext-label ext="${e.ext}"></file-ext-label>
-                    <a href="${e.path}" download filename="${e.name}">
+                    <a href="${e.path}" download="${e.name}.${e.ext}">
                         <download-button></download-button>
                     </a>
                 </p>

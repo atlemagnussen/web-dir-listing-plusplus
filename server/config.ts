@@ -1,11 +1,14 @@
 import dotenv from "dotenv"
+import path from "path"
 
 const environment = process.env.NODE_ENV ?? ""
 console.log("env", environment)
-const envFile = environment ? `.env.${environment}` : ".env"
-console.log(`environment: ${environment}, envFile: ${envFile}`)
 
-const config = dotenv.config({ path: envFile})
+const envFile = environment ? `.env.${environment}` : ".env"
+const envFilePath = path.join(process.cwd(), "..", envFile)
+console.log(`environment: ${environment}, envFilePath: ${envFilePath}`)
+
+const config = dotenv.config({ path: envFilePath})
 console.log(config)
 
 const portStr = process.env.PORT as string

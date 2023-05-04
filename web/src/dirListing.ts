@@ -29,7 +29,7 @@ export class DirListing extends LitElement {
             justify-content: center;
             gap: 0.5rem;
         }
-        audio-link {
+        audio-link, .link {
             flex: 1 1 auto;
         }
         @media only screen and (max-width: 1024px) {
@@ -78,8 +78,13 @@ export class DirListing extends LitElement {
             ${this.entries.map(e => {
                 if (e.type == "folder" || e.type == "root")
                     return html`
-                    <p>
-                        <a href="${e.name}/">${e.name}</a>
+                    <p class="filelink">
+                        
+                        <a class="link" href="${e.name}/">${e.name}</a>
+                        
+                        <a href="${e.path}" download filename="${e.name}">
+                            <download-button></download-button>
+                        </a>
                     </p>`
                 
                 return html`

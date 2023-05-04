@@ -3,6 +3,7 @@ import express from "express"
 import config from "./config"
 import { serveStream } from "./serveAudio"
 import { generateHtmlFromDir } from "./readLibDir"
+import { zipAndReturnFolder } from "./zipFolder"
 
 const app = express()
 
@@ -18,6 +19,22 @@ app.get("/file/*", (req, res) => {
     console.log("requested file path", filePath)
     try {
         return serveStream(req, res, filePath)
+    } catch (err) {
+        console.error(err)
+        return res.sendStatus(404)
+    }
+})
+
+app.get("/downloadfolder/*", (req, res) => {
+    let filePath = decodeURI(req.path)
+    console.log("requested file path", filePath)
+    try {
+        const zipBuffer = zipAndReturnFolder(filePath)
+        res.header({
+            "Content-Type": "application/zip",
+            "Content-Length": zipBuffer?.length
+        })
+        res.end(zipBuffer)
     } catch (err) {
         console.error(err)
         return res.sendStatus(404)

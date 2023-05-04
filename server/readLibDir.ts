@@ -9,13 +9,13 @@ const htmlFilePath = path.join(rootFolder, "index.html")
 
 const readDir = (dir: string) => {
 
+    console.log("readDir:Start", dir)
     const split = splitDir(dir)
     if (!split)
         return []
     const { root, rootDir, restOfPath } = split
 
     const fullDirPath = path.join(rootDir, restOfPath)
-    console.log("fullDirPath", fullDirPath)
     const entries = fs.readdirSync(fullDirPath)
 
     const entriesTyped = entries.map(entry => {
@@ -25,7 +25,7 @@ const readDir = (dir: string) => {
         const stat = fs.statSync(fullPath)
         const type: FileEntryType = stat.isDirectory() ? "folder" : "file"
         let ext = ""
-        let webpath = ""
+        let webpath = fullPath.replace(rootDir, "/downloadfolder/" + root)
         let size = 0
         if (type == "file") {
             ext = path.extname(fullPath).replace(".", "")

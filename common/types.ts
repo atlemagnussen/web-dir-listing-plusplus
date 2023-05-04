@@ -9,6 +9,12 @@ export interface FileOrDir {
     path: string
 }
 
+export interface FileEntry {
+    name: string
+    size: number
+    path: string
+}
+
 export interface ConfigFolder {
     entries: FileOrDir[]
     title: string

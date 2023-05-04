@@ -23,6 +23,8 @@ TITLE=my lib
 PORT=8000
 LIBPATHS={"Audio": "/some/path/audio","Books": "/some/path/books"}
 ```
+ 
+paths containing backslashes must be escaped, ie `C:\\path`
 
 ## run
 

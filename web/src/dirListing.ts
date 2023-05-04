@@ -20,7 +20,7 @@ export class DirListing extends LitElement {
         * {
             box-sizing: border-box;
         }
-        .filelink {
+        .filelink, .folderlink {
             max-width: 100%;
             width: 100%;
             padding: 0;
@@ -78,11 +78,11 @@ export class DirListing extends LitElement {
             ${this.entries.map(e => {
                 if (e.type == "folder" || e.type == "root")
                     return html`
-                    <p class="filelink">
+                    <p class="folderlink">
                         
                         <a class="link" href="${e.name}/">${e.name}</a>
                         
-                        <a href="${e.path}" download filename="${e.name}">
+                        <a href="${e.path}" download filename="${e.name}.zip">
                             <download-button></download-button>
                         </a>
                     </p>`
@@ -92,7 +92,7 @@ export class DirListing extends LitElement {
                     <file-link @click=${() => this.play(e)} .name=${e.name}></file-link>
                     <file-size-label size=${e.size}></file-size-label>
                     <file-ext-label ext="${e.ext}"></file-ext-label>
-                    <a href="${e.path}" download filename="${e.name}.zip">
+                    <a href="${e.path}" download filename="${e.name}">
                         <download-button></download-button>
                     </a>
                 </p>

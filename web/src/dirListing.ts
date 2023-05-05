@@ -38,6 +38,11 @@ export class DirListing extends LitElement {
                 max-width: 100%;
             }
         }
+        @media only screen and (max-width: 640px) {
+            file-size-label {
+                display: none;
+            }
+        }
         a, a:visited {
             color: white;
         }
@@ -49,7 +54,7 @@ export class DirListing extends LitElement {
             --filetype-color: var(--yellow-dark);
             font-size: 0.9rem;
         }
-        download-button {
+        download-button, home-button {
             width: 1.4rem;
             height: 1.4rem;
         }
@@ -76,26 +81,31 @@ export class DirListing extends LitElement {
         }
         return html`
             ${this.entries.map(e => {
-                if (e.type == "folder" || e.type == "root")
+                if (e.type == "root")
+                return html`
+                    <p class="folderlink">
+                        <a class="link" href="${e.name}/">${e.name}</a>
+                        <home-button title="Root lib folder"></home-button>
+                    </p>`
+                    
+                if (e.type == "folder")
                     return html`
                     <p class="folderlink">
-                        
                         <a class="link" href="${e.name}/">${e.name}</a>
-                        
                         <a href="${e.path}" download="${e.name}.zip" title="download folder as zip">
                             <download-button></download-button>
                         </a>
                     </p>`
                 
                 return html`
-                <p class="filelink">
-                    <file-link @click=${() => this.play(e)} .name=${e.name}></file-link>
-                    <file-size-label size=${e.size}></file-size-label>
-                    <file-ext-label ext="${e.ext}"></file-ext-label>
-                    <a href="${e.path}" download="${e.name}.${e.ext}" title="download file">
-                        <download-button></download-button>
-                    </a>
-                </p>
+                    <p class="filelink">
+                        <file-link @click=${() => this.play(e)} .name=${e.name}></file-link>
+                        <file-size-label size=${e.size}></file-size-label>
+                        <file-ext-label ext="${e.ext}"></file-ext-label>
+                        <a href="${e.path}" download="${e.name}.${e.ext}" title="download file">
+                            <download-button></download-button>
+                        </a>
+                    </p>
                 `
             })}
         `

@@ -4,6 +4,7 @@ import { ref, Ref, createRef } from "lit/directives/ref.js"
 import {Subscription} from "rxjs"
 import { playingFile } from "../stores/fileSelectedStore"
 import { SliderBar } from "./sliderBar"
+import * as db from "../stores/database"
 
 type PlayingState = "playing" | "paused" | "stopped"
 
@@ -82,6 +83,12 @@ export class AudioPlayer extends LitElement {
             this.label = file.name
             this.ext = file.ext
             this.playingState == "stopped"
+
+            db.getAudioItem(this.url).then(v => {
+                if (v && v.audioProcess) 
+                    this.currentTime = v.audioProcess
+                console.log(v)
+            })
         })
     }
 
@@ -118,8 +125,10 @@ export class AudioPlayer extends LitElement {
         const audio = this.audioRef.value
         if (this.playingState == "paused" || this.playingState == "stopped")
             audio.play()
-        else
+        else {
             audio.pause()
+            db.saveAudioItem({ filePath: this.url, audioProcess: this.currentTime })
+        }
     }
 
     loadedMetaData() {

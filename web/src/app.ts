@@ -67,10 +67,10 @@ export class DirListingApp extends LitElement {
     config: ConfigFolder = {
         title: "xxx.yyy.zzz.xxx.yyy.zzz.xxx.yyy.zzz.xxx.yyy.zzz.xxx.yyy.zzz",
         entries: [{
-        name: "Explorer.31.-.Entities.Energy.Streams.and.Information.xxx.yyy.zzz.xxx.yyy.zzz.xxx.yyy.zzz.xxx.yyy.zzz.xxx.yyy.zzz",
-        ext: "pdf",
-        size: 1024,
-        path: "http://192.168.1.3:8000/file/monroe.institute.explorer.series.1/Explorer.31.-.Entities.Energy.Streams.and.Information.Services.mp3",
+        name: "01.Orientation.mp3",
+        ext: "mp3",
+        size: 63646491,
+        path: "http://192.168.1.3:8000/file/Audio/Monroe.Institute-Gateway.experience.mp3/Wave1.Discovery/01.Orientation.mp3",
         type: "file"
         }, {
         name: "folder1",

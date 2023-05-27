@@ -19,3 +19,8 @@ export interface ConfigFolder {
     entries: FileOrDir[]
     title: string
 }
+
+export interface SavedAudio {
+    filePath: string
+    audioProcess: number
+}

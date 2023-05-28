@@ -65,7 +65,7 @@ export class DirListingApp extends LitElement {
 
     @property({ attribute: false })
     config: ConfigFolder = {
-        title: "xxx.yyy.zzz.xxx.yyy.zzz.xxx.yyy.zzz.xxx.yyy.zzz.xxx.yyy.zzz",
+        title: "audio lib dev",
         entries: [{
         name: "01.Orientation.mp3",
         ext: "mp3",

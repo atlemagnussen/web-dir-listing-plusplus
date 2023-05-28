@@ -1,5 +1,6 @@
 import { LitElement, css, html } from "lit"
 import { customElement, property } from "lit/decorators.js"
+import dialog from "./components/dialogEl"
 
 interface NamedLink {
     name: string
@@ -58,6 +59,12 @@ export class DirHeader extends LitElement {
     @property({attribute: true})
     title = ""
     
+    openHistory() {
+        dialog.openHtml({
+            hideOkBtn: true,
+            title: "history"
+        }, "<p>test</p>")
+    }
     renderBreadCrumb() {
 
         let pathSplit = location.pathname.split("/")
@@ -87,6 +94,9 @@ export class DirHeader extends LitElement {
             <div class="wrapper">
                 <a href="/">
                     <home-button></home-button>
+                </a>
+                <a>
+                    <history-button @click=${this.openHistory}></history-button>
                 </a>
                 ${location.pathname == "/" ? 
                     html`<h1>${this.title}</h1>` : 

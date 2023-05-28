@@ -5,6 +5,7 @@ import {Subscription} from "rxjs"
 import { playingFile } from "../stores/fileSelectedStore"
 import { SliderBar } from "./sliderBar"
 import * as db from "../stores/database"
+import { debounce} from "../services/helpers"
 
 type PlayingState = "playing" | "paused" | "stopped"
 
@@ -123,6 +124,22 @@ export class AudioPlayer extends LitElement {
     get filename() {
         return `${this.label}.${this.ext}`
     }
+
+    saveAudioProgress() {
+        db.saveAudioItem({ filePath: this.url, audioProcess: this.currentTime })
+        console.log("savedAudioProgress", this.currentTime)
+    }
+
+    intervalId = 0
+    saveProgressWhilePlaying() {
+        this.intervalId = window.setInterval(() => {
+            this.saveAudioProgress()
+        }, 1000)
+    }
+    stopSavingProgress() {
+        if (this.intervalId)
+            window.clearInterval(this.intervalId)
+    }
     togglePlay() {
         if (!this.audioRef.value)
             return
@@ -131,7 +148,7 @@ export class AudioPlayer extends LitElement {
             audio.play()
         else {
             audio.pause()
-            db.saveAudioItem({ filePath: this.url, audioProcess: this.currentTime })
+            this.saveAudioProgress()
         }
     }
 
@@ -150,6 +167,10 @@ export class AudioPlayer extends LitElement {
     }
     setState(state: PlayingState) {
         this.playingState = state
+        if (state == "playing")
+            this.saveProgressWhilePlaying()
+        else
+            this.stopSavingProgress()
     }
     tempTimeChange(e: CustomEvent) {
         const value = e.detail as number

@@ -8,8 +8,7 @@ const AUDIOTABLE = "audiostore"
 function openDb() : Promise<IDBDatabase>{
     return new Promise((resolve, reject) => {
         const dbReq = indexedDB.open(DBNAME, 1)
-        dbReq.onsuccess = e => {
-            console.log(e)
+        dbReq.onsuccess = () => {
             db = dbReq.result
             resolve(dbReq.result)
         }
@@ -33,13 +32,11 @@ function getOneIem<T>(path: string): Promise<T> {
         if (!db)
             reject("not connected")
         
-        const objectStore = db!.transaction([AUDIOTABLE]).objectStore(AUDIOTABLE)
-
-        const req = objectStore.get(path)
-        req.onsuccess = evt => {
-            console.log("evt success", evt)
-            resolve(req.result)
-        }
+        const store = db!.transaction([AUDIOTABLE]).objectStore(AUDIOTABLE)
+        
+        const req = store.get(path)
+        req.onsuccess = () => resolve(req.result)
+        req.onerror = err => reject(err)
     })
 }
 
@@ -49,21 +46,17 @@ function saveOneItem<T>(data: T, update: boolean): Promise<T> {
             reject("no db")
         
         const tx = db!.transaction([AUDIOTABLE], "readwrite")
-        tx.oncomplete = ev => {
-            console.log("complete", ev)
-        }
-        tx.onerror = ev => {
-            console.log("tx.error", ev)
+        tx.onerror = er => {
+            reject(er)
         }
         const objectStore = tx.objectStore(AUDIOTABLE)
         let req = update ? objectStore.put(data) : objectStore.add(data)
         
-        req.onsuccess = evt => {
-            console.log("saved", evt)
+        req.onsuccess = () => {
             resolve(data)
         }
         req.onerror = ev => {
-            console.log("req.err", ev)
+            reject(ev)
         }
     })
     
@@ -80,3 +73,4 @@ export async function getAudioItem(path:string) {
     const value = await getOneIem<SavedAudio>(path)
     return value
 }
+

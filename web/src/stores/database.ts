@@ -7,7 +7,7 @@ const AUDIOTABLE = "audiostore"
 
 function openDb() : Promise<IDBDatabase>{
     return new Promise((resolve, reject) => {
-        const dbReq = indexedDB.open(DBNAME)
+        const dbReq = indexedDB.open(DBNAME, 1)
         dbReq.onsuccess = e => {
             console.log(e)
             db = dbReq.result
@@ -16,9 +16,8 @@ function openDb() : Promise<IDBDatabase>{
         dbReq.onerror = (er) => {
             reject(er)
         }
-        dbReq.onupgradeneeded = (event) => {
+        dbReq.onupgradeneeded = () => {
             let dbu = dbReq.result
-            console.log("onupgradeneeded")
             const objectAudioStore = dbu.createObjectStore(AUDIOTABLE, { keyPath: "filePath"})
             objectAudioStore.createIndex("filePath", "filePath", { unique: true })
             objectAudioStore.createIndex("audioProcess", "audioProcess", { unique: false })
@@ -44,7 +43,7 @@ function getOneIem<T>(path: string): Promise<T> {
     })
 }
 
-function saveOneItem<T>(path: string, data: T, update: boolean): Promise<T> {
+function saveOneItem<T>(data: T, update: boolean): Promise<T> {
     return new Promise((resolve, reject) => {
         if (!db)
             reject("no db")
@@ -73,7 +72,7 @@ function saveOneItem<T>(path: string, data: T, update: boolean): Promise<T> {
 export async function saveAudioItem(data: SavedAudio) {
     await openDbPromise
     const exists = await getAudioItem(data.filePath)
-    await saveOneItem(data.filePath, data, !!exists)
+    await saveOneItem(data, !!exists)
 }
 
 export async function getAudioItem(path:string) {

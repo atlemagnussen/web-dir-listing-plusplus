@@ -5,7 +5,6 @@ import {Subscription} from "rxjs"
 import { playingFile } from "../stores/fileSelectedStore"
 import { SliderBar } from "./sliderBar"
 import * as db from "../stores/database"
-import { debounce} from "../services/helpers"
 
 type PlayingState = "playing" | "paused" | "stopped"
 

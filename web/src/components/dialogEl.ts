@@ -11,11 +11,11 @@ interface DialogOptions {
     cancelBtnText?: string
     hideOkBtn?: boolean
 }
-enum DialogSizes {
-    Minimum,
-    Medium,
-    Maximum
-}
+// enum DialogSizes {
+//     Minimum,
+//     Medium,
+//     Maximum
+// }
 
 const defaultOptions: DialogOptions = {
     title: "Digilean dialog",
@@ -24,7 +24,7 @@ const defaultOptions: DialogOptions = {
     hideOkBtn: false
 }
 
-const defaultSize: DialogSizes = DialogSizes.Minimum
+// const defaultSize: DialogSizes = DialogSizes.Minimum
 
 @customElement('dialog-el')
 class DialogElement extends LitElement {
@@ -171,7 +171,7 @@ class DialogElement extends LitElement {
         const dialogStyle = this.getSize()
 
         return html`
-            <dialog ${ref(this.dialog)} @keydown=${(e) => this.keydown(e)}>
+            <dialog ${ref(this.dialog)} @keydown=${(e: KeyboardEvent) => this.keydown(e)}>
                 <div id="dialog-body" style=${styleMap(dialogStyle)}>
                     <header>
                         <h4>${unsafeHTML(this.title)}</h4>
@@ -263,7 +263,7 @@ class DigiLeanDialog {
         if (hideOkBtn)
             this.dialog.hideOkBtn = hideOkBtn
     }
-    mergeOptions(optionsIncoming: DigiLeanDialogOptions) {
+    mergeOptions(optionsIncoming: DialogOptions) {
         let options = cloneDeep(defaultOptions)
         if (optionsIncoming)
             options = merge(options, optionsIncoming)

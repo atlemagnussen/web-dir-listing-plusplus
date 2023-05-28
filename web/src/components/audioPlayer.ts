@@ -83,11 +83,15 @@ export class AudioPlayer extends LitElement {
             this.label = file.name
             this.ext = file.ext
             this.playingState == "stopped"
-
+            this.currentTime = 0
             db.getAudioItem(this.url).then(v => {
-                if (v && v.audioProcess) 
+                if (v && v.audioProcess) {
+                    if (!this.audioRef.value)
+                        return
+                    const audio = this.audioRef.value
                     this.currentTime = v.audioProcess
-                console.log(v)
+                    audio.currentTime
+                }
             })
         })
     }
@@ -135,6 +139,8 @@ export class AudioPlayer extends LitElement {
         if (!this.audioRef.value)
             return
         this.duration = this.audioRef.value.duration
+        if (this.currentTime > 0)
+            this.audioRef.value.currentTime = this.currentTime // might be saved progress
         this.playingState = "stopped"
     }
     currentTimeUpdate() {

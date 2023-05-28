@@ -44,7 +44,7 @@ function getOneIem<T>(path: string): Promise<T> {
     })
 }
 
-function saveOneItem<T>(path: string, data: T): Promise<T> {
+function saveOneItem<T>(path: string, data: T, update: boolean): Promise<T> {
     return new Promise((resolve, reject) => {
         if (!db)
             reject("no db")
@@ -57,7 +57,8 @@ function saveOneItem<T>(path: string, data: T): Promise<T> {
             console.log("tx.error", ev)
         }
         const objectStore = tx.objectStore(AUDIOTABLE)
-        const req = objectStore.add(data)
+        let req = update ? objectStore.put(data) : objectStore.add(data)
+        
         req.onsuccess = evt => {
             console.log("saved", evt)
             resolve(data)
@@ -71,7 +72,8 @@ function saveOneItem<T>(path: string, data: T): Promise<T> {
 
 export async function saveAudioItem(data: SavedAudio) {
     await openDbPromise
-    await saveOneItem(data.filePath, data)
+    const exists = await getAudioItem(data.filePath)
+    await saveOneItem(data.filePath, data, !!exists)
 }
 
 export async function getAudioItem(path:string) {

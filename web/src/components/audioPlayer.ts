@@ -5,6 +5,7 @@ import {Subscription} from "rxjs"
 import { playingFile } from "../stores/fileSelectedStore"
 import { SliderBar } from "./sliderBar"
 import * as db from "../stores/database"
+import dialog from "../components/dialogEl"
 
 type PlayingState = "playing" | "paused" | "stopped"
 
@@ -175,6 +176,12 @@ export class AudioPlayer extends LitElement {
         const value = e.detail as number
         this.currentTime = value
     }
+    openHistory() {
+        dialog.openHtml({
+            hideOkBtn: true,
+            title: "history"
+        }, "<p>test</p>")
+    }
     displayBufferedAmount = () => {
         if (!this.audioRef.value)
             return
@@ -223,6 +230,8 @@ export class AudioPlayer extends LitElement {
                             html`<play-button @click=${this.togglePlay}></play-button>` : 
                             html`<pause-button @click=${this.togglePlay}></pause-button>`
                         }
+                        <history-button @click=${this.openHistory}></history-button>
+                    
                     </div>
                     <div class="information">
                         <scrolling-text>${label}</scrolling-text>

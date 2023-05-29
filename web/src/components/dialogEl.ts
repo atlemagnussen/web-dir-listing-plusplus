@@ -41,7 +41,9 @@ class DialogElement extends LitElement {
         dialog {
             border: none !important;
             border-radius: 3px;
-            box-shadow: 0 0 #0000, 0 0 #0000, 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 0 #83838300, 0 0 #83838300, 0 25px 50px -12px rgba(100, 100, 100, 1);
+            background: var(--primary-background);
+            color: white;
             padding: 0;
         }
         dialog #dialog-body {
@@ -164,7 +166,7 @@ class DialogElement extends LitElement {
     hideOkBtn = defaultOptions.hideOkBtn
 
     getSize() {
-        return { minWidth: "64rem", minHeight: "48rem" }
+        return { minWidth: "90vw", minHeight: "90vh" }
     }
     render() {
 

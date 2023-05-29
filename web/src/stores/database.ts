@@ -40,6 +40,20 @@ function getOneIem<T>(path: string): Promise<T> {
     })
 }
 
+function getAll<T>(): Promise<T[]> {
+    
+    return new Promise((resolve, reject) => {
+        if (!db)
+            reject("not connected")
+        
+        const store = db!.transaction([AUDIOTABLE]).objectStore(AUDIOTABLE)
+        
+        const req = store.getAll()
+        req.onsuccess = () => resolve(req.result)
+        req.onerror = err => reject(err)
+    })
+}
+
 function saveOneItem<T>(data: T, update: boolean): Promise<T> {
     return new Promise((resolve, reject) => {
         if (!db)
@@ -74,3 +88,8 @@ export async function getAudioItem(path:string) {
     return value
 }
 
+export async function getAllAudioItems() {
+    await openDbPromise
+    const values = await getAll<SavedAudio>()
+    return values
+}

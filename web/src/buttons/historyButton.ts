@@ -10,7 +10,7 @@ export class HistoryButton extends LitElement {
             overflow: none;
             height: var(--button-height, 4rem);
             width: var(--button-width, 4rem);
-            color: var(--link-color);
+            --button-color: var(--link-color);
             cursor: pointer;
         }
         svg {
@@ -18,7 +18,7 @@ export class HistoryButton extends LitElement {
             height: 100%;
         }
         .history {
-            fill: var(--link-color);
+            fill: var(--button-color);
         }
     `
     

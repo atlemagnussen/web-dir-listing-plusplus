@@ -183,8 +183,8 @@ export class AudioPlayer extends LitElement {
     openHistory() {
         dialog.openHtml({
             hideOkBtn: true,
-            title: "history"
-        }, "<history-viewer></history-viewer>")
+            title: `<history-button style="--button-height: 1.5rem; --button-width: 1.5rem; --button-color: var(--yellow)"></history-button>`
+        }, `<history-viewer></history-viewer>`)
     }
     displayBufferedAmount = () => {
         if (!this.audioRef.value)

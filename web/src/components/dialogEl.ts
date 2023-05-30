@@ -138,13 +138,11 @@ class DialogElement extends LitElement {
         }
     }
     
-
     dispatchCustomEvent(name: DialogResult, detail: any) {
         const options = { detail, bubbles: true, composed: true}
         this.dispatchEvent(new CustomEvent(name, options));
     }
 
-    
     @property({attribute: true})
     header = ""
     
@@ -161,7 +159,6 @@ class DialogElement extends LitElement {
     @property({attribute: true})
     cancelText = "cancel"
     
-
     @property({attribute: false})
     hideOkBtn = defaultOptions.hideOkBtn
 
@@ -186,9 +183,9 @@ class DialogElement extends LitElement {
                         }
                     </section>
                     <menu>
-                        <button @click=${() => this.cancel()}>${this.cancelText}</button>
+                        <dir-button @click=${() => this.cancel()}>${this.cancelText}</dir-button>
                         ${this.hideOkBtn ? html`` : 
-                            html`<button @click=${() => this.ok()}>${this.okText}</button>`
+                            html`<dir-button @click=${() => this.ok()}>${this.okText}</dir-button>`
                         }
                     </menu>
                 </div>

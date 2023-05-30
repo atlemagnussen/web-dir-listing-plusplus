@@ -73,6 +73,10 @@ export class AudioPlayer extends LitElement {
             --button-height: 1.3rem;
             --button-width: 1.3rem;
         }
+        history-button {
+            --button-height: 2rem;
+            --button-width: 2rem;
+        }
     `
     sub: Subscription | null = null
     audioRef: Ref<HTMLAudioElement> = createRef()
@@ -230,8 +234,6 @@ export class AudioPlayer extends LitElement {
                             html`<play-button @click=${this.togglePlay}></play-button>` : 
                             html`<pause-button @click=${this.togglePlay}></pause-button>`
                         }
-                        <history-button @click=${this.openHistory}></history-button>
-                    
                     </div>
                     <div class="information">
                         <scrolling-text>${label}</scrolling-text>
@@ -243,6 +245,9 @@ export class AudioPlayer extends LitElement {
                                 </a>
                             ` : ""}
                         </div>
+                    </div>
+                    <div class="more">
+                        <history-button @click=${this.openHistory}></history-button>
                     </div>
                 </div>
             </div>

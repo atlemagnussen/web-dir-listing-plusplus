@@ -18,7 +18,7 @@ export class PlayButton extends LitElement {
             height: 100%;
         }
         .triangle {
-            stroke-width: 5px;
+            stroke-width: 8px;
             stroke: var(--link-color);
             fill: transparent;
         }
@@ -28,7 +28,7 @@ export class PlayButton extends LitElement {
         
         return html`
 
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110 110">
                 <polygon class="triangle" stroke-linejoin="round" points="10,0 80,50 10, 100" />
             </svg>
         `

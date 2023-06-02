@@ -10,7 +10,11 @@ export class HistoryViewer extends LitElement {
             display: inline-block;
             overflow: none;
         }
-        
+        h3 {
+            font-size: 1.17em;
+            margin-block-start: 0;
+            margin-block-end: 1rem;
+        }
     `
     @state()
     private audioItems: SavedAudio[] = []

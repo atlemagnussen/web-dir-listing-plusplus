@@ -11,11 +11,6 @@ interface DialogOptions {
     cancelBtnText?: string
     hideOkBtn?: boolean
 }
-// enum DialogSizes {
-//     Minimum,
-//     Medium,
-//     Maximum
-// }
 
 const defaultOptions: DialogOptions = {
     title: "Digilean dialog",
@@ -23,8 +18,6 @@ const defaultOptions: DialogOptions = {
     cancelBtnText: "Cancel",
     hideOkBtn: false
 }
-
-// const defaultSize: DialogSizes = DialogSizes.Minimum
 
 @customElement('dialog-el')
 class DialogElement extends LitElement {
@@ -53,8 +46,11 @@ class DialogElement extends LitElement {
         dialog #dialog-body section {
             flex: 1 1 auto;
         }
-        dialog #dialog-body header, dialog #dialog-body section{
+        dialog #dialog-body header {
             padding: 1rem;
+        }
+        dialog #dialog-body section {
+            padding: 0 1rem 1rem 1rem;
         }
         dialog #dialog-body menu {
             padding: 1rem;

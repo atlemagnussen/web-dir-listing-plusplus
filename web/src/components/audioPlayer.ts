@@ -190,6 +190,7 @@ export class AudioPlayer extends LitElement {
             return
         const audio = this.audioRef.value
         const bufferedAmount = Math.floor(audio.buffered.end(audio.buffered.length - 1))
+        console.log("bufferedAmount", bufferedAmount)
         //audioPlayerContainer.style.setProperty('--buffered-width', `${(bufferedAmount / seekSlider.max) * 100}%`);
     }
     seek(e: Event) {

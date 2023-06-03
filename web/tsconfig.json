@@ -24,10 +24,12 @@
         "skipLibCheck": true,
         "baseUrl": ".",
         "paths": {
+            "@app/*": ["src/*"],
             "@common/*": ["../common/*"]
         }
     },
     "include": [
+        "common/**/*.ts",
         "src/**/*.ts"
     ],
     "references": [

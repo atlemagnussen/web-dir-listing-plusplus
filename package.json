@@ -5,7 +5,8 @@
   "scripts": {
     "build:web": "cd web && npm run build && cd ..",
     "server": "cd server && npm run prod:ts && cd ..",
-    "prod": "npm run build:web && npm run server"
+    "prod": "npm run build:web && npm run server",
+    "ts": "tsc --build tsconfig.json"
   },
   "keywords": [
     "web",
@@ -27,6 +28,7 @@
     "typescript": "^4.9.4"
   },
   "dependencies": {
+    "@appnest/web-router": "^1.4.2",
     "@types/adm-zip": "^0.5.0",
     "adm-zip": "^0.5.10",
     "lit": "^2.6.1",

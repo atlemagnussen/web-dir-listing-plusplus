@@ -69,15 +69,19 @@ const getConfigRoot = (): ConfigFolder => {
     }
 }
 
-export const generateHtmlFromDir = (dir: string) => {
-    let html = fs.readFileSync(htmlFilePath, 'utf8')
-
+export const getFolderContent = (dir: string) => {
     let config: ConfigFolder
     if (!dir || dir == "/" || dir == "")
         config = getConfigRoot()
     else
         config = getConfigForDir(dir)
+    return config
+}
 
+export const generateHtmlFromDir = (dir: string) => {
+    let html = fs.readFileSync(htmlFilePath, 'utf8')
+
+    const config = getFolderContent(dir)
     const confStr = `const config = ${JSON.stringify(config)};`
     const jsToInject = `${confStr}\ndirListApp.config = config;\n`
     //console.log(jsonToInject)

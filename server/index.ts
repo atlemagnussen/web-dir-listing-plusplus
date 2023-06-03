@@ -2,17 +2,17 @@ import path from "path"
 import express from "express"
 import config from "./config"
 import { serveStream } from "./serveAudio"
-import { generateHtmlFromDir } from "./readLibDir"
+import { generateHtmlFromDir, getFolderContent } from "./readLibDir"
 import { zipAndReturnFolder } from "./zipFolder"
 
 const app = express()
 
 const rootFolder = __dirname
 console.log("rootFolder", rootFolder)
-const web = path.resolve("..", "web")
+const web = path.resolve("..", "web/dist")
 console.log("libdirs", config.libPaths)
 
-app.use('/static', express.static(web))
+//app.use('/static', express.static(web))
 
 app.get("/file/*", (req, res) => {
     let filePath = decodeURI(req.path)
@@ -41,17 +41,24 @@ app.get("/downloadfolder/*", (req, res) => {
     }
 })
 
-app.get('*', (req, res) => {
-    let path = decodeURI(req.path)
-    console.log("path*", path)
-    const html = generateHtmlFromDir(path)
-    res.send(html)
+app.get("/foldercontent/*", (req, res) => {
+    let folderPath = decodeURI(req.path)
+    folderPath = folderPath.replace("foldercontent/", "")
+    console.log("requested folderPath", folderPath)
+    const content = getFolderContent(folderPath)
+    res.send(content)
 })
+app.use(express.static(web))
+// app.get('*', (req, res) => {
+//     let path = decodeURI(req.path)
+//     console.log("path*", path)
+//     const html = generateHtmlFromDir(path)
+//     res.send(html)
+// })
 if (!config.libPaths)
-    throw Error("missing libpath!!")
+    throw new Error("missing libpath!!")
 
 let port = config.port ? config.port : 5000
 app.listen(port, '0.0.0.0', () => {
     console.log(`[server]: Server is running at http://localhost:${port}`)
 })
-

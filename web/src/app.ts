@@ -1,6 +1,7 @@
 import { LitElement, css, html } from "lit"
 import { customElement, property } from "lit/decorators.js"
-import { ConfigFolder } from "@common/types"
+import type { ConfigFolder } from "@common/types"
+import { content } from "@app/stores/fileSelectedStore"
 
 import "./dirHeader"
 import "./filePreview"
@@ -9,6 +10,7 @@ import "./buttons"
 import "./components"
 import "./vars.css"
 import "./index.css"
+import "./services/locationLoader"
 
 @customElement('dir-listing-app')
 export class DirListingApp extends LitElement {
@@ -66,30 +68,12 @@ export class DirListingApp extends LitElement {
     @property({ attribute: false })
     config: ConfigFolder = {
         title: "audio lib dev",
-        entries: [{
-        name: "01.Orientation.mp3",
-        ext: "mp3",
-        size: 63646491,
-        path: "http://192.168.1.3:8000/file/Audio/Monroe.Institute-Gateway.experience.mp3/Wave1.Discovery/01.Orientation.mp3",
-        type: "file"
-        }, {
-        name: "folder1",
-        type: "folder",
-        ext: "",
-        size: 0,
-        path: ""
-        },
-        {
-            name: "root1",
-            type: "root",
-            ext: "",
-            size: 0,
-            path: ""
-            }]
+        entries: []
     }
 
     constructor() {
         super()
+        content.subscribe(con => this.config = con)
         //const folder1 = this.config.entries.find(e => e.name == "folder1")
         // for (let i = 0; i < 30; i++)
         //     this.config.entries.push({ name: `test ${i}`, ext: "mp3", size: i*100, type: "file", path: `http://localhost:8000/${i}.mp3` })

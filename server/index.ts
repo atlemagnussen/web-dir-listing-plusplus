@@ -10,6 +10,8 @@ const app = express()
 const rootFolder = __dirname
 console.log("rootFolder", rootFolder)
 const web = path.resolve("..", "web/dist")
+const webIndex = path.resolve(web, "index.html")
+
 console.log("libdirs", config.libPaths)
 
 //app.use('/static', express.static(web))
@@ -49,6 +51,10 @@ app.get("/foldercontent/*", (req, res) => {
     res.send(content)
 })
 app.use(express.static(web))
+
+app.get('*', function (req, res) {
+    res.sendFile(webIndex)
+})
 // app.get('*', (req, res) => {
 //     let path = decodeURI(req.path)
 //     console.log("path*", path)

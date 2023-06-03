@@ -85,14 +85,14 @@ export class DirListing extends LitElement {
                 if (e.type == "root")
                 return html`
                     <p class="folderlink">
-                        <a class="link" href="${e.name}">${e.name}</a>
+                        <a class="link" href="/${e.name}">${e.name}</a>
                         <home-button title="Root lib folder"></home-button>
                     </p>`
                     
                 if (e.type == "folder")
                     return html`
                     <p class="folderlink">
-                        <a class="link" @click=${goto} href="${e.name}">${e.name}</a>
+                        <a class="link" @click=${goto} href="/${e.name}">${e.name}</a>
                         <a href="${e.path}" download="${e.name}.zip" title="download folder as zip">
                             <download-button></download-button>
                         </a>

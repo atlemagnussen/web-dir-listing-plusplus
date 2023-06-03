@@ -1,5 +1,5 @@
 
-const baseUrl = location.host
+const baseUrl = location.origin
 
 const jsonContentType = "application/json"
 

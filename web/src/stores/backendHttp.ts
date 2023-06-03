@@ -1,5 +1,5 @@
 
-const baseUrl = "http://localhost:8000" // location.host
+const baseUrl = location.host
 
 const jsonContentType = "application/json"
 

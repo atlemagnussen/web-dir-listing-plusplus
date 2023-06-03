@@ -67,20 +67,16 @@ export class DirListingApp extends LitElement {
 
     @property({ attribute: false })
     config: ConfigFolder = {
-        title: "audio lib dev",
+        title: "audio lib loading",
         entries: []
     }
 
     constructor() {
         super()
         content.subscribe(con => this.config = con)
-        //const folder1 = this.config.entries.find(e => e.name == "folder1")
-        // for (let i = 0; i < 30; i++)
-        //     this.config.entries.push({ name: `test ${i}`, ext: "mp3", size: i*100, type: "file", path: `http://localhost:8000/${i}.mp3` })
     }
 
     render() {
-        console.log("config", this.config.entries)
         return html`
             <header>
                 <dir-header .title=${this.config.title}></dir-header>

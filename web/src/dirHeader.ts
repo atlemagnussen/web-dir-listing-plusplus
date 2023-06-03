@@ -1,5 +1,6 @@
 import { LitElement, css, html } from "lit"
 import { customElement, property } from "lit/decorators.js"
+import { goto } from "./services/locationLoader"
 
 interface NamedLink {
     name: string
@@ -76,7 +77,7 @@ export class DirHeader extends LitElement {
         
         return html`<h1>
             ${links.map((p) => 
-                html`<a href="${p.path}">${p.name}/</a>`
+                html`<a @click=${goto} href="${p.path}">${p.name}/</a>`
             )}
             </h1>
         `

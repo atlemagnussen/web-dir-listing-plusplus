@@ -6,12 +6,8 @@ let path = window.location.pathname
 
 async function loadContentFromPath() {
     const content = await getFolderContent(path)
-    console.log("content", content)
     setContent(content)
 }
-
-loadContentFromPath()
-
 
 export const goto = (e: Event) => {
     e.preventDefault()
@@ -42,3 +38,6 @@ const getHrefWithoutOrigin = (href: string) => {
     const hrefWithOutOrigin = href.replace(origin, "")
     return hrefWithOutOrigin
 }
+
+loadContentFromPath()
+pushHrefToHistory(path)

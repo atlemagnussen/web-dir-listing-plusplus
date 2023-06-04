@@ -1,3 +1,4 @@
+import { splitFileName } from "@app/services/helpers"
 import type { SavedAudio } from "@common/types"
 
 let db: IDBDatabase | undefined
@@ -76,8 +77,24 @@ function saveOneItem<T>(data: T, update: boolean): Promise<T> {
     
 }
 
-export async function saveAudioItem(data: SavedAudio) {
+export async function saveAudioItem(filePath: string, audioProcess: number) {
+    let params = new URLSearchParams(window.location.search)
+    let fname = ""
+    let fext = ""
+    if (params.has("file")) {
+        const { name, ext } = splitFileName(params.get("file")!)
+        fname = name
+        fext = ext
+    }
+
     await openDbPromise
+    const data: SavedAudio = {
+        filePath,
+        audioProcess,
+        folderPath: window.location.pathname,
+        name: fname,
+        ext: fext
+    }
     const exists = await getAudioItem(data.filePath)
     await saveOneItem(data, !!exists)
 }

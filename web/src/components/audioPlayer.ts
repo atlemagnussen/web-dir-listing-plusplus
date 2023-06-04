@@ -130,7 +130,7 @@ export class AudioPlayer extends LitElement {
     }
 
     saveAudioProgress() {
-        db.saveAudioItem({ filePath: this.url, audioProcess: this.currentTime })
+        db.saveAudioItem(this.url, this.currentTime)
     }
 
     intervalId = 0

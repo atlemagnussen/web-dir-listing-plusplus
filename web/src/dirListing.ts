@@ -1,7 +1,7 @@
 import { LitElement, css, html } from "lit"
 import { customElement, property } from "lit/decorators.js"
 import { FileOrDir } from "@common/types"
-import { setPlayingFile } from "./stores/fileSelectedStore"
+import { gotoSelectFile } from "@app/services/locationLoader"
 import { goto } from "./services/locationLoader"
 
 @customElement('dir-listing')
@@ -64,9 +64,6 @@ export class DirListing extends LitElement {
     @property({attribute: false})
     entries: FileOrDir[] = []
 
-    play(e: FileOrDir) {
-        setPlayingFile(e)
-    }
     render() {
         return html`
             <div class="wrapper">
@@ -99,7 +96,7 @@ export class DirListing extends LitElement {
                 
                 return html`
                     <p class="filelink">
-                        <file-link @click=${() => this.play(e)} .name=${e.name}></file-link>
+                        <file-link @click=${() => gotoSelectFile(e)} .name=${e.name}></file-link>
                         <file-size-label size=${e.size}></file-size-label>
                         <file-ext-label ext="${e.ext}"></file-ext-label>
                         <a href="${e.path}" download="${e.name}.${e.ext}" title="download file">

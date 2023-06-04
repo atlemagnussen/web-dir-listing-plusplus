@@ -21,6 +21,9 @@ export interface ConfigFolder {
 }
 
 export interface SavedAudio {
+    name: string
+    ext: string
+    folderPath: string
     filePath: string
     audioProcess: number
 }

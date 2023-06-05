@@ -91,12 +91,12 @@ class DialogElement extends LitElement {
         }
     `
 
-    // constructor() {
-    //     super()
-    //     this.addEventListener(DialogResult.dialogOkFromOutside, ((e: CustomEvent) => {
-    //         this.ok(e.detail)
-    //     })  as EventListener, { once: false, passive: true } )
-    // }
+    constructor() {
+        super()
+        this.addEventListener(DialogResult.dialogOkFromOutside, ((e: CustomEvent) => {
+            this.ok(e.detail)
+        })  as EventListener, { once: false, passive: true } )
+    }
     // createRenderRoot() {
     //     return this
     // }

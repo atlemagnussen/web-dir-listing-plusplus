@@ -22,6 +22,5 @@ export function splitFileName(filename: string) {
         ext = split.pop()!
         name = split.join(".")
     }
-    console.log(`file name=${name}, ext=${ext}`)
     return {name, ext}
 }

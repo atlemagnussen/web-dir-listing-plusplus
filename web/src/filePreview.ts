@@ -3,8 +3,7 @@ import { customElement } from "lit/decorators.js"
 import {Subscription} from "rxjs"
 import { playingFile } from "./stores/fileSelectedStore"
 import { FileOrDir } from "@common/types"
-
-const audioFileTypes = ["mp3", "flac", "m4b"]
+import { audioFileTypes } from "./services/playerService"
 
 @customElement('file-preview')
 export class FilePreview extends LitElement {

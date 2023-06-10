@@ -27,3 +27,5 @@ export interface SavedAudio {
     filePath: string
     audioProcess: number
 }
+
+export type PlayingState = "playing" | "paused" | "ended"

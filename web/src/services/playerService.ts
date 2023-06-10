@@ -31,7 +31,7 @@ function playNextAudio() {
 
     let foundOrNull = false
     while (!foundOrNull) {
-        nextFile = findNextFile(file, contFolder.entries)
+        nextFile = findNextFile(nextFile ?? file, contFolder.entries)
         if (!nextFile)
             foundOrNull = true
         else {

@@ -35,7 +35,7 @@ function playNextAudio() {
         if (!nextFile)
             foundOrNull = true
         else {
-            const isAudio = audioFileTypes.includes(file.ext)
+            const isAudio = audioFileTypes.includes(nextFile.ext)
             if (isAudio)
                 foundOrNull = true
         }

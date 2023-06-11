@@ -1,7 +1,7 @@
 import { LitElement, css, html } from "lit"
 import { customElement } from "lit/decorators.js"
 import {Subscription} from "rxjs"
-import { playingFile } from "./stores/fileSelectedStore"
+import { playingFile } from "./stores/filesStore"
 import { FileOrDir } from "@common/types"
 
 @customElement('file-preview')

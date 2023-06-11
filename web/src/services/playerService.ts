@@ -1,4 +1,4 @@
-import { playingState, playingFile, content, autoPlayEnabled } from "@app/stores/fileSelectedStore"
+import { playingState, playingFile, content, autoPlayEnabled } from "@app/stores/filesStore"
 import { ConfigFolder, FileOrDir, PlayingState } from "@common/types"
 import { gotoSelectFile } from "./locationLoader"
 

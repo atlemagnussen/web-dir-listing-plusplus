@@ -1,7 +1,7 @@
 import { LitElement, css, html } from "lit"
 import { customElement, property } from "lit/decorators.js"
 import type { ConfigFolder } from "@common/types"
-import { content } from "@app/stores/fileSelectedStore"
+import { content } from "@app/stores/filesStore"
 
 import "./dirHeader"
 import "./filePreview"

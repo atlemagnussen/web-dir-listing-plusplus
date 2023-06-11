@@ -2,7 +2,6 @@ import { playingState, playingFile, content, autoPlayEnabled } from "@app/stores
 import { ConfigFolder, FileOrDir, PlayingState } from "@common/types"
 import { gotoSelectFile } from "./locationLoader"
 
-export const audioFileTypes = ["mp3", "flac", "m4b"]
 let autoPlay = false
 autoPlayEnabled.subscribe(ap => autoPlay = ap)
 
@@ -13,7 +12,7 @@ playingState.subscribe(st => {
         playNextAudio()
 })
 
-let file: FileOrDir = {name: "", ext: "", path: "", type: "file", size: 0}
+let file: FileOrDir = {name: "", ext: "", path: "", type: "file", size: 0, mimeType: ""}
 playingFile.subscribe(fil => file = fil)
 
 let contFolder:ConfigFolder = {title: "", entries: []}
@@ -35,7 +34,7 @@ function playNextAudio() {
         if (!nextFile)
             foundOrNull = true
         else {
-            const isAudio = audioFileTypes.includes(nextFile.ext)
+            const isAudio = nextFile.mimeType.startsWith("audio")
             if (isAudio)
                 foundOrNull = true
         }

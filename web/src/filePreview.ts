@@ -3,7 +3,6 @@ import { customElement } from "lit/decorators.js"
 import {Subscription} from "rxjs"
 import { playingFile } from "./stores/fileSelectedStore"
 import { FileOrDir } from "@common/types"
-import { audioFileTypes } from "./services/playerService"
 
 @customElement('file-preview')
 export class FilePreview extends LitElement {
@@ -42,7 +41,7 @@ export class FilePreview extends LitElement {
 
         let isAudio = false
         if (this.file && this.file.ext)
-            isAudio = audioFileTypes.includes(this.file.ext)
+            isAudio = this.file.mimeType.startsWith("audio")
 
         if (isAudio)
             return html`

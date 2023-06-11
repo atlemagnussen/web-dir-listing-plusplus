@@ -44,7 +44,7 @@ export class FileInfo extends LitElement {
     `
 
     @property({attribute: false})
-    file: FileOrDir = { type: "file", name: "", ext: "", size: 0, path: ""}
+    file: FileOrDir = { type: "file", name: "", ext: "", size: 0, path: "", mimeType: ""}
 
     render() {
         return html`

@@ -5,6 +5,7 @@ export interface FileOrDir {
     type: FileEntryType
     name: string
     ext: string
+    mimeType: string
     size: number
     path: string
 }

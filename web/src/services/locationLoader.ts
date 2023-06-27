@@ -41,8 +41,13 @@ export function gotoSelectFile(file: FileOrDir) {
     params.append("file", filename)
     
     let folderPath = path
-    if (file.folderPath)
-        folderPath = file.folderPath
+    if (file.folderPath) {
+        if (file.folderPath.startsWith("/"))
+            folderPath = file.folderPath
+        else
+            folderPath = `/${file.folderPath}`
+    }
+        
 
     let url = new URL(`${window.location.origin}${folderPath}`)
     url.searchParams.append("file", filename)

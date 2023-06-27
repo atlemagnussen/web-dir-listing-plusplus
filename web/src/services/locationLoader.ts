@@ -10,12 +10,12 @@ let content: ConfigFolder = {title:"", entries:[]}
 async function loadContentFromPath() {
     content = await getFolderContent(path)
     setContent(content)
-    getFileFromParams()
+    getFileFromParams(params)
 }
 
-function getFileFromParams() {
-    if (params.has("file")) {
-        const { name, ext } = splitFileName(params.get("file")!)
+function getFileFromParams(parms: URLSearchParams) {
+    if (parms.has("file")) {
+        const { name, ext } = splitFileName(parms.get("file")!)
         const file = content.entries.find(e => e.name == name && e.ext == ext)
         if (file)
             setPlayingFile(file)
@@ -37,8 +37,8 @@ export const gotoPath = (p: string) => {
 
 export function gotoSelectFile(file: FileOrDir) {
     const filename = `${file.name}.${file.ext}`
-    params = new URLSearchParams()
-    params.append("file", filename)
+    let p = new URLSearchParams()
+    p.append("file", filename)
     
     let folderPath = path
     if (file.folderPath) {
@@ -54,7 +54,7 @@ export function gotoSelectFile(file: FileOrDir) {
     const fullhref = url.toString()
     const href = getHrefWithoutOrigin(fullhref)
     pushHrefToHistory(href)
-    getFileFromParams()
+    getFileFromParams(p)
 }
 
 window.addEventListener("popstate", (event: PopStateEvent) => {

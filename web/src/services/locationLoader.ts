@@ -1,4 +1,4 @@
-import { setContent, setPlayingFile } from "@app/stores/fileSelectedStore"
+import { setContent, setPlayingFile } from "@app/stores/filesStore"
 import { getFolderContent } from "@app/stores/server"
 import { ConfigFolder, FileOrDir } from "@common/types"
 import { splitFileName } from "./helpers"

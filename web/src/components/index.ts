@@ -8,4 +8,8 @@ import "./fileInfo"
 import "./audioPlayer"
 import "./dialogEl"
 import "./historyView"
+
 import "./searchView"
+
+import "./checkbox"
+

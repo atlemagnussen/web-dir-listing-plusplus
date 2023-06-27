@@ -3,6 +3,7 @@ import path from "path"
 import config from "./config"
 import { splitDir } from "./common"
 import { FileOrDir, FileEntryType, ConfigFolder } from "@common/types"
+import mime from "mime-types"
 
 const rootFolder = __dirname
 const htmlFilePath = path.join(rootFolder, "index.html")
@@ -27,14 +28,18 @@ const readDir = (dir: string) => {
         let ext = ""
         let webpath = fullPath.replace(rootDir, "/downloadfolder/" + root)
         let size = 0
+        let mimeType = ""
         if (type == "file") {
             ext = path.extname(fullPath).replace(".", "")
             size = stat.size
             webpath = fullPath.replace(rootDir, "/file/" + root)
             name = entry.replace("."+ext, "")
+            let mt = mime.lookup(fullPath)
+            if (mt)
+                mimeType = mt
         }
-            
-        return { name, type, ext, size, path: webpath }
+        
+        return { name, type, ext, size, mimeType, path: webpath }
     }) as FileOrDir[]
     console.log("entriesTyped", entriesTyped)
     return entriesTyped
@@ -59,7 +64,8 @@ const getConfigRoot = (): ConfigFolder => {
             name: l,
             path: l,
             size: 0,
-            ext: ""
+            ext: "",
+            mimeType: ""
         }
     })
 

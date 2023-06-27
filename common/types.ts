@@ -5,6 +5,7 @@ export interface FileOrDir {
     type: FileEntryType
     name: string
     ext: string
+    mimeType: string
     size: number
     path: string
 }
@@ -31,3 +32,5 @@ export interface SavedAudio {
 export interface SearchRequest {
     searchTerm: string
 }
+
+export type PlayingState = "playing" | "paused" | "ended"

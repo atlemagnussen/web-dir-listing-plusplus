@@ -2,12 +2,13 @@ import { LitElement, css, html } from "lit"
 import { customElement, property, state } from "lit/decorators.js"
 import { ref, Ref, createRef } from "lit/directives/ref.js"
 import {Subscription} from "rxjs"
-import { playingFile } from "../stores/fileSelectedStore"
+import { playingFile, autoPlayEnabled, setAutoPlay, setPlayingState, playingState } from "../stores/filesStore"
 import { SliderBar } from "./sliderBar"
 import * as db from "../stores/database"
 import dialog from "../components/dialogEl"
+import { PlayingState } from "@common/types"
 
-type PlayingState = "playing" | "paused" | "stopped"
+
 
 @customElement('audio-player')
 export class AudioPlayer extends LitElement {
@@ -78,16 +79,19 @@ export class AudioPlayer extends LitElement {
             --button-width: 2rem;
         }
     `
-    sub: Subscription | null = null
+    subs: Subscription[] = []
     audioRef: Ref<HTMLAudioElement> = createRef()
+
+    @state()
+    autoPlay = false
 
     connectedCallback() {
         super.connectedCallback()
-        this.sub = playingFile.subscribe(file => {
+        this.subs.push(playingFile.subscribe(file => {
             this.url = file.path
             this.label = file.name
             this.ext = file.ext
-            this.playingState == "stopped"
+            this.playingState == "paused"
             this.currentTime = 0
             db.getAudioItem(this.url).then(v => {
                 if (v && v.audioProcess) {
@@ -98,13 +102,21 @@ export class AudioPlayer extends LitElement {
                     audio.currentTime
                 }
             })
-        })
+        }))
+        this.subs.push(autoPlayEnabled.subscribe(ap => this.autoPlay = ap))
+        this.subs.push(playingState.subscribe(state => {
+            this.playingState = state
+            if (state == "playing")
+                this.saveProgressWhilePlaying()
+            else
+                this.stopSavingProgress()
+        }))
     }
 
     disconnectedCallback() {
         super.disconnectedCallback()
-        if (this.sub) {
-            this.sub.unsubscribe()
+        if (this.subs.length > 0) {
+            this.subs.map(s => s.unsubscribe())
         }
     }
     @property({attribute: true})
@@ -123,7 +135,7 @@ export class AudioPlayer extends LitElement {
     currentTime = 0
 
     @state()
-    playingState: PlayingState = "stopped"
+    playingState: PlayingState = "paused"
 
     get filename() {
         return `${this.label}.${this.ext}`
@@ -147,7 +159,7 @@ export class AudioPlayer extends LitElement {
         if (!this.audioRef.value)
             return
         const audio = this.audioRef.value
-        if (this.playingState == "paused" || this.playingState == "stopped")
+        if (this.playingState == "paused" || this.playingState == "ended")
             audio.play()
         else {
             audio.pause()
@@ -158,23 +170,24 @@ export class AudioPlayer extends LitElement {
     loadedMetaData() {
         if (!this.audioRef.value)
             return
-        this.duration = this.audioRef.value.duration
+        const audioEl = this.audioRef.value
+        this.duration = audioEl.duration
         if (this.currentTime > 0)
-            this.audioRef.value.currentTime = this.currentTime // might be saved progress
-        this.playingState = "stopped"
+            audioEl.currentTime = this.currentTime // might be saved progress
+        this.playingState = "paused"
+
+        if (this.autoPlay) {
+            setTimeout(() => {
+                audioEl.play()
+            }, 500)
+        }
     }
     currentTimeUpdate() {
         if (!this.audioRef.value)
             return
         this.currentTime = this.audioRef.value.currentTime
     }
-    setState(state: PlayingState) {
-        this.playingState = state
-        if (state == "playing")
-            this.saveProgressWhilePlaying()
-        else
-            this.stopSavingProgress()
-    }
+    
     tempTimeChange(e: CustomEvent) {
         const value = e.detail as number
         this.currentTime = value
@@ -212,9 +225,9 @@ export class AudioPlayer extends LitElement {
                 type="${this.ext}"
                 preload="metadata"
                 @loadedmetadata=${this.loadedMetaData}
-                @play=${() => this.setState("playing")}
-                @pause=${() => this.setState("paused")}
-                @ended=${() => this.setState("stopped")}
+                @play=${() => setPlayingState("playing")}
+                @pause=${() => setPlayingState("paused")}
+                @ended=${() => setPlayingState("ended")}
                 @timeupdate=${this.currentTimeUpdate}>
             </audio>
             <div class="wrapper">
@@ -229,7 +242,7 @@ export class AudioPlayer extends LitElement {
                 </div>
                 <div class="section">
                     <div class="controls">
-                        ${this.playingState == "stopped" || this.playingState == "paused" ? 
+                        ${this.playingState == "ended" || this.playingState == "paused" ? 
                             html`<play-button @click=${this.togglePlay}></play-button>` : 
                             html`<pause-button @click=${this.togglePlay}></pause-button>`
                         }
@@ -242,6 +255,10 @@ export class AudioPlayer extends LitElement {
                                 <a href="${this.url}" download filename="${this.filename}">
                                     <download-button></download-button>
                                 </a>
+                                <label for="autoplay">Autoplay</label>
+                                <au-checkbox id="autoplay" .checked=${this.autoPlay} 
+                                    @change=${(e:any) => setAutoPlay(e.target.checked)}>
+                                </au-checkbox>
                             ` : ""}
                         </div>
                     </div>

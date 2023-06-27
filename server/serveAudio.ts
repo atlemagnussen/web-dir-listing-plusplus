@@ -51,15 +51,13 @@ export const serveStream = (req: Request, res: Response, filePath: string) => {
     const { root, rootDir, restOfPath } = split
 
     const fullPath = path.join(rootDir, restOfPath)
-    console.log("file fullpath", fullPath)
 
     const stat = fs.statSync(fullPath)
-    console.log("filestat.size", stat.size)
 
     let mimeType = mime.lookup(fullPath)
     if (!mimeType) {
-        console.warn("Could not find mimeType, set to mpeg")
-        mimeType = "audio/mpeg"
+        console.warn("Could not find mimeType, set to application/octet-stream")
+        mimeType = "application/octet-stream"
     }
     console.log("mimeType", mimeType)
 

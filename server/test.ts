@@ -1,13 +1,15 @@
-import config from "./config"
-import { splitDir } from "./common"
+import { glob } from "glob"
 
-console.log(config)
+const lib = "C:/Users/atlmag/Downloads/"
+const search = "FAKT*.*"
 
-const split1 = splitDir("/")
-console.log("split1", split1)
+const term = lib + search
 
-const split2 = splitDir("/Audio")
-console.log("split2", split2)
+async function perform() {
+    const files = await glob(term, {
+        nocase: true
+    })
+    console.log(files)
+}
 
-const split3 = splitDir("/Audio/Test.mp3")
-console.log("split3", split3)
+perform()

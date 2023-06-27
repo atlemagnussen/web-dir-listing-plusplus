@@ -1,11 +1,15 @@
 import path from "path"
 import express from "express"
+import bodyParser from "body-parser"
 import config from "./config"
 import { serveStream } from "./serveAudio"
-import { generateHtmlFromDir, getFolderContent } from "./readLibDir"
+import { getFolderContent } from "./readLibDir"
 import { zipAndReturnFolder } from "./zipFolder"
+import { SearchRequest } from "@common/types"
+import { searchFile } from "./searchFiles"
 
 const app = express()
+app.use(bodyParser.json()) 
 
 const rootFolder = __dirname
 console.log("rootFolder", rootFolder)
@@ -15,6 +19,14 @@ const webIndex = path.resolve(web, "index.html")
 console.log("libdirs", config.libPaths)
 
 //app.use('/static', express.static(web))
+
+app.post("/searchfiles", async (req, res) => {
+    console.log("search", req.path)
+    console.log("body", req.body)
+    const searchReq = req.body as SearchRequest
+    const files = await searchFile(searchReq.searchTerm)
+    res.send(files)
+})
 
 app.get("/file/*", (req, res) => {
     let filePath = decodeURI(req.path)
@@ -55,6 +67,7 @@ app.use(express.static(web))
 app.get('*', function (req, res) {
     res.sendFile(webIndex)
 })
+
 // app.get('*', (req, res) => {
 //     let path = decodeURI(req.path)
 //     console.log("path*", path)

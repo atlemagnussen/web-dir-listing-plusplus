@@ -1,6 +1,7 @@
 import { LitElement, css, html } from "lit"
 import { customElement, property } from "lit/decorators.js"
 import { goto } from "./services/locationLoader"
+import dialog from "@app/components/dialogEl"
 
 interface NamedLink {
     name: string
@@ -50,7 +51,7 @@ export class DirHeader extends LitElement {
                 font-size: 1.1rem;
             }
         }
-        home-button {
+        home-button, search-button {
             --button-height: 3rem;
             --button-width: 3rem;
         }
@@ -59,6 +60,14 @@ export class DirHeader extends LitElement {
     @property({attribute: true})
     title = ""
     
+    openSearchDialog() {
+        dialog.openHtml({
+            title: "Search",
+            hideOkBtn: true,
+            cancelBtnText: "Close"
+        }, "<search-view></search-view>")
+    }
+
     renderBreadCrumb() {
 
         let pathSplit = location.pathname.split("/")
@@ -89,7 +98,7 @@ export class DirHeader extends LitElement {
                 <a href="/">
                     <home-button></home-button>
                 </a>
-                
+                <search-button @click=${this.openSearchDialog}></search-button>
                 ${location.pathname == "/" ? 
                     html`<h1>${this.title}</h1>` : 
                     this.renderBreadCrumb()

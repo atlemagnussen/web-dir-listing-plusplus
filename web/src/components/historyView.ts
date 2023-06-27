@@ -9,7 +9,7 @@ import { DialogResult } from "./dialogEl"
 export class HistoryViewer extends LitElement {
     static styles = css`
         :host {
-            display: inline-block;
+            display: block;
             overflow: none;
         }
         h3 {
@@ -61,4 +61,3 @@ export class HistoryViewer extends LitElement {
         `
     }
 }
-

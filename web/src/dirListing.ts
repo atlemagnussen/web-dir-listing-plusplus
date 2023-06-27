@@ -73,7 +73,7 @@ export class DirListing extends LitElement {
     }
     renderContent() {
         
-        if (this.entries.length === 0) {
+        if (!this.entries || this.entries.length === 0) {
             return html`<h2>No entries</h2>`
         }
         return html`

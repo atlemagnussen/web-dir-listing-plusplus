@@ -27,3 +27,7 @@ export interface SavedAudio {
     filePath: string
     audioProcess: number
 }
+
+export interface SearchRequest {
+    searchTerm: string
+}

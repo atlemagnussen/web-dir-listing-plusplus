@@ -1,7 +1,7 @@
 import config from "./config"
  
 export const splitDir = (dir: string) => {
-    console.log("splitDir", dir)
+    
     let pathSplit = dir.split("/")
 
     if (pathSplit.length == 0)

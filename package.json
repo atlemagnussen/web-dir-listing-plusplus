@@ -31,6 +31,7 @@
     "@appnest/web-router": "^1.4.2",
     "@types/adm-zip": "^0.5.0",
     "adm-zip": "^0.5.10",
+    "glob": "^10.3.0",
     "lit": "^2.6.1",
     "lodash-es": "^4.17.21",
     "rxjs": "^7.8.0",

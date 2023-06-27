@@ -8,6 +8,11 @@ const get = async <T>(url: string) => {
     return await http<T>(req)
 }
 
+const post = <T>(url: string, data: any) => {
+    const req = createRequest(url, "post", jsonContentType, data)
+    return http<T>(req)
+}
+
 const createRequest = (url: string, method: string, contentType?: string, data?: any) => {
     
     const args: RequestInit = {
@@ -76,4 +81,4 @@ const resHandler = async (res: Response) => {
     }
 }
 
-export default { get }
+export default { get, post }

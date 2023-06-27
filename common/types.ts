@@ -8,6 +8,7 @@ export interface FileOrDir {
     mimeType: string
     size: number
     path: string
+    folderPath?: string
 }
 
 export interface FileEntry {

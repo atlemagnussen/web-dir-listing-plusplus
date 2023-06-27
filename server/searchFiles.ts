@@ -34,16 +34,18 @@ function resultsToTyped(searchResLib: SearchResLib) {
         const type: FileEntryType = stat.isDirectory() ? "folder" : "file"
 
         let ext = ""
-        let webpath = fullPath.replace(libDir, "/downloadfolder/" + lib)
+        let webpath = ""
+        let folderPath = ""
         let size = 0
         if (type == "file") {
             ext = path.extname(fullPath).replace(".", "")
+            folderPath = fullPath.replace(libDir, lib).replace(name, "")
             size = stat.size
             webpath = fullPath.replace(libDir, "/file/" + lib)
             name = name.replace("."+ext, "")
         }
             
-        return { name, type, ext, size, path: webpath }
+        return { name, type, ext, size, path: webpath, folderPath }
 
     }) as FileOrDir[]
 }

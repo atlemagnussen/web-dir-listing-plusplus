@@ -39,7 +39,12 @@ export function gotoSelectFile(file: FileOrDir) {
     const filename = `${file.name}.${file.ext}`
     params = new URLSearchParams()
     params.append("file", filename)
-    let url = new URL(`${window.location.origin}${path}`)
+    
+    let folderPath = path
+    if (file.folderPath)
+        folderPath = file.folderPath
+
+    let url = new URL(`${window.location.origin}${folderPath}`)
     url.searchParams.append("file", filename)
     const fullhref = url.toString()
     const href = getHrefWithoutOrigin(fullhref)

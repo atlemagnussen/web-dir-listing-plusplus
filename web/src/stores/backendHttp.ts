@@ -7,9 +7,12 @@ const get = async <T>(url: string) => {
     const req = createRequest(url, "get", jsonContentType)
     return await http<T>(req)
 }
-
-const post = <T>(url: string, data: any) => {
+const post = <T>(url: string, data?: any) => {
     const req = createRequest(url, "post", jsonContentType, data)
+    return http<T>(req)
+}
+const put = <T>(url: string, data?: any) => {
+    const req = createRequest(url, "put", jsonContentType, data)
     return http<T>(req)
 }
 
@@ -27,7 +30,11 @@ const createRequest = (url: string, method: string, contentType?: string, data?:
             args.body = data
     }
     
-    const fullUrl = `${baseUrl}/${url}`
+    let fullUrl = `${baseUrl}/${url}`
+    if (!url || url === "/")
+        fullUrl = `${baseUrl}`
+    else if (url.startsWith("/"))
+        fullUrl = `${baseUrl}${url}`
     return new Request(fullUrl, args)
 }
 
@@ -81,4 +88,4 @@ const resHandler = async (res: Response) => {
     }
 }
 
-export default { get, post }
+export default { get, post, put }

@@ -39,7 +39,7 @@ const readDir = (dir: string) => {
                 mimeType = mt
         }
         
-        return { name, type, ext, size, mimeType, path: webpath }
+        return { name, type, ext, size, mimeType, path: webpath, folderPath: dir }
     }) as FileOrDir[]
     console.log("entriesTyped", entriesTyped)
     return entriesTyped

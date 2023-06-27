@@ -3,6 +3,6 @@ import { FileOrDir } from "@common/types"
 
 export async function searchFile(searchTerm: string) {
     const data = { searchTerm }
-    const content = await http.post<FileOrDir[]>("searchfiles", data)
+    const content = await http.put<FileOrDir[]>("searchfiles", data)
     return content
 }

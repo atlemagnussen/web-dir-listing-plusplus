@@ -20,7 +20,7 @@ console.log("libdirs", config.libPaths)
 
 //app.use('/static', express.static(web))
 
-app.post("/searchfiles", async (req, res) => {
+app.put("/searchfiles", async (req, res) => {
     console.log("search", req.path)
     console.log("body", req.body)
     const searchReq = req.body as SearchRequest
@@ -55,9 +55,8 @@ app.get("/downloadfolder/*", (req, res) => {
     }
 })
 
-app.get("/foldercontent/*", (req, res) => {
+app.post("*", (req, res) => {
     let folderPath = decodeURI(req.path)
-    folderPath = folderPath.replace("foldercontent/", "")
     console.log("requested folderPath", folderPath)
     const content = getFolderContent(folderPath)
     res.send(content)

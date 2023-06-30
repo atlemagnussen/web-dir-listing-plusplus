@@ -3,14 +3,17 @@ import { getFolderContent } from "@app/stores/server"
 import { ConfigFolder, FileOrDir } from "@common/types"
 import { splitFileName } from "./helpers"
 
-let path = window.location.pathname
-let params = new URLSearchParams(window.location.search)
+const state = {
+    path: window.location.pathname,
+    params: new URLSearchParams(window.location.search)
+}
+
 let content: ConfigFolder = {title:"", entries:[]}
 
 async function loadContentFromPath() {
-    content = await getFolderContent(path)
+    content = await getFolderContent(state.path)
     setContent(content)
-    getFileFromParams(params)
+    getFileFromParams(state.params)
 }
 
 function getFileFromParams(parms: URLSearchParams) {
@@ -30,7 +33,7 @@ export const goto = (e: Event) => {
 }
 
 export const gotoPath = (p: string) => {
-    path = p
+    state.path = p
     loadContentFromPath()
     pushHrefToHistory(p)
 }
@@ -40,7 +43,7 @@ export function gotoSelectFile(file: FileOrDir) {
     let p = new URLSearchParams()
     p.append("file", filename)
     
-    let folderPath = path
+    let folderPath = state.path
     if (file.folderPath) {
         if (file.folderPath.startsWith("/"))
             folderPath = file.folderPath

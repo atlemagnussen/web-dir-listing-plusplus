@@ -34,9 +34,12 @@ export const goto = (e: Event) => {
 }
 
 export const gotoHref = (href: string) => {
-    const split = href.split("?")
-    const path = split[0]
-    state.path = path
+    const url = new URL(`${window.location.origin}${href}`)
+    
+    state.path = url.pathname
+    if (url.search)
+        state.params = url.searchParams
+    
     loadContentFromPath()
     pushHrefToHistory(href)
 }

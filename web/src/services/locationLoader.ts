@@ -12,6 +12,7 @@ let content: ConfigFolder = {title:"", entries:[]}
 
 async function loadContentFromPath() {
     content = await getFolderContent(state.path)
+    console.log("content", content)
     setContent(content)
     getFileFromParams(state.params)
 }
@@ -29,13 +30,15 @@ export const goto = (e: Event) => {
     e.preventDefault()
     const target = e.currentTarget as HTMLAnchorElement
     const href = getHrefWithoutOrigin(target.href)
-    gotoPath(href)
+    gotoHref(href)
 }
 
-export const gotoPath = (p: string) => {
-    state.path = p
+export const gotoHref = (href: string) => {
+    const split = href.split("?")
+    const path = split[0]
+    state.path = path
     loadContentFromPath()
-    pushHrefToHistory(p)
+    pushHrefToHistory(href)
 }
 
 export function gotoSelectFile(file: FileOrDir) {
@@ -61,7 +64,7 @@ export function gotoSelectFile(file: FileOrDir) {
 }
 
 window.addEventListener("popstate", (event: PopStateEvent) => {
-    gotoPath(event.state.href)
+    gotoHref(event.state.href)
 })
 
 const pushHrefToHistory = (href: string) => {

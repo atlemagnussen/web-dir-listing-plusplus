@@ -41,11 +41,17 @@ export class SearchView extends LitElement {
     inputChangeEvent(e: any) {
         this.searchTerm = e.target.value
     }
+    keyPressEvent(e: any) {
+        if (e.key === "Enter") {
+            e.preventDefault()
+            this.search()
+        }
+    }
     render() {
         
         return html`
             <div class="search-box">
-                <input type="text" @input=${this.inputChangeEvent}/>
+                <input type="text" @input=${this.inputChangeEvent} @keypress=${this.keyPressEvent} />
                 <search-button @click=${this.search}></search-button>
             </div>
             <dir-listing .entries=${this.files}></dir-listing>

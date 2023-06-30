@@ -64,6 +64,7 @@ export function gotoSelectFile(file: FileOrDir) {
     if (shouldReloadCont) {
         state.path = url.pathname
         state.params = url.searchParams
+        loadContentFromPath()
     }
 
     const fullhref = url.toString()

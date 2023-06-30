@@ -3,6 +3,7 @@ import { customElement, property } from "lit/decorators.js"
 import { FileOrDir } from "@common/types"
 import { gotoSelectFile } from "@app/services/locationLoader"
 import { goto } from "./services/locationLoader"
+import { DialogResult } from "./components/dialogEl"
 
 @customElement('dir-listing')
 export class DirListing extends LitElement {
@@ -64,6 +65,15 @@ export class DirListing extends LitElement {
     @property({attribute: false})
     entries: FileOrDir[] = []
 
+    dispatchCustomEvent(name: string, detail: any) {
+        const options = { detail, bubbles: true, composed: true}
+        this.dispatchEvent(new CustomEvent(name, options))
+    }
+    selectFile(file: FileOrDir) {
+        this.dispatchCustomEvent(DialogResult.dialogOkFromOutside, {"close": true})
+        gotoSelectFile(file)
+    }
+
     render() {
         return html`
             <div class="wrapper">
@@ -96,7 +106,7 @@ export class DirListing extends LitElement {
                 
                 return html`
                     <p class="filelink">
-                        <file-link @click=${() => gotoSelectFile(e)} .name=${e.name}></file-link>
+                        <file-link @click=${() => this.selectFile(e)} .name=${e.name}></file-link>
                         <file-size-label size=${e.size}></file-size-label>
                         <file-ext-label ext="${e.ext}"></file-ext-label>
                         <a href="${e.path}" download="${e.name}.${e.ext}" title="download file">

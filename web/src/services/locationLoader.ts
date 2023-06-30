@@ -12,7 +12,6 @@ let content: ConfigFolder = {title:"", entries:[]}
 
 async function loadContentFromPath() {
     content = await getFolderContent(state.path)
-    console.log("content", content)
     setContent(content)
     getFileFromParams(state.params)
 }

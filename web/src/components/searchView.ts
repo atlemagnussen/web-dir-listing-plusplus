@@ -34,7 +34,6 @@ export class SearchView extends LitElement {
 
     async search() {
         const res = await searchFile(this.searchTerm)
-        console.log(res)
         this.files = res
     }
 

@@ -51,7 +51,7 @@ export function gotoSelectFile(file: FileOrDir) {
     
     let shouldReloadCont = false
     let folderPath = state.path
-    if (file.folderPath) {
+    if (file.folderPath && file.folderPath !== state.path) {
         shouldReloadCont = true
         if (file.folderPath.startsWith("/"))
             folderPath = file.folderPath

@@ -49,19 +49,26 @@ export function gotoSelectFile(file: FileOrDir) {
     let p = new URLSearchParams()
     p.append("file", filename)
     
+    let shouldReloadCont = false
     let folderPath = state.path
     if (file.folderPath) {
+        shouldReloadCont = true
         if (file.folderPath.startsWith("/"))
             folderPath = file.folderPath
         else
             folderPath = `/${file.folderPath}`
     }
         
-
     let url = new URL(`${window.location.origin}${folderPath}`)
     url.searchParams.append("file", filename)
+    if (shouldReloadCont) {
+        state.path = url.pathname
+        state.params = url.searchParams
+    }
+
     const fullhref = url.toString()
     const href = getHrefWithoutOrigin(fullhref)
+
     pushHrefToHistory(href)
     getFileFromParams(p)
 }

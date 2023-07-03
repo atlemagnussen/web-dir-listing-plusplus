@@ -71,6 +71,7 @@ export class DirHeader extends LitElement {
     renderBreadCrumb() {
 
         let pathSplit = location.pathname.split("/")
+        document.title = this.title + "-" + location.pathname
         pathSplit = pathSplit.filter(p => p)
 
         let link = "/"
@@ -93,6 +94,7 @@ export class DirHeader extends LitElement {
     }
 
     render() {
+        document.title = this.title
         return html`
             <div class="wrapper">
                 <a href="/">

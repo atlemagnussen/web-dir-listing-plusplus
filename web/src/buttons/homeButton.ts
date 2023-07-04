@@ -10,7 +10,8 @@ export class HomeButton extends LitElement {
             overflow: none;
             height: var(--button-height, 4rem);
             width: var(--button-width, 4rem);
-            color: var(--link-color);
+            --btn-color: var(--cyan);
+            color: var(--btn-color);
             cursor: pointer;
         }
         svg {
@@ -18,7 +19,7 @@ export class HomeButton extends LitElement {
             height: 100%;
         }
         .house {
-            fill: var(--link-color);
+            fill: var(--btn-color);
         }
     `
     

@@ -60,6 +60,9 @@ export class DirListing extends LitElement {
             width: 1.4rem;
             height: 1.4rem;
         }
+        home-button {
+            --btn-color: var(--cardinal-blue);
+        }
     `
 
     @property({attribute: false})

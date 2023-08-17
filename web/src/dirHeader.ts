@@ -71,14 +71,14 @@ export class DirHeader extends LitElement {
     renderBreadCrumb() {
 
         let pathSplit = location.pathname.split("/")
-        document.title = location.pathname
+        document.title = decodeURI(location.pathname)
         pathSplit = pathSplit.filter(p => p)
 
         let link = "/"
         let links = pathSplit.map(p => {
             link = `${link}${p}/`
             const namedLink: NamedLink = {
-                name: p,
+                name: decodeURI(p),
                 path: link
             }
             return namedLink
@@ -94,7 +94,9 @@ export class DirHeader extends LitElement {
     }
 
     render() {
-        document.title = this.title
+        const title = decodeURI(this.title)
+        console.log("title", title)
+        document.title = title
         return html`
             <div class="wrapper">
                 <a href="/">
@@ -102,7 +104,7 @@ export class DirHeader extends LitElement {
                 </a>
                 <search-button @click=${this.openSearchDialog}></search-button>
                 ${location.pathname == "/" ? 
-                    html`<h1>${this.title}</h1>` : 
+                    html`<h1>${title}</h1>` : 
                     this.renderBreadCrumb()
                 }
                 

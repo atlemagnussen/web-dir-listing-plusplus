@@ -165,7 +165,6 @@ export class SliderBar extends LitElement {
                 value=${this.current}
                 @change=${this.changeEvent}
                 @input=${this.inputEvent}>
-                <span>${this.current} / ${duration}</span>
         `
     }
 }

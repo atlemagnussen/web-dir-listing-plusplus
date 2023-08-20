@@ -8,8 +8,6 @@ import * as db from "../stores/database"
 import dialog from "../components/dialogEl"
 import { PlayingState } from "@common/types"
 
-
-
 @customElement('audio-player')
 export class AudioPlayer extends LitElement {
     static styles = css`
@@ -99,7 +97,7 @@ export class AudioPlayer extends LitElement {
                         return
                     const audio = this.audioRef.value
                     this.currentTime = v.audioProcess
-                    audio.currentTime
+                    audio.currentTime = this.currentTime
                 }
             })
         }))

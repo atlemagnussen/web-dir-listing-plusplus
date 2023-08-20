@@ -104,8 +104,16 @@ export class SliderBar extends LitElement {
         }
 
     `
-    @property({attribute: false})
-    duration = 0
+
+    _duration = 0
+
+    set duration(value) {
+        this._duration = Math.ceil(value)
+        this.requestUpdate()
+    }
+    get duration() {
+        return this._duration
+    }
 
     _value = 0
     
@@ -157,6 +165,7 @@ export class SliderBar extends LitElement {
                 value=${this.current}
                 @change=${this.changeEvent}
                 @input=${this.inputEvent}>
+                <span>${this.current} / ${duration}</span>
         `
     }
 }

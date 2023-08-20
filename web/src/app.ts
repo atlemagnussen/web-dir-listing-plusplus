@@ -11,6 +11,7 @@ import "./components"
 import "./vars.css"
 import "./index.css"
 import "./services/locationLoader"
+import "./services/playerService"
 
 @customElement('dir-listing-app')
 export class DirListingApp extends LitElement {

@@ -1,6 +1,7 @@
 import { playingState, playingFile, content, autoPlayEnabled } from "@app/stores/filesStore"
 import { ConfigFolder, FileOrDir, PlayingState } from "@common/types"
 import { gotoSelectFile } from "./locationLoader"
+import * as db from "../stores/database"
 
 let autoPlay = false
 autoPlayEnabled.subscribe(ap => autoPlay = ap)
@@ -8,6 +9,7 @@ autoPlayEnabled.subscribe(ap => autoPlay = ap)
 let state: PlayingState = "paused"
 playingState.subscribe(st => {
     state = st
+    console.log("playing state", state)
     if (state == "ended" && autoPlay)
         playNextAudio()
 })
@@ -19,7 +21,7 @@ let contFolder:ConfigFolder = {title: "", entries: []}
 content.subscribe(c => contFolder = c) 
 
 
-function playNextAudio() {
+async function playNextAudio() {
     if (contFolder.entries.length < 1)
         return
     
@@ -40,6 +42,8 @@ function playNextAudio() {
         }
     }
     if (nextFile) {
+        // reset progression on autoplay
+        await db.saveAudioItem(nextFile.path, 0)
         gotoSelectFile(nextFile)
     }
 }

@@ -11,7 +11,10 @@ export const setAutoPlay = (val: boolean) => AutoplaySubject.next(val)
 
 const PlayingStateSubject = new BehaviorSubject<PlayingState>("paused")
 export const playingState = PlayingStateSubject.asObservable()
-export const setPlayingState = (state: PlayingState) => PlayingStateSubject.next(state)
+export const setPlayingState = (state: PlayingState) => {
+    // console.log("playing state store", state)
+    PlayingStateSubject.next(state)
+}
 
 const contentSubject = new BehaviorSubject<ConfigFolder>({title: "lib dir", entries: []})
 export const content = contentSubject.asObservable()

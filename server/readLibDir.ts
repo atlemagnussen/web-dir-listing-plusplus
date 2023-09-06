@@ -37,6 +37,8 @@ const readDir = (dir: string) => {
             let mt = mime.lookup(fullPath)
             if (mt)
                 mimeType = mt
+            if (ext == "m4b")
+                mimeType = "audio/x-m4b"
         }
         
         return { name, type, ext, size, mimeType, path: webpath, folderPath: dir }

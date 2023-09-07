@@ -1,27 +1,11 @@
-
-import { parseFile, orderTags } from "music-metadata"
 import mime from "mime-types"
-import { glob } from "glob"
 
-const lib = "C:/Users/atlmag/Downloads/"
-const search = "FAKT*.*"
+const extensions = ["mp3", "aac", "m4a", "m4b", "ogg", "opus", "flac", "wav", "webm", "mp4", "m4v", "mov", "avi", "mkv", "wmv", "mpg", "mpeg", "m4v", "m4p", "m4r", "m4v", "3gp", "3g2", "flv", "f4v", "f4p", "f4a", "f4b"]
 
-const term = lib + search
-
-async function perform2() {
-    const files = await glob(term, {
-        nocase: true
-    })
-    console.log(files)
-}
-
-
-
-const filepath = "/Users/atle/Downloads/Audio/Explorer.01.-.Communication.with.Non-Physical.Entities.mp3"
-
-const perform = async () => {
-    const info = await parseFile(filepath)
-    console.log(info)
-}
-
-perform()
+extensions.forEach(ext => {
+    const mt = mime.lookup(ext)
+    if (mt)
+        console.log(`${ext} = ${mt}`)
+    else
+        console.log(`${ext} MISSING`)
+})

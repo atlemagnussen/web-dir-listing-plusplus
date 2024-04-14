@@ -77,6 +77,6 @@ if (!config.libPaths)
     throw new Error("missing libpath!!")
 
 let port = config.port ? config.port : 5000
-app.listen(port, '0.0.0.0', () => {
+app.listen(port, '::', () => {
     console.log(`[server]: Server is running at http://localhost:${port}`)
 })

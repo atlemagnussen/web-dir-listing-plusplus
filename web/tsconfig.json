@@ -32,6 +32,7 @@
         "common/**/*.ts",
         "src/**/*.ts"
     ],
+    "exclude": ["./types/**/*"],
     "references": [
         {
             "path": "./tsconfig.node.json"

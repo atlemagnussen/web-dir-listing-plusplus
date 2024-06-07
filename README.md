@@ -42,5 +42,11 @@ npm i
 npm run prod
 ```
 
+## Container
+```sh
+docker build --label web-dir-listing --tag web-dir-listing .
+```
+
 ## thanks to
 - [Style input range](https://www.cssportal.com/style-input-range/)
+

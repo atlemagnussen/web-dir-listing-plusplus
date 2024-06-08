@@ -51,11 +51,11 @@ docker build --label web-dir-listing --tag web-dir-listing .
 # create volume for binding
 docker volume create \
 --opt type=none \
---opt device=/mnt/ \
+--opt device=/mnt/some/folder/on/host \
 --opt o=bind \
 datavolume
 
-# run
+# run - LIBPATHS in .env file must be relative to /data
 docker run --env-file .env.prod -v datavolume:/data:ro  -d --rm -p 8000:5000 --name web-dir-listing web-dir-listing
 ```
 

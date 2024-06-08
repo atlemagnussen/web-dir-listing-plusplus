@@ -10,9 +10,11 @@ ARG NODE_VERSION=20.14
 
 FROM node:${NODE_VERSION}-alpine
 
+# volume to mount data wed-dir-list will read
+VOLUME /data
+
 # Use production node environment by default.
 ENV NODE_ENV production
-
 
 WORKDIR /usr/app
 

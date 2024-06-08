@@ -32,10 +32,11 @@ COPY . .
 
 #build client
 WORKDIR /usr/app/web
-RUN mkdir types
+RUN npm run build
 
 #build server
 WORKDIR /usr/app/server
+RUN npm run build
 
 # Run the application as a non-root user.
 USER node

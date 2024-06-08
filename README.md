@@ -45,6 +45,8 @@ npm run prod
 ## Container
 ```sh
 docker build --label web-dir-listing --tag web-dir-listing .
+
+docker run --env-file .env.prod -p 5000:5000 web-dir-listing
 ```
 
 ## thanks to

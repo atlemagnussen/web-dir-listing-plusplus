@@ -12,8 +12,8 @@ FROM node:${NODE_VERSION}-alpine
 
 # volume to mount data wed-dir-list will read
 VOLUME /data
+# RUN chown -R node:root /data not necessary
 
-RUN chown -R node:node /data
 # Use production node environment by default.
 ENV NODE_ENV production
 
@@ -27,7 +27,6 @@ RUN --mount=type=bind,source=package.json,target=package.json \
     --mount=type=bind,source=package-lock.json,target=package-lock.json \
     --mount=type=cache,target=/root/.npm \
     npm ci --omit=dev
-
 
 
 # Copy the rest of the source files into the image.

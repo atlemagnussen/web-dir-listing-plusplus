@@ -46,7 +46,20 @@ npm run prod
 ```sh
 docker build --label web-dir-listing --tag web-dir-listing .
 
-docker run --env-file .env.prod -d --rm -p 5000:5000 web-dir-listing
+#!/usr/bin/env bash
+
+docker volume create \
+--opt type=none \
+--opt device=/mnt/ \
+--opt o=bind \
+datavolume
+
+docker run --env-file .env.prod -v datavolume:/data:ro  -d --rm -p 8000:5000 --name web-dir-listing web-dir-listing
+```
+
+enter shell
+```sh
+docker exec -it web-dir-listing sh
 ```
 
 ## thanks to

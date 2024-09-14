@@ -44,7 +44,7 @@ RUN npm run build
 USER node
 
 # Expose the port that the application listens on.
-EXPOSE 5000
+EXPOSE 8000
 
 # Run the application.
 CMD node dist/server/index.js

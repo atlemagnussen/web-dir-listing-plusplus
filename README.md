@@ -4,13 +4,14 @@
 <img src="https://raw.githubusercontent.com/atlemagnussen/web-dir-listing-plusplus/main/webdirlistingplusplus.png" alt="Screenshot of web-dir-listing-plusplus" width="400"/>
 </a>  
 
-Simple directory listing app for web.  
-One or more folders can be configured to be displayed at top level and then navigated like a normal file system  
+Simple directory and files listing app for web.  
+One or more folders can be configured to be displayed at top level and then navigated like a file system  
+
 plus some more:
 
 - files are displayed with a download link and some info
 - folders have a navigation link and a download all content as a zip link (be patient when you click it)
-- Also an audio player to listen to audio files directly  
+- An audio player to listen to audio files directly  
 
 Usecase could be to make files available for download and distribution on your internal network.  
 There is currently no authentication so use with care
@@ -43,6 +44,9 @@ npm run prod
 ```
 
 ## Container
+
+[Builds on docker hub](https://hub.docker.com/repository/docker/atlmag)
+
 ```sh
 # build
 docker build --label web-dir-listing --tag web-dir-listing .

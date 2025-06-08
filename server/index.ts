@@ -91,6 +91,15 @@ if (!config.libPaths)
 
 let port = config.port ? config.port : 5000
 let host = "::"
-app.listen(port, host, () => {
+const server = app.listen(port, host, () => {
     console.log(`[server]: Server is running at http://${host}:${port}`)
+})
+
+process.on("SIGTERM", () => {
+    console.info("SIGTERM signal received.")
+    console.log("Closing http server.")
+    server.close(() => {
+        console.log("Http server closed.")
+        process.exit(0)
+    })
 })

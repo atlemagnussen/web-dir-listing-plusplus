@@ -68,7 +68,7 @@ app.get("/downloadfolder/*", authorize, (req, res) => {
     }
 })
 
-app.post("*", (req, res) => {
+app.post("*", authorize, (req, res) => {
     let folderPath = decodeURI(req.path)
     console.log("requested folderPath", folderPath)
     const content = getFolderContent(folderPath)

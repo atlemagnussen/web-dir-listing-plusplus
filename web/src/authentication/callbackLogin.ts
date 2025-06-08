@@ -3,7 +3,7 @@ Log.setLogger(console)
 
 const settings: UserManagerSettings = {
     authority: "https://id.atle.guru",
-    client_id: "webclient",
+    client_id: "web",
     redirect_uri: window.location.origin,
     loadUserInfo: true,
     response_mode: "query",

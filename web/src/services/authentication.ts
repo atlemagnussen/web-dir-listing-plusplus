@@ -9,7 +9,7 @@ const logPrefix = "webDirOidc::"
 const rootPath = window.location.origin
 let oicdConfig: UserManagerSettings = {
     authority: "https://id.atle.guru",
-    client_id: "webclient",
+    client_id: "web",
     redirect_uri: `${rootPath}/callback.html`,
     response_mode: "query",
     response_type: "code",

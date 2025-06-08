@@ -82,6 +82,7 @@ export class DirListingApp extends LitElement {
         authUser.subscribe(u => {
             this.user = u
         })
+        oidc.initialize()
     }
 
     async loginUser() {

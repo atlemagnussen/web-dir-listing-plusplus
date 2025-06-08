@@ -33,7 +33,7 @@ app.get("/private", authorize, async (req, res) => {
     res.json({ message: "Private endpoint" })
 })
 
-app.put("/searchfiles", async (req, res) => {
+app.put("/searchfiles", authorize, async (req, res) => {
     console.log("search", req.path)
     console.log("body", req.body)
     const searchReq = req.body as SearchRequest
@@ -41,7 +41,7 @@ app.put("/searchfiles", async (req, res) => {
     res.send(files)
 })
 
-app.get("/file/*", (req, res) => {
+app.get("/file/*", authorize, (req, res) => {
     let filePath = decodeURI(req.path)
     console.log("requested file path", filePath)
     try {
@@ -52,7 +52,7 @@ app.get("/file/*", (req, res) => {
     }
 })
 
-app.get("/downloadfolder/*", (req, res) => {
+app.get("/downloadfolder/*", authorize, (req, res) => {
     let filePath = decodeURI(req.path)
     console.log("requested file path", filePath)
     try {

@@ -4,20 +4,22 @@
     "description": "atle audio¨",
     "main": "index.js",
     "scripts": {
-      "start": "cross-env NODE_ENV=local ts-node index.ts",
-      "test": "node test.mjs",
-      "test:ts": "cross-env NODE_ENV=local ts-node test.ts",
-      "build": "tsc",
-      "prod": "cross-env NODE_ENV=prod node ./dist/index.js",
-      "prod:ts": "cross-env NODE_ENV=prod ts-node index.ts"
+        "start": "cross-env NODE_ENV=local ts-node index.ts",
+        "test": "node test.mjs",
+        "test:ts": "cross-env NODE_ENV=local ts-node test.ts",
+        "build": "tsc",
+        "prod": "cross-env NODE_ENV=prod node ./dist/index.js",
+        "prod:ts": "cross-env NODE_ENV=prod ts-node index.ts"
     },
     "keywords": [
-      "express",
-      "directory",
-      "listing",
-      "audio"
+        "express",
+        "directory",
+        "listing",
+        "audio"
     ],
     "author": "atlemagnussen",
-    "license": "ISC"
-  }
-  
+    "license": "ISC",
+    "dependencies": {
+        "express-oauth2-jwt-bearer": "^1.6.1"
+    }
+}

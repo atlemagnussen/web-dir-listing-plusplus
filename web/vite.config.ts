@@ -1,4 +1,5 @@
 import { defineConfig } from "vite"
+import {viteStaticCopy} from "vite-plugin-static-copy"
 import path from "path"
 
 const projectRootDir = path.resolve(__dirname)
@@ -20,6 +21,14 @@ export default defineConfig({
             "@common": commonSrcPath
         }  
     },
+    plugins: [viteStaticCopy({
+        targets: [
+            {
+                src: path.join(appSrcPath, "authentication/*.html"),
+                dest: ".",
+            }
+        ]
+    })],
     build: {
         outDir: buildOutput,  
         sourcemap: true,

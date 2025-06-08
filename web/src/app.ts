@@ -1,8 +1,9 @@
 import { LitElement, css, html } from "lit"
-import { customElement, property } from "lit/decorators.js"
+import { customElement, property, state } from "lit/decorators.js"
 import type { ConfigFolder } from "@common/types"
 import { content } from "@app/stores/filesStore"
-
+import oidc from "@app/services/authentication"
+import { authUser } from "./stores/userStore"
 import "./dirHeader"
 import "./filePreview"
 import "./dirListing"
@@ -12,6 +13,7 @@ import "./vars.css"
 import "./index.css"
 import "./services/locationLoader"
 import "./services/playerService"
+import { AuthUser } from "./stores/userStore"
 
 @customElement('dir-listing-app')
 export class DirListingApp extends LitElement {
@@ -72,11 +74,21 @@ export class DirListingApp extends LitElement {
         entries: []
     }
 
+    @state()
+    user: AuthUser = {}
     constructor() {
         super()
         content.subscribe(con => this.config = con)
+        authUser.subscribe(u => {
+            this.user = u
+        })
     }
 
+    async loginUser() {
+        let user = await oidc.initialize()
+        if (user == null)
+            oidc.login()
+    }
     render() {
         return html`
             <header>
@@ -84,6 +96,11 @@ export class DirListingApp extends LitElement {
             </header>
 
             <main>
+                ${this.user.accessToken ? html`
+                    <span>Logged in: ${this.user.accessToken}</span>
+                ` : html`
+                    <span @click=${this.loginUser}>Not logged in</span>
+                `}
                 <dir-listing .entries=${this.config.entries}></dir-listing>
             </main>
 

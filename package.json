@@ -16,25 +16,27 @@
   "license": "ISC",
   "devDependencies": {
     "cross-env": "^7.0.3",
-    "ts-node": "^10.9.1"
+    "dotenv": "^16.5.0",
+    "ts-node": "^10.9.1",
+    "vite": "^6.3.5",
+    "vite-plugin-static-copy": "^3.0.0"
   },
   "dependencies": {
     "@appnest/web-router": "^1.4.2",
     "@types/adm-zip": "^0.5.0",
     "@types/express": "^4.17.21",
     "@types/lodash-es": "^4.17.12",
-    "@types/mime-types": "^2.1.4",
-    "@types/node": "^20.14.2",
+    "@types/mime-types": "^3.0.1",
+    "@types/node": "^22.15.30",
     "adm-zip": "^0.5.10",
-    "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "glob": "^10.3.0",
     "lit": "^3.1.4",
     "lodash-es": "^4.17.21",
-    "mime-types": "^2.1.35",
+    "mime-types": "^3.0.1",
     "music-metadata": "^8.1.4",
+    "oidc-client-ts": "^3.2.1",
     "rxjs": "^7.8.0",
-    "typescript": "^5.4.5",
-    "vite": "^5.2.13"
+    "typescript": "^5.4.5"
   }
 }

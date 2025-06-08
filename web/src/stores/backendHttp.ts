@@ -1,5 +1,11 @@
+import { authUser, type AuthUser } from "@app/stores/userStore"
 
+let user: AuthUser = {}
 const baseUrl = location.origin
+
+authUser.subscribe(u => {
+    user = u
+})
 
 const jsonContentType = "application/json"
 
@@ -18,11 +24,18 @@ const put = <T>(url: string, data?: any) => {
 
 const createRequest = (url: string, method: string, contentType?: string, data?: any) => {
     
+    const headers: Record<string, string> = {}
+
+    if (contentType)
+        headers["Content-Type"] = contentType
+
+    if (user.accessToken)
+        headers["Authorization"] = `Bearer ${user.accessToken}`
+    
     const args: RequestInit = {
         method,
-        headers: {"Content-Type": contentType} as HeadersInit
+        headers
     }
-    
     if (data) {
         if (contentType === jsonContentType)
             args.body = JSON.stringify(data)
@@ -49,7 +62,7 @@ async function http<T>(request: RequestInfo): Promise<T> {
     return resHandler(res)
 }
 
-const resHandler = async (res: Response) => {
+async function resHandler(res: Response) {
     let errorFetchMsg: string
     if (res.ok) {
         const contentType = res.headers.get("content-type")

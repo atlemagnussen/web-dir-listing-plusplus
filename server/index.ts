@@ -7,6 +7,7 @@ import { getFolderContent } from "./readLibDir"
 import { zipAndReturnFolder } from "./zipFolder"
 import { SearchRequest } from "@common/types"
 import { searchFile } from "./searchFiles"
+import { auth } from "express-oauth2-jwt-bearer"
 
 const app = express()
 app.use(bodyParser.json()) 
@@ -18,7 +19,19 @@ const webIndex = path.resolve(web, "index.html")
 
 console.log("libdirs", config.libPaths)
 
+const authorize = auth({
+    audience: "api1",
+    issuerBaseURL: "https://id.atle.guru/",
+})
 //app.use('/static', express.static(web))
+
+app.get("/public", async (req, res) => {
+    res.json({ message: "Public endpoint" })
+})
+
+app.get("/private", authorize, async (req, res) => {
+    res.json({ message: "Private endpoint" })
+})
 
 app.put("/searchfiles", async (req, res) => {
     console.log("search", req.path)

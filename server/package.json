@@ -18,8 +18,5 @@
         "audio"
     ],
     "author": "atlemagnussen",
-    "license": "ISC",
-    "dependencies": {
-        "express-oauth2-jwt-bearer": "^1.6.1"
-    }
+    "license": "ISC"
 }

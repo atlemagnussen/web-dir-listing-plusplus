@@ -20,7 +20,7 @@ const webIndex = path.resolve(web, "index.html")
 console.log("libdirs", config.libPaths)
 
 const authorize = auth({
-    audience: "api1",
+    audience: "webdir",
     issuerBaseURL: "https://id.atle.guru/",
 })
 //app.use('/static', express.static(web))

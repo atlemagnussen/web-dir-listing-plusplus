@@ -2,11 +2,17 @@ import { setContent, setPlayingFile } from "@app/stores/filesStore"
 import { getFolderContent } from "@app/stores/server"
 import { ConfigFolder, FileOrDir } from "@common/types"
 import { splitFileName } from "./helpers"
+import { authUser } from "@app/stores/userStore"
 
 const state = {
     path: window.location.pathname,
     params: new URLSearchParams(window.location.search)
 }
+
+authUser.subscribe(u => {
+    if (u.accessToken)
+        loadContentFromPath()
+})
 
 let content: ConfigFolder = {title:"", entries:[]}
 

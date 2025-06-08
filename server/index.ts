@@ -41,7 +41,7 @@ app.put("/searchfiles", authorize, async (req, res) => {
     res.send(files)
 })
 
-app.get("/file/*", authorize, (req, res) => {
+app.get("/file/*", (req, res) => {
     let filePath = decodeURI(req.path)
     console.log("requested file path", filePath)
     try {

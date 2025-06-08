@@ -21,6 +21,8 @@
   "author": "atlemagnussen",
   "license": "ISC",
   "dependencies": {
-    "esbuild": "^0.25.5"
+    "esbuild": "^0.25.5",
+    "vite": "^6.3.5",
+    "vite-plugin-static-copy": "^3.0.0"
   }
 }

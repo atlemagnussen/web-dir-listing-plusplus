@@ -17,9 +17,7 @@
   "devDependencies": {
     "cross-env": "^7.0.3",
     "dotenv": "^16.5.0",
-    "ts-node": "^10.9.1",
-    "vite": "^6.3.5",
-    "vite-plugin-static-copy": "^3.0.0"
+    "ts-node": "^10.9.1"
   },
   "dependencies": {
     "@appnest/web-router": "^1.4.2",
@@ -38,6 +36,8 @@
     "music-metadata": "^8.1.4",
     "oidc-client-ts": "^3.2.1",
     "rxjs": "^7.8.0",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "vite": "^6.3.5",
+    "vite-plugin-static-copy": "^3.0.0"
   }
 }

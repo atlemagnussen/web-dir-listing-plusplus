@@ -39,6 +39,7 @@ RUN npm run build
 
 #build server
 WORKDIR /usr/app/server
+RUN npm install
 RUN npm run build
 
 # Run the application as a non-root user.

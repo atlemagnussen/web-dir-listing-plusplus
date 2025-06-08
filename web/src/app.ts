@@ -98,7 +98,7 @@ export class DirListingApp extends LitElement {
 
             <main>
                 ${this.user.accessToken ? html`
-                    <span>Logged in: ${this.user.accessToken}</span>
+                    <span>Logged in: ${this.user.userName}</span>
                 ` : html`
                     <span @click=${this.loginUser}>Not logged in</span>
                 `}

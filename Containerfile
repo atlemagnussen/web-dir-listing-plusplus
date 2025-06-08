@@ -34,6 +34,7 @@ COPY . .
 
 #build client
 WORKDIR /usr/app/web
+RUN npm install
 RUN npm run build
 
 #build server

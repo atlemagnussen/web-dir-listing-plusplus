@@ -19,5 +19,8 @@
     "web"
   ],
   "author": "atlemagnussen",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "esbuild": "^0.25.5"
+  }
 }

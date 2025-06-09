@@ -22,7 +22,7 @@ const libPathsStr = process.env.LIBPATHS as string
 let libPathsTemp: Record<string, string> | undefined
 if (libPathsStr) {
 
-    // try json structure first
+    // try if stringified json structure first
     try {
         const libPathsJson = JSON.parse(libPathsStr) as Record<string, string>
         console.log("libpathJson", libPathsJson)
@@ -33,7 +33,7 @@ if (libPathsStr) {
     }
 
     if (!libPathsTemp) {
-        // try array for container config
+        // try array of folder names relative to data folder for container config
         const libArr = libPathsStr.split(",")
         if (libArr.length > 0) {
             libPathsTemp = {}

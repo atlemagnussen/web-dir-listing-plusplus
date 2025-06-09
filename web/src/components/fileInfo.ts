@@ -1,5 +1,5 @@
 import { FileOrDir } from "@common/types"
-import { LitElement, css, html } from "lit"
+import { LitElement, css, html, nothing } from "lit"
 import { customElement, property } from "lit/decorators.js"
 
 
@@ -44,9 +44,15 @@ export class FileInfo extends LitElement {
     `
 
     @property({attribute: false})
-    file: FileOrDir = { type: "file", name: "", ext: "", size: 0, path: "", mimeType: ""}
+    file: FileOrDir | null = null
 
     render() {
+        if (!this.file) {
+            return html`
+                <div class="wrapper">
+                </div>
+            `
+        }
         return html`
             <div class="wrapper"> 
                 <div class="section">
@@ -54,7 +60,6 @@ export class FileInfo extends LitElement {
                 </div>
                 <div class="section">
                     <div class="information">
-                        
                         <div class="fileinfo">
                             ${this.file.ext ? html`
                                 <file-ext-label ext="${this.file.ext}"></file-ext-label>
@@ -62,7 +67,14 @@ export class FileInfo extends LitElement {
                                 <a href="${this.file.path}" download filename="${this.file.name}">
                                     <download-button></download-button>
                                 </a>
-                            ` : ""}
+                            ` : nothing}
+
+                            ${this.file.ext.toLowerCase() === "pdf" ? html`
+                                <a href="${this.file.path}" filename="${this.file.name}" target="_blank">
+                                    <open-button></open-button>
+                                </a>
+                                <preview-button></preview-button>
+                            ` : nothing }
                         </div>
                     </div>
                 </div>

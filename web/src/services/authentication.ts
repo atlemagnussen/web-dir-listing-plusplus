@@ -1,6 +1,4 @@
-
-
-import type { UserManagerSettings, UserLoadedCallback, UserSignedOutCallback } from "oidc-client-ts"
+import type { UserManagerSettings } from "oidc-client-ts"
 import { Log, UserManager, WebStorageStateStore } from "oidc-client-ts"
 import { setAuthUser, setUserLoggedOut } from "@app/stores/userStore"
 
@@ -27,16 +25,6 @@ let oicdConfig: UserManagerSettings = {
 Log.setLogger(console)
 let manager = new UserManager(oicdConfig)
 
-function addUserLoaded(fn: UserLoadedCallback) {
-    manager.events.addUserLoaded(fn)
-}
-function addUserSignedOut(fn: UserSignedOutCallback) {
-    manager.events.addUserSignedOut(fn)
-}
-let events = {
-    addUserLoaded,
-    addUserSignedOut
-}
 function setupEvents() {
     manager.events.addUserLoaded((user) => {
         const loadedMsg = `user ${user.profile.sub} loaded`
@@ -151,7 +139,6 @@ setupEvents()
 
 export default { 
     initialize,
-    events,
     getLoggedInUser,
     getUser,
     login,

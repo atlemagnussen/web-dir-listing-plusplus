@@ -48,7 +48,7 @@ export const serveStream = (req: Request, res: Response, filePath: string) => {
     const split = splitDir(filePath)
     if (!split)
         return []
-    const { root, rootDir, restOfPath } = split
+    const { rootDir, restOfPath } = split
 
     const fullPath = path.join(rootDir, restOfPath)
 

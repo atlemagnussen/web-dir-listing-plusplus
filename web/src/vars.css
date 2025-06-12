@@ -8,7 +8,7 @@
     --primary-background: #222;
     --secondary-background: #111;
 
-    --yellow: #fbff00;
+    --yellow: #ffff00;
     --yellow-medium: #ffea00;
     --yellow-dark: #9b9101;
 
@@ -27,7 +27,7 @@
     --peach: #FF96AB;
     --peach-dark: #F27B7F;
     --headline-color: var(--cardinal);
-    --link-text: var(--magenta);
+    --link-text: white;
 
     --box-shadow: #A6A6A6;
     --slider-track: var(--cyan-dark);

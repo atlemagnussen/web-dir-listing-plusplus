@@ -69,7 +69,7 @@ export class FileInfo extends LitElement {
                                 </a>
                             ` : nothing}
 
-                            ${this.file.ext.toLowerCase() === "pdf" ? html`
+                            ${this.isFileBrowserCanView() ? html`
                                 <a href="${this.file.path}" filename="${this.file.name}" target="_blank">
                                     <open-button></open-button>
                                 </a>
@@ -80,5 +80,11 @@ export class FileInfo extends LitElement {
                 </div>
             </div>
         `
+    }
+    browserFileTypes = ["pdf", "txt", "jpg", "png"]
+    isFileBrowserCanView() {
+        if (!this.file)
+            return false;
+        return this.browserFileTypes.includes(this.file.ext.toLowerCase())
     }
 }

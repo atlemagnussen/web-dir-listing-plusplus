@@ -68,9 +68,9 @@ export class AudioPlayer extends LitElement {
             align-items: center;
             gap: 1rem;
         }
-        download-button {
-            --button-height: 1.3rem;
-            --button-width: 1.3rem;
+        download-button, open-button {
+            --button-height: 1.4rem;
+            --button-width: 1.4rem;
         }
         history-button {
             --button-height: 2rem;
@@ -252,6 +252,9 @@ export class AudioPlayer extends LitElement {
                                 <file-ext-label ext="${this.ext}"></file-ext-label>
                                 <a href="${this.url}" download filename="${this.filename}">
                                     <download-button></download-button>
+                                </a>
+                                <a href="${this.url}" target="_blank">
+                                    <open-button></open-button>
                                 </a>
                                 <label for="autoplay">Autoplay</label>
                                 <au-checkbox id="autoplay" .checked=${this.autoPlay} 

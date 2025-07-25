@@ -9,6 +9,7 @@ let oicdConfig: UserManagerSettings = {
     authority: "https://id.atle.guru",
     client_id: "web",
     redirect_uri: `${rootPath}/callback.html`,
+    popup_redirect_uri: `${rootPath}/popup.html`,
     response_mode: "query",
     response_type: "code",
     scope:"openid profile api1",
@@ -90,10 +91,10 @@ async function getLoggedInUser() {
         return user
     }
 }
-function login() {
-    manager.signinRedirect({ 
-        state: window.location.href
-    })
+async function login() {
+    const user = await manager.signinPopup()
+    setAuthUser(user)
+    //manager.signinRedirect()
 }
 
 // Must be called initially

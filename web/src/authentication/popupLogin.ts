@@ -5,7 +5,7 @@ const settings: UserManagerSettings = {
     authority: "https://id.atle.guru",
     client_id: "web",
     redirect_uri: "",
-    popup_redirect_uri: `/callback.html`,
+    popup_redirect_uri: `/popup.html`,
     response_type: "code",
     userStore: new WebStorageStateStore({ store: window.sessionStorage }),
 }

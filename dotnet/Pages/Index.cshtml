@@ -1,0 +1,25 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+@if(Model.LibPathConfig is null)
+{
+    <div class="text-center">
+        <h1>No config</h1>
+    </div>
+}
+else
+{
+    <div>
+        @if (Model.LibPathConfig.Paths != null)
+        {
+            @foreach (var path in Model.LibPathConfig.Paths)
+            {
+                <div>@path.Key - @path.Value</div>
+            }
+        }
+    </div>
+}
+

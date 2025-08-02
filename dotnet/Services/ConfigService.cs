@@ -13,7 +13,7 @@ public class ConfigService
     public LibPathConfig GetLibPaths()
     {
         var libPaths = new LibPathConfig();
-        var configSection = _config.GetSection("LibPaths");
+        var configSection = _config.GetSection("FileServerConfig");
         configSection.Bind(libPaths);
         return libPaths;
     }

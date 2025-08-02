@@ -18,7 +18,9 @@ else
         {
             @foreach (var path in Model.LibPathConfig.Paths)
             {
-                <div>@path.Key - @path.Value</div>
+                <div>
+                    <a href="@path.Key">@path.Key</a>
+                </div>
             }
         }
     </div>

@@ -1,4 +1,5 @@
 using Server;
+using Server.Models;
 using Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +9,10 @@ builder.Services.AddRazorPages();
 
 builder.AddAuthenticationServer();
 
+var configSection = builder.Configuration.GetSection("FileServerConfig");
+builder.Services.Configure<LibPathConfig>(configSection);
 builder.Services.AddTransient<ConfigService>();
+builder.Services.AddTransient<FolderService>();
 
 var app = builder.Build();
 
@@ -23,6 +27,9 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseRouting();
+
+app.MapFallbackToPage("/FileServer");
+
 
 app.UseAuthorization();
 

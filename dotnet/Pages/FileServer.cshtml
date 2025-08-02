@@ -1,0 +1,19 @@
+@page
+@model FileServerModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<h1>FileServer</h1>
+
+<h2>Route = @Model.Route</h2>
+
+<ul>
+@foreach(var foil in Model.FolderContent)
+{
+    <li>
+        @foil.Name
+    </li>
+
+}
+</ul>

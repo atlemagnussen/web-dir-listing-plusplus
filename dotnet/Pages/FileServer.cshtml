@@ -1,19 +1,29 @@
-@page
+@page "/{root}/{*path}"
 @model FileServerModel
 @{
     ViewData["Title"] = "Home page";
 }
 
-<h1>FileServer</h1>
-
 <h2>Route = @Model.Route</h2>
 
-<ul>
-@foreach(var foil in Model.FolderContent)
+<ul class="listing">
+@if (Model.FolderContent?.Entries != null)
 {
-    <li>
-        @foil.Name
-    </li>
-
+    foreach(var foil in Model.FolderContent.Entries)
+    {
+        <li>
+            @if(foil.Type == Models.FileEntryType.Folder)
+            {
+                <a href="@foil.Name/">@foil.Name</a>
+            }
+            else
+            {
+                <a class="file" download href="@foil.Name" target="_blank">
+                    @foil.Name
+                </a>
+            }
+            
+        </li>
+    }
 }
 </ul>

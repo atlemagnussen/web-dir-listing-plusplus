@@ -24,17 +24,13 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
-
 app.UseRouting();
-
-app.MapFallbackToPage("/FileServer");
 
 
 app.UseAuthorization();
 
-app.MapStaticAssets();
-app.MapRazorPages()
-   .WithStaticAssets();
+app.MapRazorPages();
+
+app.MapFallbackToPage("/FileServer");
 
 app.Run();

@@ -2,7 +2,7 @@ namespace Server.Models;
 
 public enum FileEntryType
 {
-    File, Folder, Root
+    File, Folder, Root, Unknown
 }
 
 public record FileOrDir

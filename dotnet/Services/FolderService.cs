@@ -1,3 +1,4 @@
+using System.IO.Compression;
 using Microsoft.Extensions.Options;
 using Server.Models;
 
@@ -34,6 +35,7 @@ public class FolderService
         })
         .Where(e => e.Type.Equals(FileEntryType.File) ||
                e.Type.Equals(FileEntryType.Folder))
+        .OrderBy(e => e.Name)
         .ToList();
 
         content.Entries = arrEntries;

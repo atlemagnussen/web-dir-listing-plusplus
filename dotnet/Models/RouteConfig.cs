@@ -12,7 +12,7 @@ public record RouteConfig
             if (string.IsNullOrWhiteSpace(Route))
                 return Root;
 
-            return $"{Root}{Route}"; 
+            return $"{Root}/{Route}"; 
         }
     }
     public bool IsFolder { get; set; }

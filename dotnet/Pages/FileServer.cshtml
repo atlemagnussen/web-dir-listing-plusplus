@@ -4,7 +4,7 @@
     ViewData["Title"] = "Home page";
 }
 
-<h2>Route = @Model.Route</h2>
+<h3>@Model.Path</h3>
 
 <ul class="listing">
 @if (Model.FolderContent?.Entries != null)
@@ -18,7 +18,7 @@
             }
             else
             {
-                <a class="file" download href="@foil.Name" target="_blank">
+                <a class="file" href="@foil.Name" target="_blank">
                     @foil.Name
                 </a>
             }

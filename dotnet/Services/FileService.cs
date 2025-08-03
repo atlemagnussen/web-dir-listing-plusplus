@@ -94,6 +94,9 @@ public static class FileService
         if (config.Paths is null)
             throw new ApplicationException("No configured paths");
 
+        if (!config.Paths.ContainsKey(root))
+            throw new ApplicationException("unknown");
+
         var rootFolder = config.Paths[root];
 
         if (string.IsNullOrWhiteSpace(rootFolder))

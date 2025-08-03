@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.HttpOverrides;
 using Server;
 using Server.Models;
 using Server.Services;
@@ -28,7 +29,10 @@ app.UseRouting();
 
 app.UseHttpsRedirection();
 
-app.UseForwardedHeaders();
+// app.UseForwardedHeaders(new ForwardedHeadersOptions
+// {
+//     ForwardedHeaders = ForwardedHeaders.XForwardedProto
+// });
 
 app.UseAuthorization();
 

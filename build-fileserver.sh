@@ -1,1 +1,1 @@
-podman build -f Containerfile-server --tag atlmag/web-dir-listing.net:1.0 --tag atlmag/web-dir-listing:latest
+podman build -f Containerfile-server --tag atlmag/web-dir-listing.net:1.0 --tag atlmag/web-dir-listing.net:latest

@@ -1,20 +1,19 @@
-using System.IO.Compression;
-using Microsoft.Extensions.Options;
 using Server.Models;
 
 namespace Server.Services;
 
 public class FolderService
 {
-    private readonly LibPathConfig _config;
+    private readonly ILogger<FolderService> _logger;
 
-    public FolderService(IOptions<LibPathConfig> options)
+    public FolderService(ILogger<FolderService> logger)
     {
-        _config = options.Value;
+        _logger = logger;
     }
 
     public FolderContent GetFolderContent(string physicalPath)
     {
+        _logger.LogInformation($"GetFolderContent: {physicalPath}");
         var content = new FolderContent
         {
             PhysicalPath = physicalPath,

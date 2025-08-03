@@ -12,11 +12,13 @@ public class FileServerModel : PageModel
 {
     private readonly FolderService _service;
     private readonly LibPathConfig _config;
+    private readonly ILogger<FileServerModel> _logger;
 
-    public FileServerModel(FolderService service, IOptions<LibPathConfig> options)
+    public FileServerModel(FolderService service, IOptions<LibPathConfig> options, ILogger<FileServerModel> logger)
     {
         _service = service;
         _config = options.Value;
+        _logger = logger;
     }
 
     public FolderContent? FolderContent { get; set; }
@@ -24,49 +26,53 @@ public class FileServerModel : PageModel
 
     public IActionResult OnGet()
     {
-        try
+        foreach (var rv in RouteData.Values)
         {
-            var route = FileService.Parse(_config, RouteData.Values);
-
-            Path = route.Path;
-
-            if (route.Root is null || route.Root == "/")
+            _logger.LogInformation($"FileServer:Get:: {rv.Key}:{rv.Value}");
+        }
+        try
             {
-                FolderContent = new FolderContent
-                {
-                    PhysicalPath = "",
-                    Path = "/"
-                };
+                var route = FileService.Parse(_config, RouteData.Values);
 
-                if (_config.Paths is not null)
+                Path = route.Path;
+
+                if (route.Root is null || route.Root == "/")
                 {
-                    foreach (var root in _config.Paths)
-                        FolderContent.Entries.Add(new FileOrDir
-                        {
-                            Name = root.Key,
-                            Type = FileEntryType.Folder
-                        });
+                    FolderContent = new FolderContent
+                    {
+                        PhysicalPath = "",
+                        Path = "/"
+                    };
+
+                    if (_config.Paths is not null)
+                    {
+                        foreach (var root in _config.Paths)
+                            FolderContent.Entries.Add(new FileOrDir
+                            {
+                                Name = root.Key,
+                                Type = FileEntryType.Folder
+                            });
+                    }
+                    return Page();
                 }
+
+
+                if (route.IsFolder)
+                {
+                    FolderContent = _service.GetFolderContent(route.PhysicalPath);
+                    FolderContent.Path = route.Path;
+                }
+                else
+                {
+                    return OnGetFile(route);
+                }
+
                 return Page();
             }
-
-
-            if (route.IsFolder)
+            catch (Exception)
             {
-                FolderContent = _service.GetFolderContent(route.PhysicalPath);
-                FolderContent.Path = route.Path;
+                return NotFound();
             }
-            else
-            {
-                return OnGetFile(route);
-            }
-
-            return Page();
-        }
-        catch (Exception)
-        {
-            return NotFound();
-        }
     }
 
     public FileResult OnGetFile(RouteConfig file)

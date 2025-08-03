@@ -5,6 +5,32 @@ namespace Server.Services;
 
 public static class FileService
 {
+    public static RouteConfig Parse(LibPathConfig config, RouteValueDictionary values)
+    {
+        var route = new RouteConfig
+        {
+            Root = values["root"]?.ToString(),
+            Route = values["path"]?.ToString(),
+        };
+
+        if (string.IsNullOrWhiteSpace(route.Root))
+            return route;
+
+        var rootFolder = GetRootFolder(config, route.Root);
+        if (string.IsNullOrWhiteSpace(route.Route))
+        {
+            route.PhysicalPath = rootFolder;
+        }
+        else
+        {
+            route.PhysicalPath = Path.Join(rootFolder, route.Route);
+        }
+
+        route.IsFolder = Directory.Exists(route.PhysicalPath);
+        
+        return route;
+    }
+
     public static RouteConfig ParsePath(LibPathConfig config, string path)
     {
         var route = new RouteConfig

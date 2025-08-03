@@ -24,14 +24,13 @@ public class FileServerModel : PageModel
 
     public IActionResult OnGet()
     {
-        var pagePath = RouteData.Values["path"]?.ToString();
+        var route = FileService.Parse(_config, RouteData.Values);
         
-        Route = pagePath;
-
-        if (pagePath is null || pagePath == "/")
+        if (route.Root is null || route.Root == "/")
         {
             FolderContent = new FolderContent
             {
+                PhysicalPath = "",
                 Path = "/"
             };
 
@@ -45,28 +44,23 @@ public class FileServerModel : PageModel
             }
             return Page();
         }
-        
-            
-        var routeConfig = FileService.ParsePath(_config, pagePath);
-        if (routeConfig.IsFolder)
+
+
+        if (route.IsFolder)
         {
-            FolderContent = _service.GetFolderContent(pagePath);
+            FolderContent = _service.GetFolderContent(route.PhysicalPath);
+            FolderContent.Path = route.Path;
         }
         else
         {
-            return OnGetDownloadFile();
+            return OnGetDownloadFile(route);
         }
     
         return Page();
     }
 
-    public FileResult OnGetDownloadFile()
+    public FileResult OnGetDownloadFile(RouteConfig file)
     {
-        var pagePath = RouteData.Values["path"]?.ToString();
-        if (pagePath is null)
-            throw new ApplicationException("no path");
-
-        RouteConfig file = FileService.ParsePath(_config, pagePath);
         if (file.IsFolder)
             throw new ApplicationException("is folder");
 

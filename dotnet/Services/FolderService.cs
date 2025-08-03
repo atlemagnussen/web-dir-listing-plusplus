@@ -12,25 +12,25 @@ public class FolderService
         _config = options.Value;
     }
 
-    public FolderContent GetFolderContent(string path)
+    public FolderContent GetFolderContent(string physicalPath)
     {
         var content = new FolderContent
         {
-            Path = path
+            PhysicalPath = physicalPath,
+            Path = ""
         };
-        if (string.IsNullOrWhiteSpace(path))
+        if (string.IsNullOrWhiteSpace(physicalPath))
             return content;
 
-        var routeConfig = FileService.ParsePath(_config, path);
 
-        var entries = Directory.GetFileSystemEntries(routeConfig.PhysicalPath);
+        var entries = Directory.GetFileSystemEntries(physicalPath);
         if (entries is null)
             return content;
 
         var arrEntries = entries.Select(c => new FileOrDir
         {
             Type = FileService.GetEntryType(c),
-            Name = c.Replace(routeConfig.PhysicalPath, "").TrimStart('/')
+            Name = c.Replace(physicalPath, "").TrimStart('/')
         })
         .Where(e => e.Type.Equals(FileEntryType.File) ||
                e.Type.Equals(FileEntryType.Folder))

@@ -29,8 +29,9 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapRazorPages();
-
-app.MapFallbackToPage("/FileServer");
+app.MapStaticAssets();
+app.MapRazorPages()
+   .WithStaticAssets();
+//app.MapFallbackToPage("/FileServer");
 
 app.Run();

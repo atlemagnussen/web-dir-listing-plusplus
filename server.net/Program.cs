@@ -28,6 +28,8 @@ app.UseRouting();
 
 app.UseHttpsRedirection();
 
+app.UseForwardedHeaders();
+
 app.UseAuthorization();
 
 app.MapStaticAssets();

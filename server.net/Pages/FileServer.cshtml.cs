@@ -31,49 +31,50 @@ public class FileServerModel : PageModel
             _logger.LogInformation($"FileServer:Get:: {rv.Key}:{rv.Value}");
         }
         try
+        {
+            var route = FileService.Parse(_config, RouteData.Values);
+
+            Path = route.Path;
+
+            if (route.Root is null || route.Root == "/")
             {
-                var route = FileService.Parse(_config, RouteData.Values);
-
-                Path = route.Path;
-
-                if (route.Root is null || route.Root == "/")
+                FolderContent = new FolderContent
                 {
-                    FolderContent = new FolderContent
-                    {
-                        PhysicalPath = "",
-                        Path = "/"
-                    };
+                    PhysicalPath = "",
+                    Path = "/"
+                };
 
-                    if (_config.Paths is not null)
-                    {
-                        foreach (var root in _config.Paths)
-                            FolderContent.Entries.Add(new FileOrDir
-                            {
-                                Name = root.Key,
-                                Type = FileEntryType.Folder
-                            });
-                    }
-                    return Page();
-                }
-
-
-                if (route.IsFolder)
+                if (_config.Paths is not null)
                 {
-                    FolderContent = _service.GetFolderContent(route.PhysicalPath);
-                    FolderContent.Path = route.Path;
+                    foreach (var root in _config.Paths)
+                        FolderContent.Entries.Add(new FileOrDir
+                        {
+                            Name = root.Key,
+                            Type = FileEntryType.Folder
+                        });
                 }
-                else
-                {
-                    return OnGetFile(route);
-                }
-
                 return Page();
             }
-            catch (Exception ex)
+
+            _logger.LogInformation($"Physical Path='{route.PhysicalPath}', isFolder={route.IsFolder}");
+
+            if (route.IsFolder)
             {
-                _logger.LogError(ex, "something happened");
-                return NotFound();
+                FolderContent = _service.GetFolderContent(route.PhysicalPath);
+                FolderContent.Path = route.Path;
             }
+            else
+            {
+                return OnGetFile(route);
+            }
+
+            return Page();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "something happened");
+            return NotFound();
+        }
     }
 
     public FileResult OnGetFile(RouteConfig file)

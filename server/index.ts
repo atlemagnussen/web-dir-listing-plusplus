@@ -89,7 +89,7 @@ app.get('*', function (req, res) {
 if (!config.libPaths)
     throw new Error("missing libpath!!")
 
-let port = config.port ? config.port : 5000
+let port = config.port ? config.port : 8000
 let host = "::"
 const server = app.listen(port, host, () => {
     console.log(`[server]: Server is running at http://${host}:${port}`)

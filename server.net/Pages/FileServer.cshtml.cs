@@ -69,8 +69,9 @@ public class FileServerModel : PageModel
 
                 return Page();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogError(ex, "something happened");
                 return NotFound();
             }
     }

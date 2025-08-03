@@ -3,9 +3,15 @@ ul {
 }
 
 ul li {
-  list-style: none;
+  margin-bottom: 0.8rem;
 }
 
 a.file {
   text-decoration: none;
+}
+
+div.root-folder {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;;
 }

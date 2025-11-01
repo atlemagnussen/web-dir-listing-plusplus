@@ -1,0 +1,31 @@
+{
+  "name": "@wdl/client",
+  "version": "1.0.0",
+  "description": "webaudio",
+  "type": "module",
+  "main": "dist/app.es.js",
+  "exports": {
+    ".": "./dist/app.es.js"
+  },
+  "scripts": {
+    "start": "vite",
+    "build": "npm run build:auth && npm run build:vite",
+    "build:vite": "tsc && vite build",
+    "build:watch": "tsc && vite build --watch",
+    "build:auth": "node authBuild.mjs"
+  },
+  "keywords": [
+    "audio",
+    "web"
+  ],
+  "author": "atlemagnussen",
+  "license": "ISC",
+  "dependencies": {
+      "@wdl/common": "1.0.0"
+  },
+  "peerDependencies": {
+    "@awesome.me/webawesome": "^3.0.0",
+    "@lit-labs/router": "^0.1.4",
+    "lit": "^3.3.1"
+  }
+}

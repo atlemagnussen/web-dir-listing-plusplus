@@ -1,7 +1,13 @@
 {
+  "private": true,
   "name": "directory-listing-plus-plus",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "directory listing app with extra features like audio player",
+  "workspaces": [
+    "common",
+    "client",
+    "server"
+  ],
   "scripts": {
     "build:web": "cd web && npm run build && cd ..",
     "server": "cd server && npm run prod:ts && cd ..",
@@ -16,10 +22,16 @@
   "license": "ISC",
   "devDependencies": {
     "cross-env": "^7.0.3",
-    "ts-node": "^10.9.1"
+    "esbuild": "^0.25.11",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.9.3",
+    "vite": "^6.4.1",
+    "vite-plugin-static-copy": "^3.1.4"
   },
   "dependencies": {
     "@appnest/web-router": "^1.4.2",
+    "@awesome.me/webawesome": "^3.0.0",
+    "@lit-labs/router": "^0.1.4",
     "@types/adm-zip": "^0.5.0",
     "@types/express": "^4.17.21",
     "@types/lodash-es": "^4.17.12",
@@ -34,7 +46,6 @@
     "mime-types": "^3.0.1",
     "music-metadata": "^8.1.4",
     "oidc-client-ts": "^3.2.1",
-    "rxjs": "^7.8.0",
-    "typescript": "^5.4.5"
+    "rxjs": "^7.8.0"
   }
 }

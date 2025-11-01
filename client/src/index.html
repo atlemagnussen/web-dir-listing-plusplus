@@ -5,9 +5,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
-    <link rel="icon" type="image/png" href="/img/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png" href="/img/favicon-16x16.png" sizes="16x16">
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/svg" href="/img/logo.svg" sizes="32x32">
+  
     <title>AppShell</title>
     <script type="importmap">
       {
@@ -22,17 +21,16 @@
 
   <body>
     <section id="loading-screen">
-      <figure class="digilean-logo" id="digilean-logo-loading">
-        <svg xmlns="http://www.w3.org/2000/svg" id="digilean-logo-def" viewBox="0 0 582 582">
-          <g id="logo" transform="translate(0,582) scale(0.1,-0.1)">
-            <path id="top-right" fill="var(--logo-main-color)"
-              d="m 5195,2678 -460,-230 -432,216 c -238,119 -435,216 -437,216 -2,0 -6,-33 -9,-72 -26,-314 -237,-618 -532,-763 l -89,-44 -232,-463 -232,-463 229,-457 c 208,-416 231,-458 253,-458 50,0 296,51 417,85 1040,302 1810,1184 1969,2255 23,153 38,410 24,409 -5,0 -216,-104 -469,-231 z" />
-            <path id="bottom-right" fill="var(--logo-main-color)"
-              d="m 3154,5212 234,-467 -214,-425 c -117,-234 -213,-430 -213,-435 -1,-6 37,-16 82,-23 308,-45 580,-244 721,-529 l 33,-66 459,-233 c 252,-129 468,-234 478,-234 15,0 899,440 914,455 13,13 -57,341 -105,490 -313,981 -1124,1699 -2133,1890 -110,21 -336,45 -423,45 h -67 z" />
-            <path id="bottom-left" fill="var(--logo-main-color)"
-              d="M 605,2813 C 358,2689 153,2586 151,2584 c -2,-2 2,-40 8,-86 63,-438 261,-909 533,-1265 410,-538 1023,-921 1665,-1043 202,-38 533,-65 533,-44 0,3 -105,212 -232,464 l -233,459 217,434 c 119,239 214,438 211,441 -4,3 -25,6 -48,6 -66,0 -224,44 -318,89 -202,97 -358,257 -472,486 -19,38 -35,47 -490,276 l -470,237 z" />
-            <path id="top-left" fill="var(--logo-top-left-color)"
-              d="M 2390,5635 C 1966,5554 1575,5381 1231,5122 1090,5016 858,4792 748,4656 395,4218 191,3712 140,3145 c -12,-130 -13,-215 -3,-215 4,0 211,102 460,228 l 452,227 436,-217 c 239,-120 439,-218 444,-218 4,0 11,30 14,68 29,326 266,646 575,776 l 56,24 235,463 235,464 -230,455 -230,455 -35,2 c -19,1 -90,-9 -159,-22 z" />
+      <figure class="loading-logo" id="logo-loading">
+        <svg height="800px" width="800px" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 486.196 486.196" xml:space="preserve">
+          <g class="house">
+            <path fill="var(--logo-color)" d="M481.708,220.456l-228.8-204.6c-0.4-0.4-0.8-0.7-1.3-1c-5-4.8-13-5-18.3-0.3l-228.8,204.6c-5.6,5-6,13.5-1.1,19.1
+                c2.7,3,6.4,4.5,10.1,4.5c3.2,0,6.4-1.1,9-3.4l41.2-36.9v7.2v106.8v124.6c0,18.7,15.2,34,34,34c0.3,0,0.5,0,0.8,0s0.5,0,0.8,0h70.6
+                c17.6,0,31.9-14.3,31.9-31.9v-121.3c0-2.7,2.2-4.9,4.9-4.9h72.9c2.7,0,4.9,2.2,4.9,4.9v121.3c0,17.6,14.3,31.9,31.9,31.9h72.2
+                c19,0,34-18.7,34-42.6v-111.2v-34v-83.5l41.2,36.9c2.6,2.3,5.8,3.4,9,3.4c3.7,0,7.4-1.5,10.1-4.5
+                C487.708,233.956,487.208,225.456,481.708,220.456z M395.508,287.156v34v111.1c0,9.7-4.8,15.6-7,15.6h-72.2c-2.7,0-4.9-2.2-4.9-4.9
+                v-121.1c0-17.6-14.3-31.9-31.9-31.9h-72.9c-17.6,0-31.9,14.3-31.9,31.9v121.3c0,2.7-2.2,4.9-4.9,4.9h-70.6c-0.3,0-0.5,0-0.8,0
+                s-0.5,0-0.8,0c-3.8,0-7-3.1-7-7v-124.7v-106.8v-31.3l151.8-135.6l153.1,136.9L395.508,287.156L395.508,287.156z"/>
           </g>
         </svg>
         <figcaption></figcaption>
@@ -40,7 +38,7 @@
 
     </section>
 
-    <script type="module" src="/src/index.ts"></script>
+    <script type="module" src="/index.ts"></script>
   </body>
 
 </html>

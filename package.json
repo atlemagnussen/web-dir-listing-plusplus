@@ -21,11 +21,14 @@
   "author": "atlemagnussen",
   "license": "ISC",
   "devDependencies": {
-    "cross-env": "^7.0.3",
+    "@types/express": "^5.0.5",
+    "@types/node": "^24.9.2",
+    "cross-env": "^10.1.0",
+    "dotenv": "^17.2.3",
     "esbuild": "^0.25.11",
     "ts-node": "^10.9.1",
     "typescript": "^5.9.3",
-    "vite": "^6.4.1",
+    "vite": "^7.1.12",
     "vite-plugin-static-copy": "^3.1.4"
   },
   "dependencies": {
@@ -33,19 +36,17 @@
     "@awesome.me/webawesome": "^3.0.0",
     "@lit-labs/router": "^0.1.4",
     "@types/adm-zip": "^0.5.0",
-    "@types/express": "^4.17.21",
     "@types/lodash-es": "^4.17.12",
     "@types/mime-types": "^3.0.1",
-    "@types/node": "^22.15.30",
     "adm-zip": "^0.5.10",
     "express": "^4.19.2",
-    "express-oauth2-jwt-bearer": "^1.6.1",
+    "express-oauth2-jwt-bearer": "^1.7.1",
     "glob": "^10.3.0",
     "lit": "^3.1.4",
     "lodash-es": "^4.17.21",
     "mime-types": "^3.0.1",
     "music-metadata": "^8.1.4",
-    "oidc-client-ts": "^3.2.1",
+    "oidc-client-ts": "^3.3.0",
     "rxjs": "^7.8.0"
   }
 }

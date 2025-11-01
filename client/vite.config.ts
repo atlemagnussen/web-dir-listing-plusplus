@@ -21,14 +21,6 @@ export default defineConfig({
             "@wdl/common": commonSrcPath
         }  
     },
-    plugins: [viteStaticCopy({
-        targets: [
-            {
-                src: path.join(appSrcPath, "authentication/*.html"),
-                dest: ".",
-            }
-        ]
-    })],
     build: {
         outDir: buildOutput,  
         sourcemap: true,

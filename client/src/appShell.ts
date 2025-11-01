@@ -2,7 +2,6 @@
 import { html, LitElement } from "lit"
 import { customElement, state } from "lit/decorators.js"
 
-import "./components/leftMenu.js"
 import "./appShell.css"
 
 @customElement("app-shell")
@@ -15,40 +14,17 @@ export class AppShell extends LitElement {
     this._collapsed = !this._collapsed
   }
 
-  protected createRenderRoot(): HTMLElement | DocumentFragment {
-    return this
-  }
-
   protected updated() {
 
     if (this._collapsed) this.setAttribute("collapsed", "")
     else this.removeAttribute("collapsed")
   }
 
-  protected firstUpdated(): void {
-    this._slotTheLogo()
-  }
-
-  private _slotTheLogo() {
-    const hostChildren = Array.from(this.children)
-    hostChildren.forEach((node) => {
-      if ((node as HTMLElement).id == "digilean-logo-nav") {
-        const target = this.querySelector("#logo-slot")
-        if (target) {
-          target.appendChild(node)
-        }
-      }
-    })
-  }
-
   render() {
     return html`
-      <left-menu .minimized=${this._collapsed}>
-        <div id="logo-slot" slot="logo"></div>
-      </left-menu>
-
       <header class="topbar">
         <div class="topbar-left-group">
+          <slot name="logo"></slot>
           <wa-button
             size="small"
             appearance="plain" 

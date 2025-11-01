@@ -8,6 +8,7 @@ import '@awesome.me/webawesome/dist/styles/webawesome.css';
 import '@awesome.me/webawesome/dist/components/button/button.js';
 // <wa-input>
 import '@awesome.me/webawesome/dist/components/input/input.js';
+import "@awesome.me/webawesome/dist/components/avatar/avatar.js"
 
 // const modulesToLoad = [
 //     "/components/button/button.js",

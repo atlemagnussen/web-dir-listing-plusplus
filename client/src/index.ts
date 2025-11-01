@@ -1,5 +1,6 @@
 import "./appShell.js"
 import "./design/waLoader.js"
+import "./components/leftMenu.js"
 
 import oidcService from "./services/authentication.js"
 oidcService.initialize()

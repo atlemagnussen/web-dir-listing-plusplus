@@ -1,4 +1,4 @@
-import { splitFileName } from "@app/services/helpers"
+import { splitFileName } from "@wdl/client/services/helpers.js"
 import type { SavedAudio } from "@wdl/common"
 
 let db: IDBDatabase | undefined

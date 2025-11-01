@@ -8,7 +8,7 @@ export class DirListing extends LitElement {
     static styles = css`
         :host {
             display: flex;
-            justify-content: center;
+            justify-content: left;
             max-width: 100%;
             width: 100%;
         }
@@ -91,16 +91,17 @@ export class DirListing extends LitElement {
                 if (e.type == "root")
                 return html`
                     <p class="folderlink">
+                        <wa-icon name="house" label="Home"></wa-icon>
                         <a class="link" @click=${goto} href="${e.name}/">${e.name}</a>
-                        <home-button title="Root lib folder"></home-button>
                     </p>`
                     
                 if (e.type == "folder")
                     return html`
                     <p class="folderlink">
+                        <wa-icon name="folder" label="folder"></wa-icon>
                         <a class="link" @click=${goto} href="${e.name}/">${e.name}</a>
                         <a href="${e.path}" download="${e.name}.zip" title="download folder as zip">
-                            <download-button></download-button>
+                            <wa-icon name="download" label="download"></wa-icon>
                         </a>
                     </p>`
                 
@@ -110,7 +111,7 @@ export class DirListing extends LitElement {
                         <file-size-label size=${e.size}></file-size-label>
                         <file-ext-label ext="${e.ext}"></file-ext-label>
                         <a href="${e.path}" download="${e.name}.${e.ext}" title="download file">
-                            <download-button></download-button>
+                            <wa-icon name="download" label="download"></wa-icon>
                         </a>
                     </p>
                 `

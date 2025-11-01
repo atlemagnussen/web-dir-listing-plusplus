@@ -43,12 +43,12 @@ export class AppShell extends LitElement {
     })
 
     return html`
-      <h1>
+      <h3>
         ${links.map((p) =>
           html`
             <a @click=${goto} href="${p.path}">${p.name}/</a>`
           )}
-      </h1>
+      </h3>
     `
   }
 
@@ -58,8 +58,8 @@ export class AppShell extends LitElement {
 
     if (location.pathname == "/")
       return html`
-        <h1>${title}</h1>`
-    
+        <h1>${title}</h1>
+      `
     return this.renderBreadCrumb()
   }
 }

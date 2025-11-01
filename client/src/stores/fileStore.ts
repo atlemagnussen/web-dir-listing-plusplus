@@ -12,7 +12,6 @@ export const setAutoPlay = (val: boolean) => AutoplaySubject.next(val)
 const PlayingStateSubject = new BehaviorSubject<PlayingState>("paused")
 export const playingState = PlayingStateSubject.asObservable()
 export const setPlayingState = (state: PlayingState) => {
-    // console.log("playing state store", state)
     PlayingStateSubject.next(state)
 }
 

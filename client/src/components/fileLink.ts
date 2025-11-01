@@ -1,0 +1,28 @@
+import { LitElement, css, html } from "lit"
+import { customElement, property } from "lit/decorators.js"
+
+
+@customElement('file-link')
+export class FileLink extends LitElement {
+    static styles = css`
+        :host {
+            display: block;
+            color: var(--wa-color-text-link);
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-width: 0;
+            cursor: pointer;
+        }
+    `
+
+    @property({attribute: false})
+    name = ""
+
+    render() {
+        return html`
+            <span title="${this.name}">${this.name}</span>
+        `
+    }
+}

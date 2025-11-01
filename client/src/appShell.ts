@@ -3,6 +3,8 @@ import { ConfigFolder } from "@wdl/common"
 import { css, html, LitElement } from "lit"
 import { customElement, state } from "lit/decorators.js"
 import { content } from "./stores/fileStore.js"
+import auth from "@wdl/client/services/authentication.js"
+import { AuthUser, authUser } from "@wdl/client/stores/user.js"
 
 @customElement("app-shell")
 export class AppShell extends LitElement {
@@ -17,7 +19,8 @@ export class AppShell extends LitElement {
       grid-template-rows: 4rem; 
       grid-template-areas:
           "nav topbar"
-          "nav main";
+          "nav main"
+          "nav footer";
       height: 100vh;
       overflow: hidden;
       background: var(--wa-color-surface-default);
@@ -29,6 +32,10 @@ export class AppShell extends LitElement {
           grid-area: nav;
       }
 
+      footer {
+        height: 10rem;
+        grid-area: footer;
+      }
       header {
           &.topbar {
               grid-area: topbar;
@@ -71,16 +78,22 @@ export class AppShell extends LitElement {
       }
   }
   `
-  @state()
+  
   private _collapsed = false
 
+  @state()
+  user: AuthUser = {}
+
+  @state()
   conf: ConfigFolder = {
     title: "Ello",
     entries: []
   }
+
   connectedCallback(): void {
     super.connectedCallback()
     content.subscribe(c => this.conf = c)
+    authUser.subscribe(u => this.user = u)
   }
   protected updated() {
     if (this._collapsed)
@@ -98,16 +111,22 @@ export class AppShell extends LitElement {
             <slot name="logo"></slot>
           </div>
         </div>
-        <theme-selector></theme-selector>
-        <a href="user">
-          <wa-avatar label="WA" shape="circle">
-          </wa-avatar>
-        </a>
+        <div>
+          ${this.user.userName}
+        </div>
+        <wa-avatar @click=${auth.login}
+          label="WA" shape="circle">
+        </wa-avatar>
       </header>
 
       <main>
         <dir-listing .entries=${this.conf.entries}></dir-listing>
       </main>
+
+      <footer>
+        <p>Foot</p>
+        <file-preview></file-preview>
+      </footer>
     `
   }
 }

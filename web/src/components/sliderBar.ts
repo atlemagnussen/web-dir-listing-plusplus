@@ -168,4 +168,3 @@ export class SliderBar extends LitElement {
         `
     }
 }
-

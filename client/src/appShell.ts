@@ -27,10 +27,10 @@ export class AppShell extends LitElement {
       color: var(--wa-color-text-normal);
       -webkit-font-smoothing: antialiased;
 
-      left-menu {
+      /* left-menu {
           width: 20rem;
           grid-area: nav;
-      }
+      } */
 
       footer {
         height: 10rem;
@@ -107,9 +107,9 @@ export class AppShell extends LitElement {
       <left-menu></left-menu>
       <header class="topbar">
         <div class="topbar-left-group">
-          <div class="logo">
+          <a class="logo" href="/">
             <slot name="logo"></slot>
-          </div>
+          </a>
         </div>
         <div>
           ${this.user.userName}
@@ -124,7 +124,6 @@ export class AppShell extends LitElement {
       </main>
 
       <footer>
-        <p>Foot</p>
         <file-preview></file-preview>
       </footer>
     `

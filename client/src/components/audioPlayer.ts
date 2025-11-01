@@ -1,4 +1,4 @@
-import { LitElement, css, html } from "lit"
+import { LitElement, css, html, nothing } from "lit"
 import { customElement, property, state } from "lit/decorators.js"
 import { ref, Ref, createRef } from "lit/directives/ref.js"
 import {Subscription} from "rxjs"
@@ -189,12 +189,7 @@ export class AudioPlayer extends LitElement {
         const value = e.detail as number
         this.currentTime = value
     }
-    openHistory() {
-        dialog.openHtml({
-            hideOkBtn: true,
-            title: `<history-button style="--button-height: 1.5rem; --button-width: 1.5rem; --button-color: var(--yellow)"></history-button>`
-        }, `<history-viewer></history-viewer>`)
-    }
+    
     displayBufferedAmount = () => {
         if (!this.audioRef.value)
             return
@@ -240,8 +235,16 @@ export class AudioPlayer extends LitElement {
                 <div class="section">
                     <div class="controls">
                         ${this.playingState == "ended" || this.playingState == "paused" ? 
-                            html`<play-button @click=${this.togglePlay}></play-button>` : 
-                            html`<pause-button @click=${this.togglePlay}></pause-button>`
+                            html`
+                              <wa-button variant="neutral" appearance="outlined" @click=${this.togglePlay}>
+                                <wa-icon name="play" label="Home"></wa-icon>
+                                </wa-button>
+                            ` : 
+                            html`
+                                <wa-button variant="neutral" appearance="outlined" @click=${this.togglePlay}>
+                                    <wa-icon name="pause" label="Home"></wa-icon>
+                                </wa-button>
+                            `
                         }
                     </div>
                     <div class="information">
@@ -250,20 +253,18 @@ export class AudioPlayer extends LitElement {
                             ${this.ext ? html`
                                 <file-ext-label ext="${this.ext}"></file-ext-label>
                                 <a href="${this.url}" download filename="${this.filename}">
-                                    <download-button></download-button>
+                                    <wa-icon name="download" label="download"></wa-icon>
                                 </a>
                                 <a href="${this.url}" target="_blank">
-                                    <open-button></open-button>
+                                    <wa-icon name="open" label="open"></wa-icon>
                                 </a>
-                                <label for="autoplay">Autoplay</label>
-                                <au-checkbox id="autoplay" .checked=${this.autoPlay} 
-                                    @change=${(e:any) => setAutoPlay(e.target.checked)}>
-                                </au-checkbox>
-                            ` : ""}
+                                
+                                <wa-checkbox id="autoplay" @change=${(e:any) => setAutoPlay(e.target.checked)}
+                                    .checked=${this.autoPlay}>
+                                    Autoplay
+                                </wa-checkbox>
+                            ` : nothing}
                         </div>
-                    </div>
-                    <div class="more">
-                        <history-button @click=${this.openHistory}></history-button>
                     </div>
                 </div>
             </div>

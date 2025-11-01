@@ -9,10 +9,9 @@
   },
   "scripts": {
     "start": "vite",
-    "build": "npm run build:auth && npm run build:vite",
+    "build": "npm run build:vite",
     "build:vite": "tsc && vite build",
-    "build:watch": "tsc && vite build --watch",
-    "build:auth": "node authBuild.mjs"
+    "build:watch": "tsc && vite build --watch"
   },
   "keywords": [
     "audio",

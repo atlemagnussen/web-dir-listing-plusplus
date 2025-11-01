@@ -6,7 +6,7 @@
 
 # Want to help us make this template better? Share your feedback here: https://forms.gle/ybq9Krt8jtBL3iCk7
 
-ARG NODE_VERSION=22.13
+ARG NODE_VERSION=24.10
 
 FROM node:${NODE_VERSION}-alpine
 
@@ -33,7 +33,7 @@ RUN --mount=type=bind,source=package.json,target=package.json \
 COPY . .
 
 #build client
-WORKDIR /usr/app/web
+WORKDIR /usr/app/client
 RUN npm install
 RUN npm run build
 

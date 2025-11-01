@@ -1,22 +1,20 @@
 {
-    "$schema": "https://json.schemastore.org/tsconfig",
-    "display": "Node 20",
-    "_version": "20.1.0",
-  
+    "extends": "../tsconfig.base.json",
     "compilerOptions": {
-        "lib": ["es2023"],
-        "module": "node16",
-        "target": "es2022",
-  
-        "strict": true,
-        "esModuleInterop": true,
-        "skipLibCheck": true,
-        "moduleResolution": "node16",
-
         "outDir": "dist",
-        "baseUrl": ".",
-        "paths": {
-            "@common/*": ["../common/*"]
+        "rootDir": "src",
+        "composite": true
+    },
+    "references": [
+        {
+            "path": "../common"
         }
-    }
+    ],
+    "include": [
+        "src"
+    ],
+    "exclude": [
+        "public",
+        "dist"
+    ]
 }

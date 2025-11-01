@@ -1,4 +1,4 @@
-import { ConfigFolder, FileOrDir, PlayingState } from "@common/types"
+import { ConfigFolder, FileOrDir, PlayingState } from "@wdl/common"
 import { BehaviorSubject } from "rxjs"
 
 const PlayingSubject = new BehaviorSubject<FileOrDir>({name: "", ext: "", size: 0, path: "", type: "file", mimeType: ""})

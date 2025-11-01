@@ -2,7 +2,7 @@ import fs from "fs"
 import path from "path"
 import mime from "mime-types"
 import type { Request, Response } from "express"
-import { splitDir } from "./common"
+import { splitDir } from "./common.js"
 
 
 const getRangeStream = (res: Response, filePath: string, mimeType: string, size: number, range: string) => {

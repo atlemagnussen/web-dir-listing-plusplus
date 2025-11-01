@@ -1,20 +1,20 @@
 import path from "path"
 import express from "express"
 import bodyParser from "body-parser"
-import config from "./config"
-import { serveStream } from "./serveAudio"
-import { getFolderContent } from "./readLibDir"
-import { zipAndReturnFolder } from "./zipFolder"
-import { SearchRequest } from "@common/types"
-import { searchFile } from "./searchFiles"
+import config from "./config.js"
+import { serveStream } from "./serveAudio.js"
+import { getFolderContent } from "./readLibDir.js"
+import { zipAndReturnFolder } from "./zipFolder.js"
+import { SearchRequest } from "@wdl/common"
+import { searchFile } from "./searchFiles.js"
 import { auth } from "express-oauth2-jwt-bearer"
 
 const app = express()
 app.use(bodyParser.json()) 
 
-const rootFolder = __dirname
+const rootFolder = process.cwd()
 console.log("rootFolder", rootFolder)
-const web = path.resolve("..", "web/dist")
+const web = path.resolve("..", "client/dist")
 const webIndex = path.resolve(web, "index.html")
 
 console.log("libdirs", config.libPaths)

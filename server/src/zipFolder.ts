@@ -1,8 +1,8 @@
 import AdmZip from "adm-zip"
-import { splitDir } from "./common"
+import { splitDir } from "./common.js"
 import path from "path"
 import fs from "fs"
-import { FileEntry, FileEntryType } from "@common/types"
+import { FileEntry, FileEntryType } from "@wdl/common"
 
 export const zipAndReturnFolder = (reqpath: string) => {
 

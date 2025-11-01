@@ -4,6 +4,8 @@ import '@awesome.me/webawesome/dist/components/input/input.js';
 import "@awesome.me/webawesome/dist/components/avatar/avatar.js"
 import "@awesome.me/webawesome/dist/components/icon/icon.js"
 import '@awesome.me/webawesome/dist/components/slider/slider.js';
+import '@awesome.me/webawesome/dist/components/checkbox/checkbox.js';
+
 // import '@awesome.me/webawesome/dist/styles/themes/awesome.css';
 // const modulesToLoad = [
 //     "/components/button/button.js",

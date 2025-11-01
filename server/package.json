@@ -1,8 +1,12 @@
 {
     "name": "directory-listing-server",
     "version": "1.0.0",
-    "description": "atle audio¨",
-    "main": "index.js",
+    "description": "atle audio",
+    "type": "module",
+    "main": "dist/index.js",
+    "exports": {
+        ".": "./dist/index.js"
+    },
     "scripts": {
         "start": "cross-env NODE_ENV=local ts-node index.ts",
         "test": "node test.mjs",
@@ -20,6 +24,9 @@
     "author": "atlemagnussen",
     "license": "ISC",
     "dependencies": {
-        "dotenv": "^16.5.0"
+      "@wdl/common": "1.0.0"
+    },
+    "peerDependencies": {
+        "dotenv": "^17.2.3"
     }
 }

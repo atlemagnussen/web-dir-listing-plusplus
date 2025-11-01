@@ -1,8 +1,8 @@
-import config from "./config"
+import config from "./config.js"
 import fs from "fs"
 import path from "path"
 import { glob } from "glob"
-import { FileEntryType, FileOrDir } from "@common/types"
+import { FileEntryType, FileOrDir } from "@wdl/common"
 
 interface SearchResLib{
     lib: string

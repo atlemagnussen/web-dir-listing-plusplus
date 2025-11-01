@@ -1,12 +1,15 @@
 import fs from "fs"
 import path from "path"
-import config from "./config"
-import { splitDir } from "./common"
-import { FileOrDir, FileEntryType, ConfigFolder } from "@common/types"
+import config from "./config.js"
+import { splitDir } from "./common.js"
+import { FileOrDir, FileEntryType, ConfigFolder } from "@wdl/common"
 import mime from "mime-types"
 
-const rootFolder = __dirname
-const htmlFilePath = path.join(rootFolder, "index.html")
+
+const folder = process.cwd()
+
+const rootFolder = folder
+const htmlFilePath = path.join(rootFolder, "..", "index.html")
 
 const readDir = (dir: string) => {
 

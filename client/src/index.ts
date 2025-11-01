@@ -24,35 +24,35 @@ function removeLoadingScreen() {
 
 async function bootstrap() {
     
-    setContent({
-        title: "Ello",
-        entries: [
-        {
-            name: "Test",
-            type: "root",
-            ext: "",
-            mimeType: "",
-            size: 0,
-            path: "test"
-        },
-        {
-            name: "Folder",
-            type: "folder",
-            ext: "",
-            mimeType: "",
-            size: 0,
-            path: "folder"
-        },
-        {
-            name: "File",
-            type: "file",
-            ext: "mp3",
-            mimeType: "audio",
-            size: 1000,
-            path: "file.mp3"
-        }
-        ]
-    })
+    // setContent({
+    //     title: "Ello",
+    //     entries: [
+    //     {
+    //         name: "Test",
+    //         type: "root",
+    //         ext: "",
+    //         mimeType: "",
+    //         size: 0,
+    //         path: "test"
+    //     },
+    //     {
+    //         name: "Folder",
+    //         type: "folder",
+    //         ext: "",
+    //         mimeType: "",
+    //         size: 0,
+    //         path: "folder"
+    //     },
+    //     {
+    //         name: "File",
+    //         type: "file",
+    //         ext: "mp3",
+    //         mimeType: "audio",
+    //         size: 1000,
+    //         path: "file.mp3"
+    //     }
+    //     ]
+    // })
 
     await sleep(500)
     if (!document.startViewTransition)

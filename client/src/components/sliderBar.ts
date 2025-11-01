@@ -1,5 +1,5 @@
 import { LitElement, css, html } from "lit"
-import { customElement } from "lit/decorators.js"
+import { customElement, property } from "lit/decorators.js"
 
 @customElement('slider-bar')
 export class SliderBar extends LitElement {
@@ -26,9 +26,9 @@ export class SliderBar extends LitElement {
 
     _value = 0
     
+    @property({attribute: true, type: Number})
     set current(value) {
         this._value = Math.floor(value)
-        this.requestUpdate()
     }
     get current() {
         return this._value
@@ -72,9 +72,10 @@ export class SliderBar extends LitElement {
             <wa-slider size="large" value="50" label="Large"
                 min="0"
                 max="${duration}"
-                value=${this.current}
+                value="${this.current}"
                 @change=${this.changeEvent}
-                @input=${this.inputEvent}>
+                @input=${this.inputEvent}
+                with-tooltip>
             </wa-slider>
         `
     }

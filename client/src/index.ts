@@ -8,6 +8,7 @@ oidcService.initialize()
 import { authUser } from "./stores/user.js"
 
 import { AppShell } from "./appShell.js"
+import { setContent } from "./stores/fileStore.js"
 
 authUser.subscribe(user => {
     if (user.userName) {
@@ -32,6 +33,20 @@ function removeLoadingScreen() {
 
 async function bootstrap() {
     
+    setContent({
+        title: "Ello",
+        entries: [
+        {
+            name: "Test",
+            type: "root",
+            ext: "",
+            mimeType: "",
+            size: 0,
+            path: "test"
+        }
+        ]
+    })
+
     await sleep(500)
     if (!document.startViewTransition)
         removeLoadingScreen()

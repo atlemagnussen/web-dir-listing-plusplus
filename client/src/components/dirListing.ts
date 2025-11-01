@@ -23,11 +23,11 @@ export class DirListing extends LitElement {
         .filelink, .folderlink {
             max-width: 100%;
             width: 100%;
-            padding: 0;
+            padding: var(--wa-space-xs);
             display: flex;
             flex-direction: row;
             justify-content: center;
-            gap: 0.5rem;
+            gap: var(--wa-space-xs);
         }
         audio-link, .link {
             flex: 1 1 auto;

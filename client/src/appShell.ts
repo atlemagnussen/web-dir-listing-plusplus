@@ -1,6 +1,8 @@
 
+import { ConfigFolder } from "@wdl/common"
 import { css, html, LitElement } from "lit"
 import { customElement, state } from "lit/decorators.js"
+import { content } from "./stores/fileStore.js"
 
 @customElement("app-shell")
 export class AppShell extends LitElement {
@@ -72,10 +74,19 @@ export class AppShell extends LitElement {
   @state()
   private _collapsed = false
 
+  conf: ConfigFolder = {
+    title: "Ello",
+    entries: []
+  }
+  connectedCallback(): void {
+    super.connectedCallback()
+    content.subscribe(c => this.conf = c)
+  }
   protected updated() {
-
-    if (this._collapsed) this.setAttribute("collapsed", "")
-    else this.removeAttribute("collapsed")
+    if (this._collapsed)
+      this.setAttribute("collapsed", "")
+    else
+      this.removeAttribute("collapsed")
   }
 
   render() {
@@ -95,7 +106,7 @@ export class AppShell extends LitElement {
       </header>
 
       <main>
-        <p>Hello</p>
+        <dir-listing .entries=${this.conf.entries}></dir-listing>
       </main>
     `
   }

@@ -12,6 +12,9 @@ body {
     font-size: 1.6rem;
     margin: 0;
     padding: 0;
+    height: 100svh;
+    width: 100svw;
+    max-width: 100svw;
 }
 
 @keyframes spin {

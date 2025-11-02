@@ -32,14 +32,16 @@ RUN --mount=type=bind,source=package.json,target=package.json \
 # Copy the rest of the source files into the image.
 COPY . .
 
+#build common
+WORKDIR /usr/app/common
+RUN npm run build
+
 #build client
 WORKDIR /usr/app/client
-RUN npm install
 RUN npm run build
 
 #build server
 WORKDIR /usr/app/server
-RUN npm install
 RUN npm run build
 
 # Run the application as a non-root user.

@@ -15,10 +15,11 @@ export class AudioPlayer extends LitElement {
             justify-content: center;
             width: 100%;
             max-width: 100%;
-            height: 7rem;
+            height: 8rem;
             overflow: none;
             --button-height: 3rem;
             --button-width: 3rem;
+            --default-width: 1024px;
         }
         * {
             box-sizing: border-box;

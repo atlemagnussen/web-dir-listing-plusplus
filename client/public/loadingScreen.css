@@ -39,7 +39,7 @@ section#loading-screen {
 }
 
 .house {
-    fill: green;
+    fill: var(--wa-color-brand-fill-loud);
 }
 .loading-logo {
     view-transition-name: main-logo;
@@ -52,6 +52,9 @@ figure#logo-loading {
 figure#logo-nav {
     width: 3rem;
     height: 3rem;
+    .house {
+        fill: var(--wa-color-success-fill-loud);
+    }
 }
 
 ::view-transition-group(main-logo) {

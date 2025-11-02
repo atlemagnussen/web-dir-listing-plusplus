@@ -16,7 +16,7 @@ export class AppShell extends LitElement {
       line-height: 1.3;
       display: grid;
       grid-template-columns: auto 1fr;
-      grid-template-rows: 4rem; 
+      grid-template-rows: 4rem 1fr auto; 
       grid-template-areas:
           "nav topbar"
           "nav main"
@@ -26,60 +26,70 @@ export class AppShell extends LitElement {
       background: var(--wa-color-surface-default);
       color: var(--wa-color-text-normal);
       -webkit-font-smoothing: antialiased;
-
+    }
+    #btn-toggle-menu {
+      display: none;
+    }
+    left-menu {
+        max-width: 20rem;
+        grid-area: nav;
+    }
+    @media only screen and (max-width: 800px) {
       left-menu {
-          max-width: 20rem;
-          grid-area: nav;
+        display: none;
+        position: fixed;
+        &.show {
+          z-index: 1000;
+          display: block;
+          left: 4rem;
+        }
       }
-
-      footer {
-        height: 10rem;
-        grid-area: footer;
+      #btn-toggle-menu {
+        display: block;
       }
-      header {
-          &.topbar {
-              grid-area: topbar;
-              display: flex;
-              align-items: center;
-              justify-content: space-between;
-              padding: 0 0.75rem;
-              border-bottom: 1px solid var(--wa-color-brand-border-quiet);
-              height: var(--app-shell-topbar-height);
-              box-sizing: border-box;
-              position: sticky;
-              top: 0;
-          }
-
-          .topbar #topbar-right {
-              display: inline-flex;
-              align-items: center;
-              gap: .75rem;
-          }
+    }
+    footer {
+      max-height: 10rem;
+      grid-area: footer;
+    }
+    header {
+      .topbar-left-group {
+        width: 3rem;
+        height: 3rem;
       }
-
-      main {
-          grid-area: main;
-          overflow: auto;
-          padding: 1rem 1.2rem 1.6rem;
-          box-sizing: border-box;
+      &.topbar {
+          grid-area: topbar;
           display: flex;
-          flex-direction: column;
-          gap: 1.6rem;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0 0.75rem;
+          border-bottom: 1px solid var(--wa-color-brand-border-quiet);
+          height: var(--app-shell-topbar-height);
+          box-sizing: border-box;
+          position: sticky;
+          top: 0;
       }
+    }
 
-      .dev-placeholder {
-          opacity: 0.5;
-          font-size: 1rem;
-          font-style: italic;
-      }
+    main {
+        grid-area: main;
+        overflow: auto;
+        padding: 1rem 1.2rem 1.6rem;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        gap: 1.6rem;
+    }
 
-      wa-button {
-          font-size: 1rem
-      }
-  }
+    wa-button {
+        font-size: 1rem
+    }
   `
-  
-  private _collapsed = false
+  @state()
+  private leftMenuShowing = false
+  toggleLeftMenu() {
+    this.leftMenuShowing = !this.leftMenuShowing
+  }
 
   @state()
   user: AuthUser = {}
@@ -95,17 +105,15 @@ export class AppShell extends LitElement {
     content.subscribe(c => this.conf = c)
     authUser.subscribe(u => this.user = u)
   }
-  protected updated() {
-    if (this._collapsed)
-      this.setAttribute("collapsed", "")
-    else
-      this.removeAttribute("collapsed")
-  }
 
   render() {
     return html`
-      <left-menu></left-menu>
+      <left-menu class="${this.leftMenuShowing ? 'show' : ''}"></left-menu>
       <header class="topbar">
+        <wa-button size="small" appearance="plain" id="btn-toggle-menu"
+          @click=${this.toggleLeftMenu}>
+          <wa-icon name="bars" label="Toggle navigation"></wa-icon>
+        </wa-button>
         <div class="topbar-left-group">
           <a class="logo" href="/">
             <slot name="logo"></slot>

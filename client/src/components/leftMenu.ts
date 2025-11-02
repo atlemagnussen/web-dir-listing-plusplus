@@ -17,6 +17,7 @@ export class AppShell extends LitElement {
       display: flex;
       flex-direction: column;
       padding: var(--wa-space-l);
+      background: var(--wa-color-surface-raised);
     }
   `
   @state()

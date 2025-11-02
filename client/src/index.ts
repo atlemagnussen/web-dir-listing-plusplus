@@ -5,6 +5,8 @@ import { AppShell } from "./appShell.js"
 import { setContent } from "./stores/fileStore.js"
 
 import oidcService from "./services/authentication.js"
+import { authUser } from "./stores/user.js"
+import { loadContentFromPath } from "./services/locationLoader.js"
 oidcService.initialize()
 
 function removeLoadingScreen() {
@@ -67,4 +69,10 @@ function sleep(time = 100) {
     })
 }
 
-bootstrap()
+bootstrap().then(() => {
+    console.log("loaded, set up")
+    authUser.subscribe(u => {
+        if (u.accessToken)
+            loadContentFromPath()
+    })
+})

@@ -2,21 +2,15 @@ import { setContent, setPlayingFile } from "@wdl/client/stores/fileStore.js"
 import { getFolderContent } from "@wdl/client/stores/server.js"
 import { ConfigFolder, FileOrDir } from "@wdl/common"
 import { splitFileName } from "./helpers.js"
-import { authUser } from "@wdl/client/stores/user.js"
 
 const state = {
     path: window.location.pathname,
     params: new URLSearchParams(window.location.search)
 }
 
-authUser.subscribe(u => {
-    if (u.accessToken)
-        loadContentFromPath()
-})
-
 let content: ConfigFolder = {title:"", entries:[]}
 
-async function loadContentFromPath() {
+export async function loadContentFromPath() {
     content = await getFolderContent(state.path)
     setContent(content)
     getFileFromParams(state.params)
@@ -96,6 +90,5 @@ const getHrefWithoutOrigin = (href: string) => {
     return hrefWithOutOrigin
 }
 
-loadContentFromPath()
 const href = getHrefWithoutOrigin(window.location.href)
 pushHrefToHistory(href)

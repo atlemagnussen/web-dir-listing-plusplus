@@ -69,7 +69,7 @@ export class SliderBar extends LitElement {
             duration = 100
 
         return html`
-            <wa-slider size="large" value="50" label="Large"
+            <wa-slider size="large" label="Large"
                 min="0"
                 max="${duration}"
                 value="${this.current}"

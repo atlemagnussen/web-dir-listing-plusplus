@@ -256,7 +256,7 @@ export class AudioPlayer extends LitElement {
                                     <wa-icon name="download" label="download"></wa-icon>
                                 </a>
                                 <a href="${this.url}" target="_blank">
-                                    <wa-icon name="open" label="open"></wa-icon>
+                                    <wa-icon name="up-right-from-square"></wa-icon>
                                 </a>
                                 
                                 <wa-checkbox id="autoplay" @change=${(e:any) => setAutoPlay(e.target.checked)}

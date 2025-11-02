@@ -109,7 +109,7 @@ export class DirListing extends LitElement {
                     <p class="filelink">
                         <file-link @click=${() => this.selectFile(e)} .name=${e.name}></file-link>
                         <file-size-label size=${e.size}></file-size-label>
-                        <file-ext-label ext="${e.ext}"></file-ext-label>
+                        <file-ext-label ext="${e.ext}" mimeType=${e.mimeType}></file-ext-label>
                         <a href="${e.path}" download="${e.name}.${e.ext}" title="download file">
                             <wa-icon name="download" label="download"></wa-icon>
                         </a>

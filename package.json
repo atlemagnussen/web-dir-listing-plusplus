@@ -11,9 +11,10 @@
   "scripts": {
     "build:client": "cd client && npm run build && cd ..",
     "build:server": "cd server && npm run build && cd ..",
+    "watch:client": "cd client && npm run build:watch && cd ..",
     "server": "cd server && npm run prod && cd ..",
     "prod": "npm run build:client && npm run build:server && npm run server",
-    "ts": "tsc --build tsconfig.json"
+    "debug": "npm run build:server && npm run server"
   },
   "keywords": [
     "web",

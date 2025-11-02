@@ -27,10 +27,10 @@ export class AppShell extends LitElement {
       color: var(--wa-color-text-normal);
       -webkit-font-smoothing: antialiased;
 
-      /* left-menu {
-          width: 20rem;
+      left-menu {
+          max-width: 20rem;
           grid-area: nav;
-      } */
+      }
 
       footer {
         height: 10rem;

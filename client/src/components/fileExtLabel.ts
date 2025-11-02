@@ -17,12 +17,24 @@ export class FileExtLabel extends LitElement {
     `
     @property({attribute: true})
     ext = ""
+
+
+    @property({attribute: true})
+    mimeType = ""
+
     render() {
         if (!this.ext)
             return html`<label></label>`
 
+        let variant: 'brand' | 'neutral' | 'success' | 'warning' | 'danger' = 'brand'
+        if (this.mimeType.startsWith("audio"))
+            variant = "success"
+        if (this.mimeType.startsWith("video"))
+            variant = "warning"
+        if (this.mimeType.startsWith("application"))
+            variant = "danger"
         return html`
-            <label class="filetype">${this.ext}</label>
+            <wa-badge appearance="outlined" variant="${variant}">${this.ext}</wa-badge>
         `
     }
 }

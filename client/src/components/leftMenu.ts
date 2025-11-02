@@ -14,7 +14,8 @@ interface NamedLink {
 export class AppShell extends LitElement {
   static styles = css`
     :host {
-      display: block;
+      display: flex;
+      flex-direction: column;
       padding: var(--wa-space-l);
     }
   `
@@ -41,25 +42,29 @@ export class AppShell extends LitElement {
       return namedLink
 
     })
-
+    
     return html`
-      <h3>
-        ${links.map((p) =>
-          html`
-            <a @click=${goto} href="${p.path}">${p.name}/</a>`
-          )}
-      </h3>
+      <wa-breadcrumb>
+        <wa-breadcrumb-item>
+          <wa-icon slot="start" name="house"></wa-icon>
+          <a href="/" @click=${goto} slot="end">
+              Home
+            </a>
+        </wa-breadcrumb-item>
+        ${links.map(l => html`
+          <wa-breadcrumb-item href=${l.path}>
+            <a href="${l.path}" @click=${goto} slot="end">
+              ${l.name}
+            </a>
+          </wa-breadcrumb-item>
+        `)}
+      </wa-breadcrumb>
     `
   }
-
   render() {
     const title = decodeURI(this.config.title)  
     document.title = title
 
-    if (location.pathname == "/")
-      return html`
-        <h1>${title}</h1>
-      `
     return this.renderBreadCrumb()
   }
 }

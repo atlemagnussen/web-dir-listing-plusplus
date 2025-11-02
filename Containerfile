@@ -27,9 +27,6 @@ FROM node:24-slim AS final
 
 ENV NODE_ENV production
 
-# Run the application as a non-root user.
-USER node
-
 # Expose the port that the application listens on.
 EXPOSE 8000
 
@@ -42,5 +39,7 @@ COPY --from=build /usr/build/client/dist client
 
 WORKDIR /usr/app/server
 
+# Run the application as a non-root user.
+USER node
 # Run the server application.
 CMD node index.js

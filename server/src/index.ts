@@ -14,8 +14,11 @@ app.use(bodyParser.json())
 
 const rootFolder = process.cwd()
 console.log("rootFolder", rootFolder)
-const web = path.resolve("..", "client/dist")
-const webIndex = path.resolve(web, "index.html")
+
+const isProduction = process.env.NODE_ENV == "production"
+
+const clientPath = path.resolve("..", isProduction ? "client" : "client/dist")
+const clientIndexHtml = path.resolve(clientPath, "index.html")
 
 console.log("libdirs", config.libPaths)
 
@@ -74,10 +77,10 @@ app.post("*", authorize, (req, res) => {
     const content = getFolderContent(folderPath)
     res.send(content)
 })
-app.use(express.static(web))
+app.use(express.static(clientPath))
 
 app.get('*', function (req, res) {
-    res.sendFile(webIndex)
+    res.sendFile(clientIndexHtml)
 })
 
 // app.get('*', (req, res) => {
@@ -97,6 +100,15 @@ const server = app.listen(port, host, () => {
 
 process.on("SIGTERM", () => {
     console.info("SIGTERM signal received.")
+    console.log("Closing http server.")
+    server.close(() => {
+        console.log("Http server closed.")
+        process.exit(0)
+    })
+})
+// ctrl+c
+process.on("SIGINT", () => {
+    console.info("SIGINT signal received.")
     console.log("Closing http server.")
     server.close(() => {
         console.log("Http server closed.")

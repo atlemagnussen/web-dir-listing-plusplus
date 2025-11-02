@@ -1,37 +1,31 @@
-FROM node:24-slim AS production
+FROM node:24-slim AS build
 
 # volume to mount data wed-dir-list will read
 VOLUME /data
-# RUN chown -R node:root /data not necessary
 
-# Use production node environment by default.
-ENV NODE_ENV production
+ENV NODE_ENV build
 
-WORKDIR /usr/app
+WORKDIR /usr/build
 
-# Download dependencies as a separate step to take advantage of Docker's caching.
-# Leverage a cache mount to /root/.npm to speed up subsequent builds.
-# Leverage a bind mounts to package.json and package-lock.json to avoid having to copy them into
-# into this layer.
-RUN --mount=type=bind,source=package.json,target=package.json \
-    --mount=type=bind,source=package-lock.json,target=package-lock.json \
-    --mount=type=cache,target=/root/.npm \
-    npm ci --omit optional
-
-# Copy the rest of the source files into the image.
 COPY . .
 
+RUN npm install
+
 #build common
-WORKDIR /usr/app/common
+WORKDIR /usr/build/common
 RUN npm run build
 
 #build client
-WORKDIR /usr/app/client
+WORKDIR /usr/build/client
 RUN npm run build
 
 #build server
-WORKDIR /usr/app/server
+WORKDIR /usr/build/server
 RUN npm run build
+
+FROM node:24-slim AS final
+
+ENV NODE_ENV production
 
 # Run the application as a non-root user.
 USER node
@@ -39,5 +33,14 @@ USER node
 # Expose the port that the application listens on.
 EXPOSE 8000
 
-# Run the application.
-CMD node dist/server/index.js
+WORKDIR /usr/app/
+
+COPY --from=build /usr/build/server/package.json .
+RUN npm install --omit=dev
+COPY --from=build /usr/build/server/dist server
+COPY --from=build /usr/build/client/dist client
+
+WORKDIR /usr/app/server
+
+# Run the server application.
+CMD node index.js

@@ -24,7 +24,7 @@ console.log("libdirs", config.libPaths)
 
 const authorize = auth({
     audience: "webdir",
-    issuerBaseURL: "https://id.atle.guru/",
+    issuerBaseURL: "https://id.logout.work/",
 })
 //app.use('/static', express.static(web))
 

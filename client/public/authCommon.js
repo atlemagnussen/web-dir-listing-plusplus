@@ -3,7 +3,7 @@ export { UserManager } from "oidc-client-ts"
 Log.setLogger(console)
 
 export const settings = {
-    authority: "https://id.atle.guru",
+    authority: "https://id.logout.work",
     client_id: "web",
     redirect_uri: window.location.origin,
     loadUserInfo: true,

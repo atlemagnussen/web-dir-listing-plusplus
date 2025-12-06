@@ -15,7 +15,7 @@ public static class Config
         })
         .AddOpenIdConnect("oidc", options =>
         {
-            options.Authority = "https://id.atle.guru";
+            options.Authority = "https://id.logout.work";
             options.ClientId = "web";
             options.ResponseType = "code";
             options.SaveTokens = true;

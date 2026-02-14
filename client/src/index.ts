@@ -2,7 +2,7 @@ import "./appShell.js"
 import "./design/waLoader.js"
 import "./components"
 import { AppShell } from "./appShell.js"
-import { setContent } from "./stores/fileStore.js"
+//import { setContent } from "./stores/fileStore.js"
 
 import oidcService from "./services/authentication.js"
 import { authUser } from "./stores/user.js"

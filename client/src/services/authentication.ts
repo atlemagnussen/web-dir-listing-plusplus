@@ -6,7 +6,7 @@ const logPrefix = "webDirOidc::"
 
 const rootPath = window.location.origin
 let oicdConfig: UserManagerSettings = {
-    authority: "https://id.atle.guru",
+    authority: "https://id.logout.work",
     client_id: "web",
     redirect_uri: `${rootPath}/callback.html`,
     popup_redirect_uri: `${rootPath}/popup.html`,

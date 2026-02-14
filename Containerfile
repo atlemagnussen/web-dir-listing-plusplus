@@ -3,7 +3,7 @@ FROM node:24-slim AS build
 # volume to mount data wed-dir-list will read
 VOLUME /data
 
-ENV NODE_ENV build
+ENV NODE_ENV="build"
 
 WORKDIR /usr/build
 
@@ -25,7 +25,7 @@ RUN npm run build
 
 FROM node:24-slim AS final
 
-ENV NODE_ENV production
+ENV NODE_ENV="production"
 
 # Expose the port that the application listens on.
 EXPOSE 8000

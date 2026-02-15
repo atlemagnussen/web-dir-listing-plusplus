@@ -21,7 +21,7 @@ export class AppShell extends LitElement {
           "nav topbar"
           "nav main"
           "nav footer";
-      height: 100vh;
+      height: 100%;
       overflow: hidden;
       background: var(--wa-color-surface-default);
       color: var(--wa-color-text-normal);

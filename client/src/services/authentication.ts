@@ -12,7 +12,7 @@ let oicdConfig: UserManagerSettings = {
     popup_redirect_uri: `${rootPath}/popup.html`,
     response_mode: "query",
     response_type: "code",
-    scope:"openid profile api1",
+    scope:"openid profile file",
     loadUserInfo: true,
     post_logout_redirect_uri: rootPath,
     userStore: new WebStorageStateStore({ store: window.sessionStorage }),

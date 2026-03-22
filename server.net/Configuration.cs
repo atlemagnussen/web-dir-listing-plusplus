@@ -21,6 +21,7 @@ public static class Config
             options.SaveTokens = true;
             options.GetClaimsFromUserInfoEndpoint = true;
 
+            options.Scope.Add("file");
             options.Scope.Add("openid");
             options.Scope.Add("profile");
             // options.Scope.Add("your_api_scope");

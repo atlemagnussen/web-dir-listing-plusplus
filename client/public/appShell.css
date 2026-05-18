@@ -1,8 +1,10 @@
 :root: {
     --logo-color: green;
 }
+
 html {
     font-size: 14px;
+    height: 100%;
 }
 
 body {
@@ -12,9 +14,12 @@ body {
     font-size: 1.6rem;
     margin: 0;
     padding: 0;
-    height: 100svh;
-    width: 100svw;
-    max-width: 100svw;
+    width: 100%;
+    max-width: 100%;
+    min-height: 100vh;
+    min-height: 100svh;
+    min-height: 100dvh;
+    overflow: hidden;
 }
 
 @keyframes spin {
@@ -44,9 +49,11 @@ section#loading-screen {
 .house {
     fill: var(--wa-color-brand-fill-loud);
 }
+
 .loading-logo {
     view-transition-name: main-logo;
 }
+
 figure#logo-loading {
     animation: spin 3s linear infinite;
     transform-origin: center;
@@ -55,6 +62,7 @@ figure#logo-loading {
 figure#logo-nav {
     width: 3rem;
     height: 3rem;
+
     .house {
         fill: var(--wa-color-success-fill-loud);
     }

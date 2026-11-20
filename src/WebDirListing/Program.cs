@@ -30,6 +30,7 @@ builder.Services.AddDataProtection()
     .PersistKeysToFileSystem(new DirectoryInfo(Path.Combine(stateDir, "keys")));
 builder.Services.AddSingleton<LibraryService>();
 builder.Services.AddSingleton<ProgressStore>();
+builder.Services.AddSingleton<TrackerService>();
 
 builder.Services.ConfigureHttpJsonOptions(o =>
 {
@@ -53,6 +54,31 @@ var app = builder.Build();
 
 app.UseForwardedHeaders();
 
+// EPUB content is untrusted HTML rendered in same-origin iframes (foliate-js needs
+// allow-same-origin + allow-scripts). The CSP is what stops scripts inside a book, or inside an
+// .html file opened from a library, from running as the logged-in user: only our own bundled
+// scripts may run. Blob iframes inherit this policy from the page that creates them.
+const string contentSecurityPolicy =
+    "default-src 'self'; " +
+    "script-src 'self'; " +
+    "style-src 'self' 'unsafe-inline' blob:; " +
+    "img-src 'self' blob: data:; " +
+    "font-src 'self' blob: data:; " +
+    "media-src 'self' blob:; " +
+    // Web Awesome fetches its Font Awesome icons from this CDN.
+    "connect-src 'self' blob: data: https://ka-f.fontawesome.com; " +
+    "frame-src 'self' blob: data:; " +
+    "object-src 'none'; " +
+    "base-uri 'self'; " +
+    "form-action 'self'; " +
+    "frame-ancestors 'self'";
+app.Use((ctx, next) =>
+{
+    ctx.Response.Headers.ContentSecurityPolicy = contentSecurityPolicy;
+    ctx.Response.Headers.XContentTypeOptions = "nosniff";
+    return next();
+});
+
 if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler(e => e.Run(ctx =>
     {
@@ -75,12 +101,17 @@ app.Use(async (ctx, next) =>
 });
 
 app.UseStaticFiles();
+// Explicit, after static files: otherwise routing runs first and the catch-all SPA fallback
+// below claims every request, and UseStaticFiles skips requests that already have an endpoint.
+app.UseRouting();
 app.UseAuthorization();
 
 app.MapAuthEndpoints();
 app.MapApiEndpoints();
 
-// Client-side routes: "/Audio/Some book" etc.
-app.MapFallbackToFile("index.html");
+// Client-side routes: "/Audio/Some book", and also "/Books/Some book.epub" (the reader). The
+// default fallback pattern skips paths that look like files, so match everything explicitly;
+// real static files are served by UseStaticFiles before routing gets here.
+app.MapFallbackToFile("{*path}", "index.html");
 
 app.Run();

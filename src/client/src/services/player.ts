@@ -1,4 +1,4 @@
-import { fileUrl, getProgress, saveProgress } from "./api"
+import { fileUrl, getProgress, notifyProgressChanged, saveProgress } from "./api"
 import { baseName, isAudio, parentPath, stripExt } from "./format"
 import { Store } from "./store"
 import type { Entry } from "./types"
@@ -42,6 +42,8 @@ function patch(p: Partial<PlayerState>) {
 
 let lastSaved = 0
 let pendingSeek: number | undefined
+/** Path of the track that has been saved at least once (lists refresh when a new one appears). */
+let trackedPath: string | undefined
 
 export async function play(entry: Entry, queue: Entry[] = []) {
     const current = player.value.entry
@@ -49,7 +51,8 @@ export async function play(entry: Entry, queue: Entry[] = []) {
         togglePlay()
         return
     }
-    if (current)
+    // Save where we left the previous track, unless it just ended (already saved as finished).
+    if (current && !audio.ended)
         await save()
 
     patch({
@@ -141,6 +144,10 @@ async function save(finished = false, keepalive = false) {
             duration: audio.duration,
             finished,
         }, keepalive)
+        if (finished || trackedPath !== entry.path) {
+            trackedPath = entry.path
+            notifyProgressChanged()
+        }
     } catch (err) {
         console.warn("Could not save progress", err)
     }

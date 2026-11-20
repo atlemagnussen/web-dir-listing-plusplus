@@ -17,7 +17,7 @@ public static class ApiEndpoints
             new AppInfo(lib.Title, new UserInfo(user.GetSub() ?? "", user.Identity?.Name)));
 
         // Folder listing. "/api/list" or "/api/list/" lists the configured libraries.
-        api.MapGet("/list/{**path}", (string? path, ClaimsPrincipal user, LibraryService lib, ProgressStore store) =>
+        api.MapGet("/list/{**path}", (string? path, ClaimsPrincipal user, LibraryService lib, TrackerService tracker) =>
         {
             if (string.IsNullOrWhiteSpace(path))
                 return Results.Ok(lib.ListRoots());
@@ -26,11 +26,12 @@ public static class ApiEndpoints
             if (listing is null)
                 return Results.NotFound();
 
-            var progress = store.GetForFolder(user.GetSub()!, listing.Path);
-            foreach (var entry in listing.Entries)
-                entry.Progress = progress.GetValueOrDefault(entry.Path);
+            tracker.Annotate(user.GetSub()!, listing);
             return Results.Ok(listing);
         });
+
+        // Everything the user has started or finished, grouped into books (see TrackerService).
+        api.MapGet("/tracker", (ClaimsPrincipal user, TrackerService tracker) => tracker.GetTracker(user.GetSub()!));
 
         // File content with HTTP Range support (seeking in <audio>, resumable downloads).
         api.MapGet("/file/{**path}", (string path, bool? download, LibraryService lib) =>
@@ -99,10 +100,8 @@ public static class ApiEndpoints
             return p is null ? Results.NoContent() : Results.Ok(p);
         });
 
-        progress.MapGet("/recent", (int? limit, ClaimsPrincipal user, ProgressStore store) =>
-            store.GetRecent(user.GetSub()!, Math.Clamp(limit ?? 20, 1, 100)));
-
-        progress.MapPut("/", (ProgressUpdate update, ClaimsPrincipal user, LibraryService lib, ProgressStore store) =>
+        // POST as well as PUT: BunkerWeb (and other WAFs) only allow GET|POST|HEAD by default.
+        progress.MapMethods("/", ["POST", "PUT"], (ProgressUpdate update, ClaimsPrincipal user, LibraryService lib, ProgressStore store) =>
         {
             var resolved = lib.Resolve(update.Path);
             if (resolved is null || !File.Exists(resolved.FullPath))
@@ -110,12 +109,27 @@ public static class ApiEndpoints
             return Results.Ok(store.Upsert(user.GetSub()!, resolved.VirtualPath, update));
         });
 
-        progress.MapDelete("/", (string path, ClaimsPrincipal user, LibraryService lib, ProgressStore store) =>
+        // Mark a file, or all chapter files of a folder audiobook, as finished / not finished.
+        progress.MapPost("/finished", (FinishedUpdate update, ClaimsPrincipal user, TrackerService tracker, ProgressStore store) =>
         {
-            var resolved = lib.Resolve(path);
+            var paths = tracker.MediaPathsFor(update.Path)?.ToList();
+            if (paths is null || paths.Count == 0)
+                return Results.NotFound();
+            store.SetFinished(user.GetSub()!, paths, update.Finished);
+            return Results.NoContent();
+        });
+
+        // Forget progress for a file, or for all files directly in a folder.
+        // POST, not DELETE: the BunkerWeb front door only allows GET|POST|HEAD.
+        progress.MapPost("/reset", (ResetRequest request, ClaimsPrincipal user, LibraryService lib, ProgressStore store) =>
+        {
+            var resolved = lib.Resolve(request.Path);
             if (resolved is null)
                 return Results.NotFound();
-            store.Delete(user.GetSub()!, resolved.VirtualPath);
+            if (Directory.Exists(resolved.FullPath))
+                store.DeleteFolder(user.GetSub()!, resolved.VirtualPath);
+            else
+                store.Delete(user.GetSub()!, resolved.VirtualPath);
             return Results.NoContent();
         });
 

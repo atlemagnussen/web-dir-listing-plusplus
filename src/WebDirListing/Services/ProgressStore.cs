@@ -122,22 +122,74 @@ public class ProgressStore
         return result;
     }
 
-    /// <summary>Most recently touched, unfinished item per folder ("continue listening/reading").</summary>
-    public List<Progress> GetRecent(string sub, int limit)
+    public List<Progress> GetAll(string sub)
     {
         using var conn = Open();
         using var cmd = conn.CreateCommand();
+        cmd.CommandText = $"SELECT {Columns} FROM progress WHERE sub = $sub ORDER BY updated_at DESC";
+        cmd.Parameters.AddWithValue("$sub", sub);
+        return ReadAll(cmd);
+    }
+
+    /// <summary>Rows in any folder below <paramref name="folder"/> (not the folder itself).</summary>
+    public List<Progress> GetBelow(string sub, string folder)
+    {
+        var prefix = folder.TrimEnd('/') + "/";
+        using var conn = Open();
+        using var cmd = conn.CreateCommand();
+        // substr instead of LIKE: paths may contain % and _.
         cmd.CommandText = $"""
-            SELECT {Columns} FROM (
-                SELECT *, ROW_NUMBER() OVER (PARTITION BY folder ORDER BY updated_at DESC) AS rn
-                FROM progress WHERE sub = $sub
-            )
-            WHERE rn = 1 AND finished = 0
-            ORDER BY updated_at DESC
-            LIMIT $limit
+            SELECT {Columns} FROM progress
+            WHERE sub = $sub AND substr(folder, 1, length($prefix)) = $prefix
             """;
         cmd.Parameters.AddWithValue("$sub", sub);
-        cmd.Parameters.AddWithValue("$limit", limit);
+        cmd.Parameters.AddWithValue("$prefix", prefix);
+        return ReadAll(cmd);
+    }
+
+    /// <summary>
+    /// Sets/clears the finished flag, keeping position and fraction (readers treat finished as 100%),
+    /// so "mark as not finished" goes back to where you were. Creates the row if needed.
+    /// </summary>
+    public void SetFinished(string sub, IEnumerable<string> paths, bool finished)
+    {
+        using var conn = Open();
+        using var tx = conn.BeginTransaction();
+        using var cmd = conn.CreateCommand();
+        cmd.Transaction = tx;
+        cmd.CommandText = """
+            INSERT INTO progress (sub, path, folder, finished, updated_at)
+            VALUES ($sub, $path, $folder, $finished, $updated)
+            ON CONFLICT (sub, path) DO UPDATE SET
+                finished   = excluded.finished,
+                updated_at = excluded.updated_at
+            """;
+        var pPath = cmd.Parameters.Add("$path", SqliteType.Text);
+        var pFolder = cmd.Parameters.Add("$folder", SqliteType.Text);
+        cmd.Parameters.AddWithValue("$sub", sub);
+        cmd.Parameters.AddWithValue("$finished", finished ? 1 : 0);
+        cmd.Parameters.AddWithValue("$updated", DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());
+        foreach (var path in paths)
+        {
+            pPath.Value = path;
+            pFolder.Value = FolderOf(path);
+            cmd.ExecuteNonQuery();
+        }
+        tx.Commit();
+    }
+
+    public int DeleteFolder(string sub, string folder)
+    {
+        using var conn = Open();
+        using var cmd = conn.CreateCommand();
+        cmd.CommandText = "DELETE FROM progress WHERE sub = $sub AND folder = $folder";
+        cmd.Parameters.AddWithValue("$sub", sub);
+        cmd.Parameters.AddWithValue("$folder", folder);
+        return cmd.ExecuteNonQuery();
+    }
+
+    private static List<Progress> ReadAll(SqliteCommand cmd)
+    {
         using var reader = cmd.ExecuteReader();
         var result = new List<Progress>();
         while (reader.Read())

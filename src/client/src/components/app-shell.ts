@@ -9,6 +9,9 @@ import "./folder-view"
 import "./home-view"
 import "./search-view"
 import "./audio-player"
+import "./tracker-view"
+import "./reader-view"
+import { isEpub } from "../services/actions"
 
 @customElement("app-shell")
 export class AppShell extends LitElement {
@@ -51,6 +54,7 @@ export class AppShell extends LitElement {
             font-size: var(--wa-font-size-s);
         }
         main {
+            box-sizing: border-box; /* the global rule in app.css doesn't reach into shadow DOM */
             flex: 1;
             width: 100%;
             max-width: 60rem;
@@ -59,6 +63,24 @@ export class AppShell extends LitElement {
         }
         :host([has-player]) main {
             padding-bottom: calc(var(--player-height) + var(--wa-space-l));
+        }
+        /* Reader: fill exactly one screen; the player (if any) sits below it instead of on top. */
+        :host([reading]) {
+            height: 100dvh;
+            min-height: 0;
+        }
+        :host([reading]) main {
+            max-width: none;
+            padding: 0;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        :host([reading]) reader-view {
+            flex: 1;
+        }
+        :host([reading]) audio-player {
+            position: static;
         }
         audio-player {
             position: fixed;
@@ -87,6 +109,7 @@ export class AppShell extends LitElement {
 
     updated() {
         this.toggleAttribute("has-player", !!this.playerState.value.entry)
+        this.toggleAttribute("reading", isEpub(this.path.value))
     }
 
     render() {
@@ -98,12 +121,16 @@ export class AppShell extends LitElement {
                     <span>${this.info?.title ?? ""}</span>
                 </a>
                 <div class="spacer"></div>
-                <wa-button appearance="plain" size="small" href=${hrefFor("/search")} @click=${linkClick}
+                <wa-button appearance="plain" size="s" href=${hrefFor("/tracker")} @click=${linkClick}
+                    title="My books">
+                    <wa-icon name="book-bookmark" label="My books"></wa-icon>
+                </wa-button>
+                <wa-button appearance="plain" size="s" href=${hrefFor("/search")} @click=${linkClick}
                     title="Search">
                     <wa-icon name="magnifying-glass" label="Search"></wa-icon>
                 </wa-button>
                 <span class="user">${this.info?.user.name ?? ""}</span>
-                <wa-button appearance="plain" size="small" href="/auth/logout" title="Log out">
+                <wa-button appearance="plain" size="s" href="/auth/logout" title="Log out">
                     <wa-icon name="right-from-bracket" label="Log out"></wa-icon>
                 </wa-button>
             </header>
@@ -117,6 +144,10 @@ export class AppShell extends LitElement {
             return html`<home-view></home-view>`
         if (path === "/search")
             return html`<search-view></search-view>`
+        if (path === "/tracker")
+            return html`<tracker-view></tracker-view>`
+        if (isEpub(path))
+            return html`<reader-view .path=${path}></reader-view>`
         return html`<folder-view .path=${path}></folder-view>`
     }
 }

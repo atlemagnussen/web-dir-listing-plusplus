@@ -52,6 +52,10 @@ public static class AuthSetup
                 options.ClientSecret = oidc.ClientSecret;
                 options.ResponseType = "code";
                 options.UsePkce = true;
+                // Redirect (GET) back to /signin-oidc instead of a cross-site form POST: the reverse
+                // proxy's bot protection uses a SameSite=Lax cookie, which browsers don't send on
+                // cross-site POSTs, so a form_post callback would be challenged and lost.
+                options.ResponseMode = "query";
                 // id.logout.work advertises PAR but rejects it for the public "web" client
                 // (400 + HTML). Plain authorization-code redirect with PKCE works.
                 options.PushedAuthorizationBehavior = PushedAuthorizationBehavior.Disable;
@@ -98,6 +102,17 @@ public static class AuthSetup
             return Results.SignOut(new AuthenticationProperties { RedirectUri = "/" },
                 [CookieAuthenticationDefaults.AuthenticationScheme, OpenIdConnectDefaults.AuthenticationScheme]);
         });
+
+        // Shows how the app sees the request after forwarded headers are applied, i.e. which
+        // redirect_uri it will send to the IdP. Useful when setting up the reverse proxy.
+        group.MapGet("/debug", (HttpContext ctx) => new
+        {
+            redirectUri = $"{ctx.Request.Scheme}://{ctx.Request.Host}{ctx.Request.PathBase}/signin-oidc",
+            scheme = ctx.Request.Scheme,
+            host = ctx.Request.Host.Value,
+            remoteIp = ctx.Connection.RemoteIpAddress?.ToString(),
+            authenticated = ctx.User.Identity?.IsAuthenticated == true,
+        }).AllowAnonymous();
 
         group.MapGet("/error", (string? message) =>
             Results.Content($"""

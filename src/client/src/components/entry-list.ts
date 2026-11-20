@@ -1,8 +1,9 @@
 import { LitElement, css, html, nothing } from "lit"
 import { customElement, property } from "lit/decorators.js"
-import { downloadUrl, fileUrl, getListing, zipUrl } from "../services/api"
+import { downloadUrl, resetProgress, setFinished, zipUrl } from "../services/api"
+import { isEpub, openEntry } from "../services/actions"
 import { formatDuration, formatSize, isAudio, parentPath } from "../services/format"
-import { player, play } from "../services/player"
+import { player } from "../services/player"
 import { hrefFor, linkClick } from "../services/router"
 import { StoreController } from "../services/store"
 import type { Entry } from "../services/types"
@@ -113,7 +114,7 @@ export class EntryList extends LitElement {
 
     private renderEntry(e: Entry) {
         const current = this.playerState.value.entry?.path === e.path
-        const isDir = e.type !== "file"
+        const isLink = e.type !== "file" || isEpub(e.path)
         const main = html`
             <wa-icon name=${current && this.playerState.value.playing ? "volume-high" : iconFor(e)}></wa-icon>
             <div class="text">
@@ -123,17 +124,28 @@ export class EntryList extends LitElement {
 
         return html`
             <li class=${current ? "current" : ""}>
-                ${isDir
+                ${isLink
                     ? html`<a class="main" href=${hrefFor(e.path)} @click=${linkClick}>${main}</a>`
                     : html`<button class="main" @click=${() => this.open(e)}>${main}</button>`}
                 ${e.type === "folder"
-                    ? html`<wa-button appearance="plain" size="small" href=${zipUrl(e.path)} download
+                    ? html`<wa-button appearance="plain" size="s" href=${zipUrl(e.path)} download
                             title="Download folder as zip">
                             <wa-icon name="file-zipper" label="Download zip"></wa-icon>
                         </wa-button>`
                     : nothing}
+                ${e.type === "file" && e.progress
+                    ? html`<wa-dropdown @wa-select=${(ev: CustomEvent<{ item: { value: string } }>) => this.onAction(e, ev)}>
+                            <wa-button slot="trigger" appearance="plain" size="s" title="Progress">
+                                <wa-icon name="ellipsis-vertical" label="Progress actions"></wa-icon>
+                            </wa-button>
+                            ${e.progress.finished
+                                ? html`<wa-dropdown-item value="unfinish">Mark as not finished</wa-dropdown-item>`
+                                : html`<wa-dropdown-item value="finish">Mark as finished</wa-dropdown-item>`}
+                            <wa-dropdown-item value="reset">Reset progress</wa-dropdown-item>
+                        </wa-dropdown>`
+                    : nothing}
                 ${e.type === "file"
-                    ? html`<wa-button appearance="plain" size="small" href=${downloadUrl(e.path)} download
+                    ? html`<wa-button appearance="plain" size="s" href=${downloadUrl(e.path)} download
                             title="Download">
                             <wa-icon name="download" label="Download"></wa-icon>
                         </wa-button>`
@@ -148,6 +160,14 @@ export class EntryList extends LitElement {
         if (e.type === "file")
             parts.push(html`<span>${formatSize(e.size)}</span>`)
 
+        if (e.tracked) {
+            const t = e.tracked
+            parts.push(t.finished
+                ? html`<span class="finished"><wa-icon name="check"></wa-icon> Finished</span>`
+                : html`<wa-progress-bar value=${t.fraction * 100}></wa-progress-bar>
+                      <span>${Math.round(t.fraction * 100)}% · ${t.finishedFiles}/${t.files}</span>`)
+        }
+
         const state = this.playerState.value
         const p = e.progress
         if (current && state.duration > 0) {
@@ -156,7 +176,7 @@ export class EntryList extends LitElement {
                 <span>${formatDuration(state.position)} / ${formatDuration(state.duration)}</span>`)
         } else if (p?.finished) {
             parts.push(html`<span class="finished"><wa-icon name="check"></wa-icon> Finished</span>`)
-        } else if (p && p.fraction !== undefined) {
+        } else if (p && p.fraction != null) {
             parts.push(html`
                 <wa-progress-bar value=${p.fraction * 100}></wa-progress-bar>
                 <span>${p.position !== undefined ? formatDuration(p.position) : `${Math.round(p.fraction * 100)}%`}</span>`)
@@ -164,29 +184,15 @@ export class EntryList extends LitElement {
         return parts.length ? html`<div class="meta">${parts}</div>` : nothing
     }
 
-    private async open(e: Entry) {
-        if (isAudio(e) || (this.showFolder && !e.mimeType)) {
-            await this.playWithFolderQueue(e)
-            return
-        }
-        // TODO: in-app EPUB reader. Until then: let the browser handle it.
-        window.open(fileUrl(e.path), "_blank")
+    private open(e: Entry) {
+        // Mixed-folder lists (search) don't hold the siblings: openEntry loads the folder.
+        openEntry(e, this.showFolder ? undefined : this.entries)
     }
 
-    /**
-     * Mixed-folder lists (search, recent) don't hold the siblings, so load the parent
-     * folder to get the queue for next/previous and a fresh progress value.
-     */
-    private async playWithFolderQueue(e: Entry) {
-        if (!this.showFolder) {
-            play(e, this.entries)
-            return
-        }
-        const folder = await getListing(parentPath(e.path))
-        const fresh = folder.entries.find(f => f.path === e.path)
-        if (fresh && isAudio(fresh))
-            play(fresh, folder.entries)
-        else
-            window.open(fileUrl(e.path), "_blank")
+    private async onAction(e: Entry, ev: CustomEvent<{ item: { value: string } }>) {
+        const action = ev.detail.item.value
+        if (action === "finish") await setFinished(e.path, true)
+        else if (action === "unfinish") await setFinished(e.path, false)
+        else if (action === "reset") await resetProgress(e.path)
     }
 }

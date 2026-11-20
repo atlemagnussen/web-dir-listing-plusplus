@@ -1,9 +1,12 @@
 import { LitElement, css, html } from "lit"
 import { customElement, property, state } from "lit/decorators.js"
-import { NotFoundError, getListing } from "../services/api"
+import { NotFoundError, getListing, progressChanged } from "../services/api"
+import { isAudio } from "../services/format"
+import { play } from "../services/player"
 import { hrefFor, linkClick } from "../services/router"
 import type { Listing } from "../services/types"
 import "./entry-list"
+import "./tracked-card"
 
 @customElement("folder-view")
 export class FolderView extends LitElement {
@@ -23,6 +26,10 @@ export class FolderView extends LitElement {
         wa-breadcrumb-item::part(label) {
             overflow-wrap: anywhere;
         }
+        tracked-card,
+        .play-all {
+            margin-bottom: var(--wa-space-m);
+        }
     `
 
     @property() path = "/"
@@ -30,13 +37,30 @@ export class FolderView extends LitElement {
     @state() private error?: string
     @state() private loading = false
 
+    private unsubscribe?: () => void
+
     willUpdate(changed: Map<string, unknown>) {
         if (changed.has("path")) this.load()
     }
 
-    private async load() {
+    connectedCallback() {
+        super.connectedCallback()
+        // Refresh progress shown in the list when a track finishes or a book is marked etc.
+        let first = true
+        this.unsubscribe = progressChanged.subscribe(() => {
+            if (!first) this.load(true)
+            first = false
+        })
+    }
+
+    disconnectedCallback() {
+        super.disconnectedCallback()
+        this.unsubscribe?.()
+    }
+
+    private async load(quiet = false) {
         const path = this.path
-        this.loading = true
+        this.loading = !quiet
         this.error = undefined
         try {
             const listing = await getListing(path)
@@ -72,6 +96,17 @@ export class FolderView extends LitElement {
         if (this.error) return html`<p class="error">${this.error}</p>`
         if (!this.listing) return this.loading ? html`<wa-spinner></wa-spinner>` : null
         if (this.listing.entries.length === 0) return html`<p class="empty">This folder is empty.</p>`
-        return html`<entry-list .entries=${this.listing.entries}></entry-list>`
+        const entries = this.listing.entries
+        const audio = entries.filter(isAudio)
+        return html`
+            ${this.listing.tracked
+                ? html`<tracked-card .item=${this.listing.tracked}></tracked-card>`
+                : audio.length > 1
+                  ? html`<wa-button class="play-all" variant="brand" @click=${() => play(audio[0], entries)}>
+                        <wa-icon slot="start" name="play"></wa-icon>
+                        Play from the beginning
+                    </wa-button>`
+                  : null}
+            <entry-list .entries=${entries}></entry-list>`
     }
 }

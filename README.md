@@ -1,6 +1,6 @@
 # web dir listing++
 
-A self-hosted web app for your media folders. Browse and download files, stream audio with server-side listening progress (great for audiobooks), and, coming soon, read EPUBs in the browser. Login is via OpenID Connect.
+A self-hosted web app for your media folders. Browse and download files, stream audio and read EPUBs in the browser, with your progress tracked per book on the server, so you can pick up on any device. Login is via OpenID Connect.
 
 ASP.NET Core 10 backend + Lit/Web Awesome frontend, shipped as a single container.
 

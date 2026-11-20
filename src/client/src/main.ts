@@ -9,6 +9,7 @@ import "@awesome.me/webawesome/dist/components/spinner/spinner.js"
 import "@awesome.me/webawesome/dist/components/switch/switch.js"
 import "@awesome.me/webawesome/dist/components/dropdown/dropdown.js"
 import "@awesome.me/webawesome/dist/components/dropdown-item/dropdown-item.js"
+import "@awesome.me/webawesome/dist/components/drawer/drawer.js"
 import "./styles/app.css"
 
 import "./components/app-shell"

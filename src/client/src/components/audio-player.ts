@@ -131,11 +131,11 @@ export class AudioPlayer extends LitElement {
                     </wa-button>
                 </div>
                 <div class="extras">
-                    <wa-switch size="small" .checked=${s.autoplayNext}
+                    <wa-switch size="s" .checked=${s.autoplayNext}
                         @change=${(e: Event) => setAutoplayNext((e.target as HTMLInputElement).checked)}>
                         Play next automatically
                     </wa-switch>
-                    <wa-button size="small" appearance="outlined" @click=${this.cycleRate} title="Playback speed">
+                    <wa-button size="s" appearance="outlined" @click=${this.cycleRate} title="Playback speed">
                         ${s.rate}×
                     </wa-button>
                 </div>

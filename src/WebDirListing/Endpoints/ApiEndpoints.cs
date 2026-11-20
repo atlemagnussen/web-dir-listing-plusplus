@@ -65,7 +65,13 @@ public static class ApiEndpoints
 
             using var zip = new ZipArchive(ctx.Response.Body, ZipArchiveMode.Create, leaveOpen: true);
             var files = Directory.EnumerateFiles(resolved.FullPath, "*",
-                new EnumerationOptions { RecurseSubdirectories = true, IgnoreInaccessible = true });
+                new EnumerationOptions
+                {
+                    RecurseSubdirectories = true,
+                    IgnoreInaccessible = true,
+                    // Dotfiles/dot-folders are Hidden on Unix in .NET: keep state dirs out of zips.
+                    AttributesToSkip = FileAttributes.Hidden | FileAttributes.System,
+                });
             foreach (var file in files)
             {
                 ctx.RequestAborted.ThrowIfCancellationRequested();

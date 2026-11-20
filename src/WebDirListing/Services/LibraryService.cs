@@ -48,7 +48,8 @@ public class LibraryService
             .Split('/', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
         if (segments.Length == 0)
             return null;
-        if (segments.Any(s => s is "." or ".."))
+        // Rejects "." / ".." and hidden entries (e.g. a ".webdirlisting" state folder inside a library).
+        if (segments.Any(s => s.StartsWith('.')))
             return null;
 
         if (!_roots.TryGetValue(segments[0], out var rootDir))

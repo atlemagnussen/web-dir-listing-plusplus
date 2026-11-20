@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration.Json;
 using WebDirListing.Auth;
@@ -51,11 +52,21 @@ if (!app.Environment.IsDevelopment())
         return Task.CompletedTask;
     }));
 
-// Built client assets (js/css/icons) are public; index.html is served by the
-// authenticated fallback below, so opening the app triggers the login redirect.
-app.UseStaticFiles();
-
+// The OIDC callback (/signin-oidc) is handled inside UseAuthentication.
 app.UseAuthentication();
+
+// Nothing is public: not even the client's js/css. Unauthenticated requests are challenged
+// (OIDC redirect for pages/assets, 401 for /api, see AuthSetup) before static files are served.
+// /auth/* handles login, logout and the error page itself.
+app.Use(async (ctx, next) =>
+{
+    if (ctx.User.Identity?.IsAuthenticated == true || ctx.Request.Path.StartsWithSegments("/auth"))
+        await next();
+    else
+        await ctx.ChallengeAsync();
+});
+
+app.UseStaticFiles();
 app.UseAuthorization();
 
 app.MapAuthEndpoints();

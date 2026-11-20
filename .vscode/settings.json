@@ -1,0 +1,19 @@
+{
+    // Keep the inotify watch count down (see ENOSPC "System limit for number of file watchers").
+    "files.watcherExclude": {
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/node_modules/**": true,
+        "**/bin/**": true,
+        "**/obj/**": true,
+        "**/state/**": true,
+        "src/WebDirListing/wwwroot/**": true,
+        "old/**": true
+    },
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/bin": true,
+        "**/obj": true,
+        "src/WebDirListing/wwwroot": true
+    }
+}

@@ -37,7 +37,7 @@ old/                        Previous Node/Express app, its Lit client and the ol
 ## Key design decisions
 
 - **One app.** ASP.NET serves `/api/*`, `/auth/*` and the SPA. `index.html` is returned by `MapFallbackToFile` for any other path.
-- **Cookie auth, not bearer tokens.** Because the browser holds a cookie, `<audio src>`, download links and zip links are all authenticated. Every endpoint requires a logged-in user through the authorization fallback policy. Static assets (js/css/svg) are public via `UseStaticFiles`. `/api/*` gets a 401 instead of an OIDC redirect, and the client then navigates to `/auth/login?returnUrl=...`.
+- **Cookie auth, not bearer tokens.** Because the browser holds a cookie, `<audio src>`, download links and zip links are all authenticated. Nothing is public, not even the client's js/css. A middleware in `Program.cs` sends a login challenge to every unauthenticated request except `/auth/*` before static files are served, and the authorization fallback policy covers the endpoints as a second layer. `/api/*` gets a 401 instead of an OIDC redirect, and the client then navigates to `/auth/login?returnUrl=...`.
 - **Virtual paths.** A virtual path is `/<LibraryName>/<sub/path>`. The browser URL path is the same as the virtual path (`/Audio/Some%20book`), and the API takes the same path after the route prefix. All filesystem access must go through `LibraryService.Resolve`, which rejects `..` and anything that resolves outside the root.
 - **Progress.** The table is `progress(sub, path, folder, position, duration, locator, fraction, finished, updated_at)`, keyed by `(sub, path)`.
   - `sub` is the OIDC subject claim.

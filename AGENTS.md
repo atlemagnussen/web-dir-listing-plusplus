@@ -71,7 +71,7 @@ Standard ASP.NET configuration: `appsettings.json`, then `appsettings.{Env}.json
 ```jsonc
 "Library": {
   "Title": "Web dir listing",
-  "StateDir": "state",               // SQLite folder, relative to the content root; /state in the container
+  "StateDir": "state",               // SQLite db + DataProtection keys (cookie encryption), relative to content root; /state in the container
   "Paths": { "Audio": "/abs/path" }  // env: Library__Paths__Audio=/data/audio
 },
 "Oidc": {

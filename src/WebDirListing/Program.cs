@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration.Json;
 using WebDirListing.Auth;
@@ -20,6 +21,13 @@ sources.Insert(afterJson, new JsonConfigurationSource
 });
 
 builder.Services.Configure<LibraryOptions>(builder.Configuration.GetSection("Library"));
+
+// Cookie encryption keys live next to the database, so logins survive container restarts/updates.
+var stateDir = Path.GetFullPath(
+    builder.Configuration["Library:StateDir"] ?? "state", builder.Environment.ContentRootPath);
+builder.Services.AddDataProtection()
+    .SetApplicationName("WebDirListing")
+    .PersistKeysToFileSystem(new DirectoryInfo(Path.Combine(stateDir, "keys")));
 builder.Services.AddSingleton<LibraryService>();
 builder.Services.AddSingleton<ProgressStore>();
 

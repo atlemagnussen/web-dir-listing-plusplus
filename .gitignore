@@ -1,14 +1,28 @@
-lib
-*.mp3
-*.flac
-
 node_modules
 dist/
-
-.env.*
-
 *.tsbuildinfo
-
 .DS_Store
-
 *.lscache
+
+# media (test libraries)
+*.mp3
+*.flac
+*.m4b
+*.epub
+lib
+
+# local config / secrets
+.env
+.env.*
+!.env.example
+appsettings.Local.json
+
+# .NET
+bin/
+obj/
+
+# build output: Vite builds the client into the ASP.NET wwwroot
+src/WebDirListing/wwwroot/
+
+# runtime state (SQLite)
+state/

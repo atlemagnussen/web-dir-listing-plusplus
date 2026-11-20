@@ -1,45 +1,33 @@
-FROM node:24-slim AS build
+# --- client: Vite builds into ../WebDirListing/wwwroot
+FROM docker.io/library/node:24-slim AS client
+WORKDIR /src/client
+COPY src/client/package.json src/client/package-lock.json ./
+RUN npm ci
+COPY src/client/ ./
+RUN npm run build
 
-# volume to mount data wed-dir-list will read
+# --- server
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+WORKDIR /src/WebDirListing
+COPY src/WebDirListing/WebDirListing.csproj ./
+RUN dotnet restore
+COPY src/WebDirListing/ ./
+COPY --from=client /src/WebDirListing/wwwroot ./wwwroot
+RUN dotnet publish -c Release -o /app /p:UseAppHost=false
+
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
+WORKDIR /app
+COPY --from=build /app .
+RUN mkdir -p /state && chown app:app /state
+
+ENV ASPNETCORE_HTTP_PORTS=8080 \
+    Library__StateDir=/state
+
+# Media libraries, mount read-only. Configure with Library__Paths__<Name>=/data/<folder>
 VOLUME /data
+# SQLite database (listening/reading progress). Must be writable by the app user.
+VOLUME /state
 
-ENV NODE_ENV="build"
-
-WORKDIR /usr/build
-
-COPY . .
-
-RUN npm install
-
-#build common
-WORKDIR /usr/build/common
-RUN npm run build
-
-#build client
-WORKDIR /usr/build/client
-RUN npm run build
-
-#build server
-WORKDIR /usr/build/server
-RUN npm run build
-
-FROM node:24-slim AS final
-
-ENV NODE_ENV="production"
-
-# Expose the port that the application listens on.
-EXPOSE 8000
-
-WORKDIR /usr/app/
-
-COPY --from=build /usr/build/server/package.json .
-RUN npm install --omit=dev
-COPY --from=build /usr/build/server/dist server
-COPY --from=build /usr/build/client/dist client
-
-WORKDIR /usr/app/server
-
-# Run the application as a non-root user.
-USER node
-# Run the server application.
-CMD node index.js
+EXPOSE 8080
+USER app
+ENTRYPOINT ["dotnet", "WebDirListing.dll"]

@@ -1,73 +1,33 @@
-# web directory listing++
+# web dir listing++
 
-<a href="https://raw.githubusercontent.com/atlemagnussen/web-dir-listing-plusplus/main/webdirlistingplusplus.png">
-<img src="https://raw.githubusercontent.com/atlemagnussen/web-dir-listing-plusplus/main/webdirlistingplusplus.png" alt="Screenshot of web-dir-listing-plusplus" width="400"/>
-</a>  
+A self-hosted web app for your media folders. Browse and download files, stream audio with server-side listening progress (great for audiobooks), and, coming soon, read EPUBs in the browser. Login is via OpenID Connect.
 
-Simple directory and files listing app for web.  
-One or more folders can be configured to be displayed at top level and then navigated like a file system  
+ASP.NET Core 10 backend + Lit/Web Awesome frontend, shipped as a single container.
 
-plus some more:
-
-- files are displayed with a download link and some info
-- folders have a navigation link and a download all content as a zip link (be patient when you click it)
-- An audio player to listen to audio files directly  
-
-Usecase could be to make files available for download and distribution on your internal network.  
-There is currently no authentication so use with care
-
-Clone this repo and read on on how to use it:
-
-## Dependencies
-
-[nodejs](https://nodejs.org) minimum version 16  
-which in turn means it works on Linux, Windows and MacOS
-
-## Config
-
-create a file `.env.prod` in root folder like example below  
-`LIBTPATHS` is a flattened json
-```
-TITLE=my lib
-PORT=8000
-LIBPATHS={"Audio": "/some/path/audio","Books": "/some/path/books"}
-```
- 
-paths containing backslashes must be escaped, ie `C:\\path`
-
-## run
-
-still from root folder of this repo:
-```sh
-npm i
-npm run prod
-```
-
-## Container
-
-[Builds on docker hub](https://hub.docker.com/repository/docker/atlmag)
+## Run with podman/docker
 
 ```sh
-# build
-docker build --label web-dir-listing --tag web-dir-listing .
+./build-container.sh
 
-#!/usr/bin/env bash
-# create volume for binding
-docker volume create \
---opt type=none \
---opt device=/mnt/some/folder/on/host \
---opt o=bind \
-datavolume
-
-# run - LIBPATHS in .env file must be relative to /data
-docker run --env-file .env.prod -v datavolume:/data:ro  -d --rm -p 8000:5000 --name web-dir-listing web-dir-listing
+podman run -d --name web-dir-listing -p 8000:8080 \
+  -e Library__Title="My library" \
+  -e Library__Paths__Audiobooks=/data/audiobooks \
+  -e Library__Paths__Books=/data/epub \
+  -v /mnt/media:/data:ro \
+  -v wdl-state:/state \
+  atlmag/web-dir-listing
 ```
 
-enter shell
+- `/data`: your media, mounted read-only. Each `Library__Paths__<Name>` becomes a top-level folder in the app.
+- `/state`: writable folder for the SQLite database with listening and reading progress.
+- OIDC defaults to authority `https://id.logout.work` and client `web`. Override with `Oidc__Authority`, `Oidc__ClientId` and `Oidc__ClientSecret`. Register `https://<your-host>/signin-oidc` as a redirect URI.
+
+## Develop
+
 ```sh
-docker exec -it web-dir-listing sh
+cp src/WebDirListing/appsettings.Local.example.json src/WebDirListing/appsettings.Local.json   # edit paths
+cd src/client && npm ci && npm run build
+cd ../WebDirListing && dotnet run     # http://localhost:5268
 ```
 
-## thanks to
-- [Style input range](https://www.cssportal.com/style-input-range/)
-
+See [AGENTS.md](AGENTS.md) for the architecture. The previous Node-based version is kept under [old/](old/) for reference.

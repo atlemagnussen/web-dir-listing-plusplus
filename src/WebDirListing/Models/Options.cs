@@ -15,7 +15,8 @@ public class LibraryOptions
 /// <summary>Section "Oidc" in configuration.</summary>
 public class OidcOptions
 {
-    public string Authority { get; set; } = "https://id.logout.work";
+    /// <summary>Issuer URL of the OpenID Connect provider. Required unless DevBypass is on.</summary>
+    public string Authority { get; set; } = "";
     public string ClientId { get; set; } = "web";
     public string? ClientSecret { get; set; }
     public string[] Scopes { get; set; } = ["openid", "profile", "file"];

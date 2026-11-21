@@ -20,7 +20,7 @@ podman run -d --name web-dir-listing -p 8000:8080 \
 
 - `/data`: your media, mounted read-only. Each `Library__Paths__<Name>` becomes a top-level folder in the app.
 - `/state`: writable folder for the SQLite database with listening and reading progress.
-- OIDC defaults to authority `https://id.logout.work` and client `web`. Override with `Oidc__Authority`, `Oidc__ClientId` and `Oidc__ClientSecret`. Register `https://<your-host>/signin-oidc` as a redirect URI.
+- OIDC: `Oidc__Authority` (your provider's issuer URL) is required. The client defaults to `web`; override with `Oidc__ClientId` and `Oidc__ClientSecret`. Register `https://<your-host>/signin-oidc` as a redirect URI.
 
 ## Develop
 

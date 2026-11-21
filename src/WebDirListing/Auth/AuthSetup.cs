@@ -33,6 +33,11 @@ public static class AuthSetup
             return;
         }
 
+        if (string.IsNullOrWhiteSpace(oidc.Authority))
+            throw new InvalidOperationException(
+                "Oidc:Authority is not configured. Set it to your OpenID Connect provider's issuer URL, " +
+                "e.g. the environment variable Oidc__Authority=https://id.example.com");
+
         builder.Services.AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -56,8 +61,8 @@ public static class AuthSetup
                 // proxy's bot protection uses a SameSite=Lax cookie, which browsers don't send on
                 // cross-site POSTs, so a form_post callback would be challenged and lost.
                 options.ResponseMode = "query";
-                // id.logout.work advertises PAR but rejects it for the public "web" client
-                // (400 + HTML). Plain authorization-code redirect with PKCE works.
+                // Some providers advertise PAR but reject it for public clients (400 + HTML).
+                // Plain authorization-code redirect with PKCE works everywhere.
                 options.PushedAuthorizationBehavior = PushedAuthorizationBehavior.Disable;
                 options.SaveTokens = true; // id_token is needed as hint for sign-out
                 options.GetClaimsFromUserInfoEndpoint = true;

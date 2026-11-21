@@ -12,7 +12,7 @@ This is a self-hosted, all-in-one web app for media files on a NAS. It lets you:
 - read EPUBs in a browser reader, with the reading position stored the same way
 - track books: a "My books" page with in-progress and finished audiobooks and EPUBs
 
-Login uses OIDC against `https://id.logout.work`, with a server-side cookie session.
+Login uses OIDC against the provider in `Oidc:Authority` (configured per deployment, never hard-coded), with a server-side cookie session.
 
 ## Layout
 
@@ -97,7 +97,7 @@ Standard ASP.NET configuration: `appsettings.json`, then `appsettings.{Env}.json
   "Paths": { "Audio": "/abs/path" }  // env: Library__Paths__Audio=/data/audio
 },
 "Oidc": {
-  "Authority": "https://id.logout.work",
+  "Authority": "https://id.example.com", // required (env: Oidc__Authority), no default
   "ClientId": "web",
   "ClientSecret": null,
   "Scopes": ["openid", "profile", "file"],
@@ -108,7 +108,8 @@ Standard ASP.NET configuration: `appsettings.json`, then `appsettings.{Env}.json
 `DevBypass` signs every request in as `sub=dev-user`. Use it for local testing; see `appsettings.Local.example.json`.
 
 OIDC notes:
-- PAR is disabled because id.logout.work advertises it but returns 400 for the public `web` client.
+- PAR is disabled because the author's provider advertises it but returns 400 for the public `web` client.
+- Don't commit the real IdP or host names; the repo is public on GitHub. Use `id.example.com` in docs and examples.
 - The response mode is `query`, not `form_post`. Production sits behind BunkerWeb, whose antibot cookie is SameSite=Lax and is not sent on cross-site POSTs, so a form_post callback would be challenged and lost.
 - `GET /auth/debug` (anonymous) shows the scheme, host and redirect URI the app sees after forwarded headers are applied.
 - BunkerWeb allows only `GET|POST|HEAD` by default, so the client must only use GET and POST. That's why progress is saved with POST.

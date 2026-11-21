@@ -82,6 +82,9 @@ export class AppShell extends LitElement {
         :host([reading]) audio-player {
             position: static;
         }
+        :host(:not([has-player])) audio-player {
+            display: none;
+        }
         audio-player {
             position: fixed;
             left: 0;
@@ -108,8 +111,13 @@ export class AppShell extends LitElement {
     }
 
     updated() {
-        this.toggleAttribute("has-player", !!this.playerState.value.entry)
-        this.toggleAttribute("reading", isEpub(this.path.value))
+        const { entry, playing } = this.playerState.value
+        const reading = isEpub(this.path.value)
+        // Reading is another medium: a paused player gets out of the way (it comes back when you
+        // leave the book). If audio is actually playing, keep its controls below the reader.
+        const showPlayer = !!entry && (!reading || playing)
+        this.toggleAttribute("has-player", showPlayer)
+        this.toggleAttribute("reading", reading)
     }
 
     render() {

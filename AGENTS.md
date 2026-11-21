@@ -68,7 +68,8 @@ old/                        Previous Node/Express app, its Lit client and the ol
   - It resumes from the server position unless the track is marked finished.
   - Media Session handlers drive the lock screen and headset buttons.
   - It calls `notifyProgressChanged()` only when a track is first saved or finishes, not on every 15-second save. Views that show progress subscribe to `progressChanged` and reload.
-- **Reserved top-level paths:** `/api`, `/auth`, `/search`, `/tracker`, `/signin-oidc` and `/signout-callback-oidc`. Don't name a library any of these.
+- **Installable (PWA):** `client/public/manifest.webmanifest` (standalone display, shortcuts to My books and Search), with icons in `client/public/icons/`. The PNGs are rendered from `logo.svg` and `icons/maskable.svg` (full-bleed, glyph inside the safe zone) with headless Chromium; regenerate them if the logo changes. The manifest link uses `crossorigin="use-credentials"` because everything sits behind the cookie. There is no service worker: Chrome doesn't need one to install, and caching would complicate auth.
+- **Reserved top-level paths:** `/api`, `/auth`, `/search`, `/tracker`, `/icons`, `/signin-oidc` and `/signout-callback-oidc`. Don't name a library any of these.
 
 ## API
 
